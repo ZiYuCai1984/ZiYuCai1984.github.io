@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5E38;&#x89C1;&#x9519;&#x8BEF;-&#x63A7;&#x4EF6;&#x770B;&#x8D77;&#x6765;&#x4F4D;&#x7F6E;&#x504F;&#x79FB;(&#x4F4D;&#x7F6E;&#x662F;&#x6B63;&#x5E38;&#x7684;,&#x7531;&#x4E8E;&#x4E4B;&#x524D;&#x5B9A;&#x4E49;&#x4E86;background-color&#x662F;&#x900F;&#x660E;,&#x73B0;&#x5728;&#x900F;&#x660E;&#x4E0D;&#x8D77;&#x6548;&#x679C;,&#x89C6;&#x89C9;&#x4E0A;&#x770B;&#x4E0A;&#x53BB;&#x5B58;&#x5728;&#x504F;&#x79FB;...)</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">DvxaLcizDdNr/z54OT93sw==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'ab25fdb2-0fab-472b-b1b2-1c329410e24b';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>dotnet watch&#x6267;&#x884C;msbuild&#x811A;&#x672C;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">G6jHyizx1AZfL/MdH9U53XGvZQeJjYpem9AbHOI9xLZiCqlcyJ//EL9Ct4tTVBuMg9Hd3HH2X63TMap2leSsdygnlyyJihaCPFFrujMOT+Y8UqsE31Xbs7IHrV1KPmuFCyoZE+tmV0EcYl+zg62tS6VPmF89TAu+howaVfIHbjW6mCwDYz0NlAYC+g8f2effkKquWambAsrQymVdSU8CpdqT6gj7PpfrsxADXpUux0skAyh/jU3MmoxZDfG2mh6wg7CJLPG8HjsGaIIWzbD8KtkT2iOTUdAxrdanCtUb0aZUmWZ3NfiYl9BWa+2S2ij+</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '1ee2d439-90cb-4058-947a-8f4c70d3bf5f';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>bootstrap4&#x5782;&#x76F4;&#x5C45;&#x4E2D;(&#x8FC7;&#x671F;&#x6559;&#x7A0B;&#x53D7;&#x5BB3;&#x8005;)</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fkqa3b8kIMYGDIc28CxBik63nFHi3NWhxrkhZQKiiTV/wQ0HYCEUQgNMq/E5hm9D3Zc96TIKjR3tgHP5ctd4HAc7Wi6qOUpNpVuf+7IMBd83o1Ucn08zq1M3Td1j1ucz8fkdopKIK8Jt8QHQrwfXldriP/wnkMxjiEoWuPmOS9JBz8WPBmSFVsSFOoxznL7vISl/zXcaZ2xV5eUK4IfvruQZxFFtHH6j6JTB1Yf1gpwYjK8tYrrwIDecxIAsjqiSMmF/zXcaZ2xV5eUK4IfvruQbRTwMMRb2J6pvUYe8nVqF4zbzgjtC4Fuen/f/6x5gB/XX8Nl9dCsNzoI67fS4mJI+7K/VgowxVjbNJCAWEqEaARFJfacyqsq1EVYF30jvW76TddFwY0aq15ceXF5+VHxQ+Vx959cLeR1l4rsQxFUmerL91Ioj4C3ZpOszhNYOCXut3c8jhtL7+7REBs/M45pV4NVXkobyyrimoOubr8ZYu</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'a2aa9314-a59d-4f10-98df-ffa7c2abc7a1';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

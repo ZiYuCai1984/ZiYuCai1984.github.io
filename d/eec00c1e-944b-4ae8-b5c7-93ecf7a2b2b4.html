@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Excel&#x6279;&#x91CF;&#x63D2;&#x5165;&#x7A7A;&#x884C;&#x7684;&#x65B9;&#x6CD5;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">+4PyChoOGC7NDtKY0BG30vRPYNIbH7/AcqKcOmkJqp7mUU7Z3D4n0IN2+yAYfaKpte0FwRseTpvGOTvfho7FYxECveklDRC6cKZ0Xmeddk8B1plLd2Z1kAGXiX9XiIdkND5E5HT7p3XVGpIKntlD9iDEm7Kso1j9q6RTl4lJiJ/fEloKyw4oRVXkxYQjeWAx1Fu4p3mVSaSGa373+jNtkJNWsqD0Ah9qd1FTouhl9ENzCP+ZWE3nx/KkpDH02rsb/I0uWST1ZhytWMU/cREhMKfIC7MpctOP2XLErwysNzXBj0gUvrybpoR/YtJWOZFHoIPh9GnNv79R7oYG1lKQYWFKmJZH+AJE+yMwuuNsGgTiJSeM2KXHyy6K8mi12jRDmXHbMILLLBuInt3QHitO9O5xQAUc8/jmM2POvyel4kSMjyYY5vp8UC+PaGDY76HjkLEycxXbWse1NPvJjM1H305HH3Gdo3+3rIdVM0DR+/EA4g07Uf1q9BA+2WRgV1yKpCh5Bjkm2yKkyHbDrbuGQyjuy2j5t4IyzdqgAWGou3o=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'eec00c1e-944b-4ae8-b5c7-93ecf7a2b2b4';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

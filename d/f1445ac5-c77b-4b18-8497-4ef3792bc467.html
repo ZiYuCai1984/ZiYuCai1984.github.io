@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x53BB;&#x6389; &#x5C16;&#x62EC;&#x53F7;base href=~ &#x540E;&#x8981;&#x6CE8;&#x610F;&#x8D44;&#x6E90;&#x8DEF;&#x5F84;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">eTQ5rl1gHXG2RyoCsPD1wETwRT/J2A+Fi5mXkqwhj02ZWsMg1oxgODF+0a2UDs7jMeBL+HtBc/w21Pp9+uQW0IUiyKNHc4N/jcbsM9Rx1buXmpaSFYrH3oQq05wVZVma1afXmF6jQaqDE+PQmGwbDchNIY3QK4Okb3nLYPJLyEn73jpBXIUA6E0VXZcgz/QCFuasvP3SpNMljv2kHnZSA6pQYZrSyMTqVIoSiDM+anp8UiHIDCdmvGQVbaCZKop2FyzcXYjzmrR+1WYkiWtR22NzR8hMHdoktROexQS1HJa3uZvz0PRzJUKGUvMgTRWxtqwAD2vGmAyT1YojQsuRc4/k+nIJYF+B0eTY10R3tDQhM60dUGmj3piS0A/QhD+Rw2oBtMYRUSZhlFBSDZ7OV8EUzUn7TSRlbP8IAniv5WG6sn6qB3h3cBG8vpNya7F5</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'f1445ac5-c77b-4b18-8497-4ef3792bc467';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

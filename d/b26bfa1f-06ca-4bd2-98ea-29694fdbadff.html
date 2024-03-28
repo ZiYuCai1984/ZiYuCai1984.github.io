@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x684C;&#x9762;&#x8DEF;&#x5F84;  %USERPROFILE% Desktop</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">N6Kz93j77iVEAJ8WRx93hEbPLzQj/AazIVGSEvIuwQednF8E6gK8lG2YJgPlsQ4NTwW3QZY9EW5lMD+dCf9ahB6W+XDHjx4nHWet6vUFQKQee5eizIMKAyRw9V7J/qf2LMOnQy1aCQi4TXez0XDQ0xyS2msltCcKN05G/jgDV8yWwqGcvW/pN8GAPFT1aHeO4w45ZT5MLQUeyf9oI5WCaxHvsCpL23xPITQKSUJpZvY6V/VsS1NLvWA9INPZLuntmrn6xFfu/209rGrS9bid4mh5hHTaj83yGBd+wiFUwYrenE+ijiidca51MVKVUPcc</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'b26bfa1f-06ca-4bd2-98ea-29694fdbadff';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

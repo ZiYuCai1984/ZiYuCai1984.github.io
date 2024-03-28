@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>When do we need to set ProcessStartInfo.UseShellExecute to True</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">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</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '0c4a9074-cf99-4348-96a0-54fd33511dc3';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5728;&#x5F39;&#x6027;&#x5E03;&#x5C40;&#x4E2D;&#x4F7F;&#x7528;gap&#x8C03;&#x6574;item&#x95F4;&#x9694;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fkjaCHCCtBZf9n2bvmILM0QqDp73OAYHbBL+o/5vk0jaDbqVMKY1lYZLEVcLcuofK5bzG7PtzoTCsxwX1uSkBgM+Bo/GdwNNwGWe5nl4vHsN8Oll/9Vy2NMKsnhXAOSLYqWJBGA7euZx+G7Jqgx1Lv+GnziWy87TdAhu6XDnso4tBSJSPrx0ztSKM/ox/bKAEvW98Y0kC7ff7gxYOR21sZE2pjxc+XbAUAJ7AmjSbDDYrMHntIPinHFcjdrTs6zuyfD2aTR39NgwctOeqfCUIQzUxcBnqjzI5K3NQLCPAigYe26t38P22M5UmvgcJhE5UEBA3qicJk6fYA0WizemIADioYVsDdafW7697ATkcuNfYPaf4ra+flhdX9SFQjhN9OWxicOssLXIH7fjgcOFjxVWQshFUmFCweMr1+/4lp+O7xADD3BFvmBMuhaRnMDt1kPqmqR5vV8i6+ueLIoaG2VtEHN4vHBr/cDV5DsjZ2fuyaOj+jYH7TrqaZlFkvQ+biVLsvvfgZPN3F8p27UCl2JPiZv3JT9SYk3xT2puAS7RPovFMKq9NzLe9XnF/HEqMnzBedr864u6BRc+N5GhYdhwfH568PU8AZQ0pZP/eszgjvAICiDOVweRBKJXGMuzL0gDUVHZ4c+OKsXjlZQ9ESJ+8swb5QkNjPrjiRmQJJt2y2P7KStOzcK/214kayKL5ey4wkmkXNdWobmwg/j0mRt60//YSWiVw9ClFhx9cieRtl0zFUkkL2Au45aPYtDfpfcmZqUS1wn4LqBINaAYiyzjZNEu2D7aSkum8ZE5rbIfU/bsxwPNJAeNN7WyotdHvlkgnxXC7d+mL0MDPygY3TFI2pjZcqRuR14LWAI7lZzsYBeusnjz4LvhB0DEtM2HnO/qzOSybZnWM6RNvr6hconsokq/jzl8mcXLGU0HxbspcOjPFUaHVU4oCFEBCcSE91GH5OHRBmVir87hnajVYhpSXox3boPPp/chhTsxMy7YJnyEXpZNba3ksJ4Z1+i7xSeuXzQehJI3xNfgfN6HF+vlOvdoFlOCWn5J268k+S8Om10i/xAIZ9tNoyffd1DhefkF2D2Fq1Jk1CwlgqqX0tbYq9lVO3IOFNZMgt9pvlHMSmZzoO9wzl90jImnnBETFaChKC+mDvDCt2ctPhr0NhgfJ0Fts2TXQI+udL32oTJ6FsYi2hEk41IVoMBighVzlTC6skKqXaW01p0Vz0X0cvznuJ/dLYNNBn7o9jKkv5C3mO91Gadl6dzVlQOqZ9wRT3rQZVY2WSjMs3NY4tNqos0gmMt+1SSQT2ApPC3pVcy0jFyjuVl8Vbdxc1XAYRykqcZpW3BkdcOxiSEvQ4+DoyU90p00Hrwa8RIdYEpMY53LNLdCbPgtcdxrTdKrCe5kVzfo5at7ZCp3E7KBm7NGe+a5+6vCNRoEFK4Vkea1Nm3DNxTxNhBGhi9/RKluvmbAjOp/2rr4ibdKNnhIxnM53kVzZF6gmGE2HTkxkau2U1h+D7k0Za+Cvvjaq8A32U10rDLkNZs7rjp7Tvrp2EWvxPumEZ12cPlcVCpPkMIu39xE+t8EPLprHdclgbSqJmCxSqA==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '065646d5-0dda-46a9-acf2-8f5fa100ce8b';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

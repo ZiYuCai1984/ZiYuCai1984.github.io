@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dispose Pattern,&#x5373;&#x4F7F;&#x6CA1;&#x6709;&#x663E;&#x793A;&#x91CA;&#x653E;,&#x6700;&#x540E;&#x4E5F;&#x4F1A;&#x5728;&#x5783;&#x573E;&#x56DE;&#x6536;&#x65F6;&#x8C03;&#x7528;Dispose</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">a3h8UOj/BewA52+c2ynlZune75LK/MI0qV9dXeG6Y8cfnYC6DlToeBpskmQviJSJhLOp+bGt4I+zzIefkMqhtXnMwn7sIx8I/g2KoHeUe/fvGMckPn1uaKvUPb5wcFFgPFKrBN9V27OyB61dSj5rhSH/3HlzxwCqZvRDzHMNW0gWef40VDiVU0ptTJcpokvzA0RRPjjtdKo7aYt3kelL2Pc3a+GhTNo+E4LqEATwr2cTJ3D3lzdqwGBWp7NtxuPvg5VFWPS/rc1KpQAr1LPfU2ESjEGnZAv04fD6TnpYb9SDSxNDA3+YmL/bCB8WaRxS/cRDqoCSot8kEpXQP2pKPM1SUCVIIJCe2+sJ67lvRQMsgMu0ZLj7wLKjG0XF0QzsdEU12s3zmcVz1kEZ9z8I5c2BeTMyWPooPi1h5pRs8glEU4G3lWBWhkUgEcgIrsOlwpcZAtu8sK7Q/zHusN3I1TH3yNOSq2ivCpgMWaPvsMRVyQDAsa+SEN1a/V8r00dMIAlbRxKJnlMaKj94JkKqzxDj0U5bMTAfhyLNhTd7K/NjPpq4Yi4lKP4g25KF4z9AdfeIswlHQP11XhMJZ3qiCLiEpfVBKpCx9fFh+sx99yGwr8ICaJm4JOnjU8HYJUJZlK9jRp5vtWyruKSMgaK1RY2Wb+MOhG0lOPWw/E1oTzSRcro7CXV56h0aEP7fN+7hn4Hxg0y+xluXaV89gJrSdV9osSvGwFTs6h6mHG1MRLuAP8hjexUxdwXL1FWxbC3b/IpPQPR43PiImwqUwGjb1HluNKQBFh6+c8eNVdGl+j7RS4259Q9Y3NqDR2y/ZGaoTQhwztPB05xKpIA602S4A3tYUui0mDPkc+xRfoJhW6SYbEoy2ef5CIPZvAX/E0IDchKKoLsLoRL/3+a6oy7WcPrrOR5VKz84uxUkMZ+S40N27jcnmpsMjWDlEzmfdXJRrPNY4s8NIDO8HiUqDwkBa4zJL95/iIICrA6nImCO7VK8M8Qg9R9VzX1kg8RCUiXJrlX9tpjJSVyTLH6FLTdxFRUrcU18+eEJBzYauhTwTdKFYdMFx86ULk5pEveSPNnchTB09ugk7wB13d0X+FI3hhdX15yKaqIBra2/2JiI6RrURj2rwrB+R7QzG9H410VheDVV5KG8sq4pqDrm6/GWLg==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '8b8f7d72-673d-4a0f-8041-061b36561e81';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

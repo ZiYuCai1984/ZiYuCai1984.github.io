@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x4F7F;&#x7528;SuppressMessage&#x4EE3;&#x66FF;#pragma waning disable</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">IjzLY3aFNVpc+5Fu/byfBnJwFO14YB3bfPD7bJHCL8NBsaswHQ962VTUds33oUvuk+ziyn2f4BtUXrIJ8Rwer1iVDIHa+O09/CHechqPzT48HOi6vTeBYhZVmbV5m7cwj4Y9Lcg9zV5g8BPqvfiF3gIEntDkfgAUPnnDHLQ9l7m+4MtqRLLmaxRdr9ml7Eju45ztj2v0BhzKHmFV8XflcF8BjSx37uLrxwCMczi0h5rTjXZFTIykzoPtS7ghLqmjPKlnphm3kqpzV7TYe0q/0IUF4qpKj+Pr6P85Z4Zh4xhIud3b0uWDOtvCA5D+Huxe9vHDcRBXs8Uqd+cbWLJQBFLcapezCmAXVQyONCSAt0bXc7ZB9SQU2YEX7/ymP7B1XqoAcpmLratd57vs4D5GDpXa/FRY24biDLPsac3PL0QewQ3444q56k9KHfzc90cR</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'f949baa2-899d-49f0-b71a-ab6590da362b';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

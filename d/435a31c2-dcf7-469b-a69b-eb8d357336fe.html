@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>git checkout --track origin &#x6760; dev (&#x8981;&#x5207;&#x6362;&#x5230;&#x672C;&#x5730;&#x201C;dev&#x201D;&#x5206;&#x652F;&#xFF0C;&#x5E76;&#x5C06;&#x201C;origin &#x6760; dev&#x201D;&#x8BBE;&#x7F6E;&#x4E3A;&#x8DDF;&#x8E2A;&#x5206;&#x652F;&#xFF08;&#x6216;&#x4E0A;&#x6E38;&#x5206;&#x652F;&#xFF09;&#xFF0C;&#x8BF7;&#x4F7F;&#x7528;&#x201C;&#x2013;track&#x201D;&#x9009;&#x9879;&#x3002;)</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">DvxaLcizDdNr/z54OT93sw==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '435a31c2-dcf7-469b-a69b-eb8d357336fe';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

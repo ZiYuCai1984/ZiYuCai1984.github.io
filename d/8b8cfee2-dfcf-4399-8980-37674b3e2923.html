@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5C06;&#x6587;&#x4EF6;&#x5927;&#x5C0F;Bytes&#x8F6C;&#x6362;&#x4E3A;&#x5408;&#x9002;&#x5355;&#x4F4D;&#x7684;&#x65B9;&#x6CD5;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fkih+QoDe2A0B2V7Dpnfk8rFoEYJSUYf90ZUHRsrdFYMc9lVeHM5qixjeBjgY1y6wVEOXrV4RJi/QPR9TFh+WncRLE0hihTDAmLTKj0432vmJ0eJRZieYTXSQWXJIrZfsroV173d2Yd42w5WyehA4cs5e93kalv7L3LlYzpkhwA4BEUiVeLT5BNPxJF/VZlCwfrCnGGogyIXW81cWXSApivYcDK5xfy2zrKOj3hkve3HlWyOYjdO/EavsaFDuadJk/lcwb99kgHQvtNde5AStLYNut6eFv/CMIFVvopk3Nt1j4yXwR3mOaeR+wjkHfjnfAgL3l2/P+asbWXmtFR25bgS9JD8Qi7AEk6mTYc4JErDXWOG/22ecDDF8FQIgPV34gn6DdSBJKFwEA4zjoJcvc+aPFqFnZZIqAKrVWLILt5/WYJrv/+aN7SUbdOoiORkwsLiEpfVBKpCx9fFh+sx99yHPw6wBuo0yciFiKOzouJoNeXEW4DlNkuiaCaXzAWgWdhfc0nGpxu70SrNYl5Zr5fcz3R1Ui/RG5DFb4ucTCNIJ1u90CCnr1NHprdQCOjJNCExtfV0ZFqbb5XiQmKUtVwC5053qFEiXzOppeo9Zkl5+ZHJFUnzKzW9Dee10gqGRNbMghX0csjwh3pvTwkXnISlnyD1amHkpfy8NA22BoH9IrbfwyETyITd0UhbgSI+CRO8f/U25a2oTUTWyQ+E71CMhlVkKwDDyRRZfIOYX8jLu</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '8b8cfee2-dfcf-4399-8980-37674b3e2923';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

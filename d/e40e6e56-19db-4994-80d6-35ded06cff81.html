@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5728;Exception Settings&#x4E2D;&#x6DFB;&#x52A0;&#x81EA;&#x5B9A;&#x4E49;&#x5F02;&#x5E38;(&#x5B8C;&#x6574;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;),&#x53EF;&#x4EE5;&#x6355;&#x6349;&#x5230;&#x81EA;&#x5B9A;&#x4E49;&#x5F02;&#x5E38;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">4cE4cXHPWyrIUgs97epdVWh9HtS7amSavL/I2u35ZE48UqsE31Xbs7IHrV1KPmuFbnZNWMp85cE6XAWnqLpdX7K6EX6BjVL5mxwnVzI4zxOMxobSdYrD4J/gR6xeOlYAc+Ekr01RdBOK9EC2jHCornBcPj63o5dYibafGTu3kIVNMOr491/cJZodxxH+wCwI30/Jl7Aw9ICbSO/fhpIg6dU14t463LQKHAZW0/21IuJHkjZVWsrh4r/JMy5Phyub</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'e40e6e56-19db-4994-80d6-35ded06cff81';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x89C2;&#x5BDF;&#x7CFB;&#x7EDF;&#x4E2D;&#x65AD;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">XGKci4bM3HBDGjSmFORY7VgPwedfhoOkETaVzpxbNYeu8CooRZ9Cj/P+buJWAazF/Z7A8I9bIPQea5FZvZPFEfMuVlRH7u13m97Ny3UHcPDC3R4ptc3pgxM24j7+1s8W9fZ490jyrnNS5gJcCLrLQ+c4gYIDNa9epKPg/jaAM8/yMXL/9eIdiJb1YuIkylhdrtEF/wOfSvA8oS8RxNbzQhbpTZoQDtqjDAPAkr/fqc5amADgb7pdFWWARjDY0MmZhPOTY4skcnXMVg/d4Zgl/LpDNM0/w8EkWxbLSeG79CZEULuPRY2LDNOdPTV9wzh6KbecUDggVcJsAMzsig1EUsBKBzvqKguqVYLrs+9ile7KaK+iXGJwis6q3Xyf/ULAYdcpGxzgSUrp7HdtaGPxgH94lfN5PiFthX054Uwx0esTMuKeBYzArY4RPP+5KPsKeoTTPjGyvoSV8vhSuI6rikDqDUgrg3evD3hbaneqmrBDYVDGtnmRLzPBcRBPF6CWIwiBHJRBkXBsRIrrlbwHYEOsFzxebuukttHxPCWpLcSjY5W9U//HgxUVjslRgiX+s0uPvg2IFdaGTS5FpJB3hEntHqH4pEH/BEu6veiYyH+sNee+0duT0nsRa7M/r5YwIBOr0+rXonQ6ORyXit1TYziqeRIHDXg5oNWquWiPWawIIFy6hJY3rkNMEoO/cItMT3TUY0Nng+09CB3qKFvCJ3poNaInqU1oIyc3f4T1LZGi7MNzAmfsmPfr0XLwIU2Lf5fSmpYdTAp+naWiX1y5HWRKsRcc+NoIYMf2zBnP5u/k9GXaxcx1lTYyaGweFQtK6MgXYa2HErAYUd3qjU8dWhIytAUJp3RiECDa5Uy/WEYv7N4kFbaKs5doNB1cqPJUEym1rbLqt/7wF5lMYlHRFqn/BgUfbdBm/lwHvy/ooWbchhvLG3133j1y5yOHrnhnY6uvfovvyE4+3OZnBOXhb4pQo5QQLlAYwm0JQJqEV6bAlrLbKPe5+2T8QpfScXV/epqQESsENuO3cLwLzls2qbOZkuY5vx2+zc6kbzbQ1SmXCYlTAcZTKSFcJkWsjWzOPl+MZ/7kZNVQobpYKojQdUZaZFVk9hSK2TST+G/61NxDBI4+CPbDJQKAj9oQCo1IDz0+4sVrim+uNg+2NXgw9EiJ2c9g23t2U2MWSQRB2UauvV4ds+eWqezA3Tts5PFDFxaFgZp9Yr3E4WGSC/7WHGVlzlcJye5WmR07E/0I467PvOSY7qu2GiqXgPzpoBVg8tkp0QiRH6S/45tGGxL/9au/7oWelPQhRqNAA7poaheQ2/LqKEt6CP3Ix9vsmhknQf+J8No2Haf6maQsizCHvcXHYiB0e80yFrmBa/4RgKrPyyUFy4q4ncZCkLR3WRIYFgxJOIpPW6FQb+b13HFGFSzM8S9GekH6unm60f/iX6gqCjzIZRVYrFrKRqdxpPzKJjMqHn0pngwqT5wyY0fgzA5D98huofD7Ewp6Bb7swK63wQ8umsd1yWBtKomYLFKo</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '9cabd1bb-8835-47fe-8bb4-385482b45329';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

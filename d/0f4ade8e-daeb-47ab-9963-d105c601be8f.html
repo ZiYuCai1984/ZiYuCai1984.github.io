@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5173;&#x4E8E;azure pipeline &#x7684;a,b,s&#x6587;&#x4EF6;&#x5939;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">e462lpD3ULi/W7wrfWEdNvprfvbXVtiT9o/zsXE4Lu0UBVDAPYvrfidpw4tl1TAlxTkWwZqMDnuJHC6q/L16WJGKIrhx++fRdRhj8GO61R1UbZLFTk2rTr4ztbH8Mm2ae2zfXZ+FiP1X12zqhaDWRpYhRnyMT6kI95i59pnUGT7ELe5j+ezVGFhnDx5yQv5wHYU127XMFhsNts7wF+kBfXLmoCQF32gqabL5zpFgwsOBQWc6UP8SQm4epvYp9/MFn8naiJCJemgkNquOxRfuMyuubQG17yKB8xJbQt977uGLnVPwZrXpi4EiNkqGcuWLxTkWwZqMDnuJHC6q/L16WGPIbM+RzvLMvvhJzkbGLHTJz5ZPhu3ntgBBI4SydxeWw9gsap2YRUWnf3TqEIHGJHUuPWzg/ctpUb3MiPhgok03ZOxeBU6jxSR9RrtFwd5l1JIPWftx6wOcBXYm2/O5DnpQzfEBzth/JbS5cLQmUQhdinLmUOYlcR/ge2bwjOh5GSe3U0s0XpvzBD5DkYd33MR9b2I7fKMcxMbYtUaLQY69mn8h3W5hmO/ZVeto9aRLv4IrmBnZWbV/VrI1VFqchYjPixdO1cdRcpfDr77pxXVF6jOlsXfJMYPhMoibfZGHruCVyUBZFnkbo+TYAg6EdfJn6qyu8NF9hkg1tootZG7a48w5dyPCMJu63IO92bINSl27Hni/0y0y/koewlj3k3VexC1DSiHp7+30oi8YRAQHl72FvhmGJgQIFunDGKvIF+IeiMv/quk3evu76rQGzkqIMn0Cw9P+1+W+zcmohrCdnF8E6gK8lG2YJgPlsQ4NjvkkZsa7hYSCsaZd3BfFAh2e+axPGUsSY+rbBeHGMSJFhE/zghzAufzv/mNfB6lX5TTlyoKdQB710h6G2UHFWjkcSKrAiSTnfq0zcBr8AWc3z8Gmjqsc0Fus7Fijc02YfMSRZeM4ArNTIDHnR6Fs7hraH8ppa6pYn/zQKaT1nnM+KE1+o9VpNZH56FsSJS0T</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '0f4ade8e-daeb-47ab-9963-d105c601be8f';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5C06;dotnet restoret&#x6DFB;&#x52A0;&#x5230;&#x53F3;&#x952E;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">s3czUmpf1Q2tOuxMAdw3ym1Omj7iChH/BrUCBTsoMDqTPh5BotiLinI+1LIna5OhIwpV1UGO4OlwULNrb9XwNFtcHIuoAzVVtbWJ0MkJabc8sEO6yJLYgtVVS1oodEbpJF0HLTBaKe+8j5bbMcTKVU/Y6m9vq+cgVOUkw4JU4ZJrPVGOI3vyRm9PCkiNX062dE8Xj+WBH4BGUmB85s1Z/dIvPl53EVCUOefdwpFK4EAVkT74p3R7fgzN2qqe7FJdf05EMGq7XHcPW2Vt7udWiw3CRYyhs1kgLaE+EnlSD3aYJZcf1OQNwkmmYRIDNQtaZGtzKsdUh7pOl1jiUPoH4MIs48UBHdukNhaaI2O5IbXBogyv4K9nxxkoOKNVI/3GTd2NclbBv/t2yPojR0iQUfN/kvwNlhvcZ7kFl/BFEz8YBm1ypmh1pXMh3MJ0Inr642sBAqx+63p3HuLaTUAQlKUTGiLhCOU9OuzIseZwbPI=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '7c2d83e3-e6b3-4454-9600-6d7cc2e45988';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

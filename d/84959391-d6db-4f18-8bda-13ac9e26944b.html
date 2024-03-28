@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x8BBE;&#x7F6E;filter&#x4F7F;&#x7F51;&#x9875;&#x663E;&#x793A;&#x7070;&#x8272;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fkqa3b8kIMYGDIc28CxBik62JwjPz/DlDAWmvMLah6hZ08BxNTRad4rOG5T+m37m+f084yOYJzmrK9IX1AALh6fNroSGMWjuZrc4Zr2YD34/bvU5zdTIWsIsnXf2sCICh+YXpUscwSjBvvaRQZ3VxhSQFO86i0gcFAyAPiqqgwP+8wQLH2kBkOAotVGwbqYSX5QU7zqLSBwUDIA+KqqDA/7zJv+qwQipRrVVuE0oW9CiMTzjI5gnOasr0hfUAAuHp82P/glo3O7UmbsSTVLsKN2ItJPNwPbcUgerDzEkuYTHFvjzxlct2BSnvr1QOfhboIfzr0Qmndf8Tj9xqim2yCJasl6CSBLOlr2noSeX7WS3ku6oVfHM28u0Z9vlK73AQHWwbW+kSD9sQid6N9V4HHdoQKZfnwgx6d4+ZpkzigNF0urJ+qgd4d3ARvL6TcmuxeQ==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '84959391-d6db-4f18-8bda-13ac9e26944b';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

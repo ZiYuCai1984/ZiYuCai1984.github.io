@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>powershell&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x503C;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">EMoFv4IQX2Mt5bvpnxbvPm7vwo3dYmzg/tYNyh6aNDWOutpW657rKzkh14Uc0X5HwSZYsPEPZ2whkIgaoLl6tREdvMwUIwXNBxx/ALoO9Si4/PpCc3zqsEqXCQLHvYj58hNSft4dG3yRypCa5RIxvCPnh0W71UuftpATj2LuWdm+FbKXwWAqP8Wc5mo0v9x11f7sNK1PHpF7CdN0aCBt5f7xB891lEoUlLK8V0SFom/BHp4zkqC/FCHcBpiR+9LQJdHgd4fyurAh42KlzP3VfnjI6pyaOgS/GYEUNP8/MbkKTGL7qShJuHq/3At0cAY7IbC1r5Y3bwUJntdO9MgOCXws0YpCCixEGT7h9exNqGjk+Ppje2uSbYOLZjM08xMU3lID4yqEeNAfwWMLM/WcyirUMkcJsr/1EX0wSw58I6MIsbdD7DwECeaHywSkggNLTGPKlXhOjxEPRlkb60QqeeF6xMt7iYVlXFilmT4gkDE+dysUcSYAo0tA5/JQJv1tL4jnVTAB2rVXi6G0E8hNPwMjDMl+3Jcz0pPASRQGgqlvao9XGvlsN0B+/VeZNGpRn+7e3QZ/Sgq+Eutz2Guuj/PaHtUCS+Nf8kvuLA4QVUWt7UWZSGtGLoidaXczYgYteckaCpsbSne4FbZ6UcdKB6bWLjxKDUAWxM0upYJo+WA3D/mPTu1zOauH4hZcBx5mFtTz9mS3BddLd8hqzbaKIyozwkpBTU1CbRrO6wFCLe49aVux1db5Cw5TXM5iIqN/ki5LqaaZegOMZBqnJJIT7a0UUDlht9SDMmqu/uKNPRpTU8csvFzv5yvWw59ItuwNHfLaVfIo5eSwaz51EGThk7QvNu8Tf2YX3pODkNQVoDCBGD03cygzrykwD/HP+jZ+BZO3jB/VwDstSNvR1JNaf7SBn3RA5CJRhv+E1GrQtXyiPG2WHKule37YDh55KGEK4ciGORIIK5y6ikX77uYcHtE1bRzX/qFc7DrE0MSDK0PFEhAS3dY0AKcW84jcDPH+wPPor+GEfvN39MH1Xydk31zBmimBYppY5Ij3gE5XBe4=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '420e8eff-bf21-439d-8ca1-b517ef2f58bf';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

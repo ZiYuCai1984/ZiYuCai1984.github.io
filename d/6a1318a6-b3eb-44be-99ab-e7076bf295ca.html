@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Excel&#x4E2D;&#x6279;&#x91CF;&#x63D2;&#x5165;&#x7A7A;&#x884C;&#x7684;&#x65B9;&#x6CD5;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">O1FvtGHsj0NCuCAa+HVVoQDRO46mF/8lINAvxNCpl5Cg803FUTrrEdUdmP7YypMRPozrvPTK6o2Kiy8hpfdlRiUTnuNaKi799Ga+77hraA7VwS5sVwGsIl0vBkdJIuoBlGs1YndKhp9ruvVKia0gorl+aqX4nKBHhwBdvgBtU+/xJXlL6ESrLRNQjHdz3OfN6hVuKLwzuy4CzDHr4smH3Az7z4Ti4VPLX41PiHUD5A5zj8+MmDGJdKiO6y/UD5AwQXcer68/IuYHwYkoWZGppvUaXgj8uiLEPSiiyoFLm+ddTU4Yz9aYvSxvuJaZiTypzmpFDXEPHzH0E63FhRt1wUpSVdTL+J6dv42fu9/K4kg=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '6a1318a6-b3eb-44be-99ab-e7076bf295ca';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

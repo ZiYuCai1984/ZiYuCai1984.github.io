@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5173;&#x4E8E;&#x5728;Blazor&#x4E2D;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x7684;Dropdown(&#x83B7;&#x53D6;&#x7126;&#x70B9;&#x65F6;&#x663E;&#x793A;,&#x4E22;&#x5931;&#x7126;&#x70B9;&#x65F6;&#x9690;&#x85CF;)&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x95EE;&#x9898;&#x4EE5;&#x53CA;&#x5BB9;&#x6613;&#x72AF;&#x7684;&#x9519;&#x8BEF;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">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</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '7e3fc540-e8a4-4e0a-b2ec-e881955bba83';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x4F7F;&#x7528;ObjectDataProvider&#x83B7;&#x53D6;&#x679A;&#x4E3E;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fktEaXMtHFFpwKG5N6NNfmYR1szd7JUrH4+/FWZbr2LHtaoKZerlDI5qy/SyiOJfHObjqEzzBUqS2sXaXfZKUvceEjUOo97WKEpFzMWQyLKnibmRssCulvPSlYmiszUT6XZHGnlolgyXAeo23O9a71JA//kNMpdk78CG811iQY9KlxaUnZ4wjetvsJhKFTL+DZgLkE3l7DMGR0uC4jtGvE4wHGQbk9BogWBosSy557UIUgsCVfa09ARaAakEZwqM5l8GTo5KxPqb/BqB+9+OnKM8C5BN5ewzBkdLguI7RrxOM0+Nm4O2mb/1NkYVM11HcJkh8lryLPEnqEZRNb8hgEbOOSkq58BXnoO+ebU0dCpODYYeLWwKCSnWRetTLYyK7mQotUiKLV87jEgWcvHXINZry2fsz1rwQoIaWtzhimDoWiznGwtbxbmrQmbq3mnn3fEnCSM1Yb2ZxTyQUiRzSVT+XkMqey7/mb1J4x8x29HlR3yla33WcuG1pFlT1LGvGaL5u11LKCeBI3y9SIYk1cZEjmMJ88/e3ssypithxWHjzqlXwnL5qbNxmxoVT6/+5VLwbrYyRKK1Bc81Tfwcd+iYlT7MTx681GfCN6rW0nb6SyjXp771LAwA9AfWpJfJZ149F2kfpduUkH9HNO7iBitfqWtFKv2Pm29/GWF/USxf8XSi/zTVNO7SM8FIPL0Mq9R5Vxj5JTxlc2j9maKM8bi+E8NQ4uthP6Z2/9mxLhiPwJ5JZslYadqzVTzWqVk0RU8bTmHAvmT7evtBSmRYIbC8C5BN5ewzBkdLguI7RrxOMah41OvfRC1p62g/uC9yrY1qExV9TGHdxzDV7eHXWx6AYvpgt4+gg8Wp8o7urQqZ32RKltsmeu6/hWELvLjA+sUqWHoVUdq/eIzSCtFVVbz9Q/8TBaLcZBtoJGI1sZ9FTWhi9kMDH6zyDHSK4fGI+jCuKrEqIqFNoHNHGryxnR+jGFLPlS6LJq0aMxSj/iuR6pRMaIuEI5T067Mix5nBs8g==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'dd3e4d89-2867-4cee-8c45-0a2a1bb214b5';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

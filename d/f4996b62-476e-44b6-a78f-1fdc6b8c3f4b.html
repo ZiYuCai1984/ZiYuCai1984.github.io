@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x7531;&#x9632;&#x76D7;&#x9501;&#x94FE;&#x5F15;&#x53D1;&#x7684;&#x601D;&#x8003;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">yeJoMZtaswkS87gv/3AqCYGtRY7gi4zLjp40Z7cJQiqAqTaIHWz2buoFcbhmeZME6NTBsa6D+mwOUclVTJgf3oOnTWAXzEbPkcWjoC1MxL/Ab2gVfOSfdAZTYhWhAQU4139BL9wOAb0zx9c15JHJ6QUyAyP1qbaki6iNUo63ATVv9f4yJX821m6QV/CnqcKqrAps7YNyyfV6irP9aCb64Mwic1qnNpNUod7dOb2KEOBGOGl3ZV3dbGdfBp59kWwJl45rsMXPPZ12++NfPW0vPKYEqsNw7apdgJiHg7VrOu6HLODw9cUA35zClKd7DFtqqOi8rU3euF6ALsl3/cf6pWr1SzLuXAasHwb4eDMeVB8PSQls7aLnYeR1jhqzNChMYoBsYGsDYUfZacuul8a1sGc7IQxK5HJVD6Z6UjtWsXtGmYkxLXK6ONmXs4RXDXtlbyB/KbZ5IitYjX2bS8pEyw==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'f4996b62-476e-44b6-a78f-1fdc6b8c3f4b';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

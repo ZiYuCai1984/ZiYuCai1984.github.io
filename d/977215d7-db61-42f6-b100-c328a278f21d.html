@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x4F7F;&#x7528;@key&#x5728;&#x5217;&#x8868;&#x4E2D;&#x590D;&#x7528;DOM&#x5143;&#x7D20;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">ZguX382LmQiz9z3POicSPZEvN/2VwdyluWmz8Ehat0poyYb5lmqSxX2Z7V3mDWuQ6Lhq7RcZ9667qC57qGmdvM0zoYWdt2U0gBUiZOUCy/RiAOR1+OJBUuiWaN8/2gRHai2npAm9hDXnf+c24HsClzbSaZoJVzhQPuJl4EhivQv/E9SHTx53SgPW02Qh2Ax/dRnmB6gvhpQj1Du4hlCzVK2iZiHa2qNnc9bwnONbEsqg9YPsUK9QgYZ4BcOYRiDfpA/ykiVHXlvvWcrcp2vkpteFa78WhtDo3gB4LSZ59M8U6Rc+53qToDZGG2Vc211W+10J49l9UvYw2l4Oxj5LoPkGllci1OYtknf3e8LXA6Q25mTcAk2l+RLnJNXSIkMtsVRFE9I7cwpQMxYYMunE5aGdZd4wrHet540r07J7iDqPOuPFjRgaA3GI1a/QnrlDud+Wq2yhh3EiOtWUVd8QYGGQK4AN4IIVmR3DjmA96NrvndcPqSJ4MJUi8UQgVRewILZ509kTIjWkLTFx+J5/chrNxUjl71t4i+owatcuCyxf8+CcYrYRekRC8WME+7419sgtlO2eSnGQ4nnebCHl3C8xaHQ0PvSpLRa52pXqIihD6AcP05ooVtr4ZNNV1WyeOjPFUaHVU4oCFEBCcSE91OG2bbza5ZDJ9Jh/ryf49gvIZ29yI9TpPEGAT8nsF/zlSu+S6jBKw++menzAFwR7W9RbyVV3BK/QdQzsV32huwtT4VKtHp22GwfbDACYhRqrmb19eT2hOXT8a2b5ycusTAfDw3SAnAhPceCSH31x3OUZy8zh4EotZ0ofkwtVrBtzPQOlvT/OFjOSuo6KxN9cr6hbAOGEgd1iaCT3A6QWrBueA3rvmoGZOUJqnd14lSukqH02ExPmJZP1qZ8zIXjI1jOAkUmN3KiNgbvejhrjUkjN7FYrkC7kNPjO3xvf7+pthwpiese16Q9WU/y29j73zEmI+xpoLngQfjv3wWM4IAQH1UvwP4wqwrWm9x51M74lTNpXn0RxTHmgSaCOH33YVzOAkUmN3KiNgbvejhrjUkjN7FYrkC7kNPjO3xvf7+pthwpiese16Q9WU/y29j73zLx6Vxg+/LFZszb1u8iZx35R/XP4beoS/egP0febpUTNNpxpvyb9lfcWLNcfAYRy29Vv9eQOccn+ApO0q8+Xs2t32WJi09XAdcNRzCbPhey5NXQ8XQXGOb8/KJDscRKDl8W1PXMnNl8hV7PWMAIJAdnxFmePJRr8UaKQj5HK1z4voOohpZE2TX9LhTb3ZoFGS1yCjzQoiTVN8GH9xFmeexfr55WsWedavXk6L0f+LgJshz/ELPFlmI1HdWdIDLto4w6NhvRCGiCJ8ZG52gOAjcVzxBFT1ozCGg+etteXuwrEHQU6QzNPbuhrv9qqCLVJyJMq0+KC4eXCXu70OWpVj7tB/Kvesu/lYQd9Wws7TEnKl3ESuC6Ok0bAZ838asKCGyjuy2j5t4IyzdqgAWGou3o=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '977215d7-db61-42f6-b100-c328a278f21d';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

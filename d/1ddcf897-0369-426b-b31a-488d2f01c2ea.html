@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x6DF7;&#x5408;&#x5B57;&#x5178; HybridDictionary</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">kB/ecTZzH/wHC0oN9w/sX+ILWQXKrJ74mHcwB2lvHqXQLMwLIyzZXz5ICq/j6omceqp/tRNRWweWkA9fR8SxY9u4r+0w/o881CesYijRIuSulTB+m9ygZuncUTrM4m+WMpcsR+c4+HclW6Pj3AwrHBTtpWqzuIzY93qiZfysSIcCw571k7d2vblZO0vKNWH6nRzr+QKJ4uEtwdR2A87VdnxjYkT0KkiXMAq01ieAUsFT5Ha4EHVIa+rYGbV49212CO192NvOEPy2Z1dap8HsiSZNluXXcrgnAdaygp6kdEidvY2ZIeUlNxyADnlDOxT3EKmXDfCAl6ReRq2hjr6tWhZXtYB2vSDPz5ir2JDIsYKm9Ljqdwa7CjuXG5rtiH/Ol32R8vvoen7RjOw3hVqG+F5x9E7DmjYQ5E4s2e8nFfjBHToRNBIW1AMRUME0R2DcEIK+W9qrTm2kz8iN3+860MAADjGCu5jXOJ3u5bskFk7rV+XtU3AiNhatriaxlJovV5dlhzwzmjkOiwnaOkHsG+Y3z1uPShNgl9E5niWdSD8QULR55wissrgukuE/0udl6gwlt/JVjHqEmzBbokp2xN1NR0En+Y/ohn9VPdRnmfagKFdZsf9edgrI1YkRaEArAseg/BIvjCdSCSLz5bDiHRYUptSyIIOJRUQOxtYGwlLTzbc6uNy5O1rN6F/BMotxJeK2qdmuMdrvwYP55mC97he3JJxbkBkext++bTclAkDVQ0Ts913nHZPyujj8O2v/LWDFgt1ARRqMI8EDOLVxqV+S+1SJDBM2ceMt4HRcIW8pEkuxihsCk/IY6i1Qw+sjYKxdQY0Jm6NSJjyDHm0msXUmW89ygoCx/fOT++GNNNs=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '1ddcf897-0369-426b-b31a-488d2f01c2ea';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

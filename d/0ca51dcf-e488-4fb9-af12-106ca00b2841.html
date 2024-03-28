@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x4F7F;&#x7528;git merge --squash&#x538B;&#x6241;&#x5408;&#x5E76;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">IKzcrkfRTgq4bk5ElFwWq0ZP1MHJ8GC0X5t7KOPUP1iQvaebL1SL1megRSWcVQhagWjCeGZ6qssU2twcg7f1ZARwYoiOkdn3PYqKcrcMW/1I8GVYDv90jGHp/GlFVDmoOoXbB/Q0BbAvXRaUcpg6IX4x7yXwvoDIaHaJM/5XSBHJU5IQf3u6wT/7nEJNIuLzrtyEu0Dh/KnNQT3tuy7PKC5CxFN2bAsjVUBOVVhFDyv9JQNa8Mk2jUfgHgsCPxlxFhyPPj5IZdyMY0P5x8pgO2UP6ocHneczHLj5jIqVmJV8Dj5d9CNZ9ZWKVo1GReUinKaUxbQMGdm9VuDEHlFpNzIZyVRuIj0XBZ+NsVjw1LsiKRxEMLXJwZLwQr9JXKUXhI7pr+JIS1CxGs9PLNnmjtPPOppatAGp41laSInzsYRKD19u4KAv3ircHTtes7bJ52JYMMbi2C/HSknnkmlPSQ==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '0ca51dcf-e488-4fb9-af12-106ca00b2841';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

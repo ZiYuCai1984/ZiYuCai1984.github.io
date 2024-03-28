@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5E38;&#x89C1;&#x9519;&#x8BEF;MSB3073,&#x4E00;&#x822C;&#x662F;&#x8DEF;&#x5F84;&#x51FA;&#x9519;1) &#x68C0;&#x67E5;&#x8DEF;&#x5F84;&#x662F;&#x5426;&#x5B58;&#x5728;&#x7A7A;&#x683C;2) linux&#x7CFB;&#x7EDF;&#x8981;&#x6CE8;&#x610F;&#x659C;&#x6760;&#x65B9;&#x5411;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">BooUU72YSiA8gV+CJObwFSvtgZdrEEhs9OewwuwcutPQSfq52uFsGwBYlu+el6oUpfKtvyYWD9JBmmdSzL2TbqqFqon99bS80rzKppL+CQ94OX8BQ6tDq1k3wCB+zK6RmyOJIpnKg/DVPXuNi1YapineJEeeiHKqlOj6P/+/DuDke880qEnibAtkEW/ujyRVXUq+Tbe0cGlGHaQKiXLkx+nYClQewAI4+oj+k17NihlhLK4f+hd9EDg7uchqrdm7PkzG3/GWtDmkqOrOss9gI7XaetgQii8N+QSFMvHALkUSpZgWciIrGJ+Teg6IpvPG2nZsrNYcsRf8NG5Afi3DKfhK9CX+kOvLjPeOmgG28iXJ0EB2oTOEtgCje10PWEAer65NKzYpUsBKaldxM88MfmdC6iPIjwoMDlaKUGmUKrY1pnXIHiBO5UQTF5TLlbHPG3ivSbZODwe4cdr+r0IHutNnLitD8N+IawhcmYuWpFUdnciAcZo4lL6DQ4Y0BkSJPGOr3KkhHS20t2ktDe5p3BlEfTi3Z9g4JLpsy0e8Y9lYukds0sy/gXl2P8pH7cp1AwP9Ni75bf5wLsFoIrgzPxV5kRdv3a8d3w8FjtgGc5izPo9teh9NTY2032JXRnZJD2n7GiL9F9BfbiYCnyXe7DZFLAswOZfQ8BY1WH6jgRZkusO6jCdnze1uK6uQF0WTZaGGfeLtL2waDFNUPV7yfjo6WwoKDzoKpKxQYtbfYe8V5M9xlE7MgyFvNJJZ1NzvbJqc/s9zwLHW0Uy0a+G5mD5Mxt/xlrQ5pKjqzrLPYCO12nrYEIovDfkEhTLxwC5FEqWYFnIiKxifk3oOiKbzxtp2bKzWHLEX/DRuQH4twyn4SvQl/pDry4z3jpoBtvIlydBAdqEzhLYAo3tdD1hAHq+uTSs2KVLASmpXcTPPDH5nQuojyI8KDA5WilBplCq2NaZ1yB4gTuVEExeUy5Wxzxt4r0m2Tg8HuHHa/q9CB7rTZy4rQ/DfiGsIXJmLlqRVHZ3IgHGaOJS+g0OGNAZEiTxjq9ypIR0ttLdpLQ3uadwZRH04t2fYOCS6bMtHvGPZWLpHbNLMv4F5dj/KR+3KdSItIb5Dg5heco7mgZh7DhzhaA6m9P6KnLBY4iGv+KXtCW8Y5twy+ynoeEPVfsx9+A9p+xoi/RfQX24mAp8l3uyERauNkqOlu/9qRAxMm4LSZLrDuownZ83tbiurkBdFk2Whhn3i7S9sGgxTVD1e8n46OlsKCg86CqSsUGLW32HvHERR+LofvHsMRbSWcdgxqQ==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '2dfad5d2-9f3e-43fc-9069-e4e0bf70e2c4';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

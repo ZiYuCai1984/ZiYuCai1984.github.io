@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x6CE8;&#x610F;dotnet watch&#x6392;&#x9664;Item&#x548C;&#x589E;&#x52A0;Item&#x7684;&#x65B9;&#x5F0F;&#x4E0D;&#x5BF9;&#x5E94;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fktEaXMtHFFpwKG5N6NNfmYQFMgoSRLTRDivB0dt9f+0SCWC7bVyPdr8E3cwRYOeFyZpfm+6j/BlcoCN7HFWIe0/KjRYgpwjyAdgdu39HHKrhlJpxFqapDAtAAq8SnIBonXsHmDO+JItsaEUgZTQNVrKPiDxVmt7s73lXLlOpTm1Np/69DmKEhDmozAvkTXmxvgUyChJEtNEOK8HR231/7RIlWDV1NPcIiUGb6JrtwdJa5ijcUbHGH+FWKQGwwLEbl6DLRwhAPbfwd86Jfp7+9yQ1VYOpqD7yQyMd7k4tP1RS/sl2we9/HD4+ZLLCHeYz5SGVWQrAMPJFFl8g5hfyMu4=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'd8b6928a-36a7-4fdd-94f7-21c1db60db33';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

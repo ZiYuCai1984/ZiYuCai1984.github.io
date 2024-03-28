@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>git submodule update&#x4E0E;git submodule sync</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">5n75vjOIdBwhvTsRkmbK7CgyPnH7E0RbvMTLjfzduqOdWwsxof+Xs+TJvbuV6rKr7NSxPAi6J+4B6XZmQtsz1UvHISXrYzccByHQyRrFYniloM/RDOFeOUCbWH19U9z2GmpMWmj6WWkizNfHirHqJIM4Ur6vcQrM2k3/N4g4JP10WpckHiqX/IpQ59HYt1ZMsAAa9cAOy01Q4RfthZDl184RjmzqYkQKSur+MdugruTHQnyYOwax3B0df1ksz5iQqT0ZzB0+QWzDlALeKTmSIjGHvcUe0YVYNZXEOcEHmMMhkX5jpOaNioKNd+PVcn/6lCIV3pKLP56bwknemwIA1DHfsddC4TB+avONqMAzud1kX7WNfSwMio/cATp7sBjtmFO5akStIi4UmG6dga+LvReSX+Pl5JSQKEZq4vEMSp8L+ucmLXd/Ajqb23bTix9a1MMWxPzdjsaHZT5FmjeZx8iBDwu1psnFfJEf/qflTezxiHetXm0QQ5hU2xZvfGUM</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'a1416aed-e4ef-4cfe-b877-00190bef7496';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5EF6;&#x8FDF;&#x542F;&#x52A8;blazor.server.js</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fkjaCHCCtBZf9n2bvmILM0QrLm+VskrX+1RjRTD2+Oebw5L/uGvnF0LTb1+g+ctzppoc5iq875pjZ+ON4ab22/iIgcYJmZH/jZZVtjCWLq9l3K/jabbM1nWUd+kbhepY8VHzWOu+pDJrGFfEojntDI4DkQgcPSjky0oz3Csn2PWkUB+XIBFX/D8zNRMPGHm7h5obe2RIRa4I6XLP3r6EllQJ7ozJ6zeh7b7xEIqqhbf6FUUYEfR3RCjfzPnsXVclqgQM2MTtWELJeuFbMH345uQ/F2kBm8oI5Te4UaLHtrh821FVtdUwRqmhcBRvUqIKA6DNMjHXSV2BZILqRaA7EQLOzfPINVzs1XC2UGhYd4XXjD74B7HqnDn2O7jtZdAnKFKwzypYLg2L6/MNQiGLVLon6lw1C7fclTsdpPU9pz4X6Rhqrw0Obsqbmp1j4ZtbpHijuy2j5t4IyzdqgAWGou3o=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'cde9483a-2c36-4ccd-94a8-429fe167de9d';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x8BD5;&#x7528;json-schema</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">rpQ9IqOlTOuyzUoh+074sD1qTSMFa/O92QSXXbYdX5KayakE0VvCcqurb7BMcoPO+aV1/TWpMlhhRv6oXuTizV8RloVHPrF4/rKHsl4zgnJJ77EChWW4ngFGB74bkUlTMipxQm2HHRyPaL1sKgj7G2APoK09yMP0ObV5/+i2LucyaqkY5nXd8cTTV5/e+h6vI0AgoO5x9qa4f16a4l41fwmqceAMCwxynL+JZh8ooL2tZ9iZTzKqLVhtxA3UCIA0lbGYSKgMlNfilWJVuJgjbABmE64vBxrHbM67zcds/XUKyzp6cpx3L5ZUeof7mIStIGU6CZVtUE4zJ52oGWhqEtKxjxJUTaZ8nADOA+QR51bZomvmLz3HRJqYs3HhOqIvVdT+hcB0LD2ts19cmQ5YJ+NTHlTMQ87L6jo1QLfosUSocMzyLtegcaQfHn2rAGlkEeaGxuwNCm8DR5yqKTs6YL1ZDajJrqMO/bOqZcc/Utm50avWCU4Cl94iCwU63w3uj6vBXASz/Zp5pkgEYA4Pkt6y9wmJdmTM4mi5W4O51lDwR6jrk4WFa3YLLLkhOJ1iduwIUW/rcdFNfvMZiWl9zvWaEiTUTqUNw0rZpsH5VXvAaQRiPqxbXolvF2us4XIdAAFE2Yj7iCQRXV2SJJkaoTAF95gr8oODEcUZgGkn3wCwMrEmDgOa4i2Cc71PIxLdJT5ZxQ40eYo8SzqI2hK3S+/BRiNtn+3SDBLWqBRhzza6AY+laqUVdw9D0zeNKNVH5M2bYis4CTx0lC9CbEqC+A==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '3540c668-66f5-4b65-b27a-d55ce5d7fd13';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

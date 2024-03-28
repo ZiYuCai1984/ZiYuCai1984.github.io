@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>post&#x548C;put&#x7684;&#x5173;&#x7CFB;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">uxIREIg81L1kJGu6Qt6C/6xVY5huSyOEPWsBehvKB6Ygd7F5OWlcLQLnkl8DYxVWSapkLr3GgqrwTfDBDLXL2LKw2GYNL+Ub08hLGyHpnZtcaDhE9p5qG6qkKrUfQcGbHDzvr7CeI+pRwP3KrzVhOWIbI8NtCWtPfNDQ//j4NiIJCm+AAoNFPRVhH9pIPJ8Hp/AH3VM166R0uo8/iGCUy0P7gvKprzAC87U0/cNHFU3QBv1N0QNea8sWbe+bLUxFwdnkvJi2BMg1RkHr6XYVFJ3Bq6UNZm0xduZAAtA5CfgnmkqkppLhuItHVR+gLrxF77bFIozNZgChmMV82syXyEzpXutV8o/lT+is50fKy4GxQ7kHKYjJY3QFz1GVbZFhFT3VJfBBuhQrD4OEAtn/5k1aPdzauTCmuFx4lSkQ6DLz4pFVtbZVJP4D3JCJ8a+D/iDIX3ODcSLtlsB609Q1bWNBVdtlRJd/v79bCQikpaRLGm7MInqFz5NoEoH5AVzDGGfpogZFOoWxc2ClEtgzaf9CvP9oSeRa1SXsGL8F9qUv2rIiCHutnW3EjIp/ovwUeHBIP8FgHmZAf8KHBkC1jZgaWgfDUDbLgmA+ps6CZLmnFsCTmqPXbNSxztczMyb98FvEECV6vbMNW+PYWSvqHJDYpJh4MkUlcp1qQYR7/dIVDCFEp043Ds/ZN5E4g7aWz9qddW0zzS+T4w9rdAJvivXLwLz8oA7+/lS2w787fkU32GAGnT6L0Z00xlpzjTmr5DpUD1cPYYaWilWvD5iQrTjK/1Y2JsXDO+jhLZJGNcmK8oNLFl8xL9YCsgfWUXG2x2LIJJuirBbm6oOdKH132bMj+d1SIfRUc7qgqbfSWOvD1rV/BOrwvMlgbpGTXI2/vm86m8a4Shz3EKIl/sTEAKw+GXqEiRknqI78px6ZD9ZbqPVjGEezbtXZN7olDXXnIkC9HhCQEic9CvXa6GUxCG+3Vca6mxPpAOGUGxmjxDEgPerRPbFjb9CqJ/4aYsxgN5/zH9c999c4+dd1JY079nDkOdvDkOVuZsQvT1eHax8FH8eoVLQfztP8YploE/PxmPW0gwLQO+a3cugQu9lSrhaL0LeaZnuwmxUt7bLshEsZQ5sQ+cFyO5IqPNviEVtmxfC7jK9VodO2NstkfzrxAtleOqftFrkV0s5neRACEyHDCe1WkG8P5656RO3TLNw/pIOh2sHfyinOUPVLMy2K3jDqY3Vl6S6YkhFnk2PDSb0xdUeTqw84NmJzfnwgUtm90JnTB0FOZnm1gQbQsRyrT29V3t6hrqIIAiN9ETWKt/ygTfwx3FGcz3Ox5qDfABMFE1HwDjOcj8zAXXjQ63nzs6rVIJLdNltVok3CsI9UdHlIu6ZxMDHK3a8p8HHY0s51HIUKjkTZPtbtoExfPjEtfuBzWrqrgzT/X0dN/Z+wMQQ=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '778aab6e-6c63-4fe2-b046-cd277b7d56a5';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

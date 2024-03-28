@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x30C9;&#x30AF;&#x30C0;&#x30DF;&#x306B;&#x95A2;&#x3059;&#x308B;&#x8A18;&#x61B6;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">ahjkzXq/7c7DrgZEksFqzIuJ20NEZo1nfn/quYgLfdcNTWRsFWWAwwfG+cu6BiyHm/AFLU1kaUu+yer9GyxUjVW9lTbkbmhl4HvWGm1K7DK+U9g9LdoY0HNfh5mlGotFbWwJFFWQsH+w4fRVt0ugQuy/BkqJT1xDf4AdpCwgKhpszNNArbsAFG5Nphlqy63dPDVgxqvGSMhRaiA1LxwrUIk9tS6Tox8c4G661UBUITqFoncPzmN3eV6HOY8IsntAStj33HH9RCispHGY8y+8Oi3HQ7Gg7YnyyREoICqKCjUURpTz5rmtdlR3k6FLXoJta/8oOI3+pFMki5b15GeGqNPvbTsPIAnvLayX3z3N5TBpTLgN325hjG6jX0yyybCimlmti+kSdpmgPIy5ziDZ+vsIm/MCxZH0r55NMYdIsBvJ++TJ9jtzazHKVBuYciJVXTS1p2gGmxYfAkkx63nkvq0Nxt+I7+5QGW2wFwLtlR/UdWawJXe7MR+lUZHOOj8CSizzKO0znJfwj2kOajkxkPkHkaeR+o0T+nlRRMGrxAr9m+fuPMzigvxXp9ckNiPnAV2jEt5QNJz+Yz4qMbwqEw==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '3276ab94-dfd2-451a-a58e-df4e96011803';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

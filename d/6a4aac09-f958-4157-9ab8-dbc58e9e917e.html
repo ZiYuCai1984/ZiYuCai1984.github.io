@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x5173;&#x4E8E;&#x7F51;&#x7EDC;&#x9A71;&#x52A8;&#x5668;&#x7684;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#x7684;&#x539F;&#x56E0;&#x7684;&#x8C03;&#x67E5;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">3QJtAYOkMx4gATc5ltKPvi8v2zJBojxBHc0i+YHuucazRKQjrKFoPcdK7kWyttrXiIqxXbZA6+FghkZJPihEz/nl3+/TuNlw0GdkpPHrUEBcTNSc8/Cq/0qAmD0iKNZdUaAdiUK7aDh3iv005B76oN3Oxg3Gt+HyEW6xeka30/J4sxvWQJuJNv8euIRTW5KA7oR2jpc5H70ia19GMLFT7GocqBlZiSG5/sSms2ql36O7tyq0m7BZ9ET4f8dkB6FZwHXFOn1N2zcJeL+OydHEUUcwo/43Vl7N23CkMxR3Bv3fyYCfsZf6hw94c9GVGLopnVxxb4fbFfbYoLErCpfo7Pr7S352+zMe0D3LErRiynrRSZMfZBH+rR5AncYgA87+NBgrSVahAY/G4Gq+kMg3navJzu5b/QYpWxbdPfQBIvuc0hzHj3iwC0/f0GPSNIpi0H983BmSsnDc/x26V5rqNBOyeMfuWxwI3D+zTZnVeNrORGBc9GWrA1SiVH+FCb0y+vo8mgmAYUVRcE64jNSKpe5jS8x+ex7aGC/N4W4fOEepAoz8CBrkLZpKkBiszf3Nd+HX/EREdEV/aFS8d4J/jM7RdevFF0fsyCF2s1aIAI2agGuGPeyLJ/N+Relv5eBlFSojuyQkfo5z92XFkrFGrkRw/RZTVgjL8bsxzA7mRDb9p7GZj8anKFT8S2mBtUhb2GSAuKICU3pIWK/QrsaBKurkgL932ZFNZrs0q9zHftNc52/jbTi0q6YJUy2N5s4PZSIWgofdx0XGAqoRUJWvdfFfZsZwmIpwlJyRevbkA+Dw7dbFvef1OWJO0yMWMEuM0SbF/O7oNyyYHq0RL69a7MAX5OMKtjwP1EeE5CJ2Gmy/DVZLsaeaV63Sfn7n4rtsrSuYhiif78PdwDCy36e92DvSZs8uXoqArMC4C+wszHxHnfdz84daUgF91XNbX55RvqW1WOOvvEbdAHXiVp/CO7PnUp7Uusg4DEJv3qE3XUVDrA+5n9paDUhCRa3sYrLuFG4P9XKrwlC0Xju+XGhApg==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '6a4aac09-f958-4157-9ab8-dbc58e9e917e';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

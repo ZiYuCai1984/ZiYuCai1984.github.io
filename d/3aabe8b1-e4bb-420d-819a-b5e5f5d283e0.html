@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>C# 8.0 IAsyncEnumerable</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">PWpNIwVr873ZBJddth1fkih+QoDe2A0B2V7Dpnfk8rFar7woylbe2cqRUMqXEWncKAExUWxu9oXIyRQDtp+0oODQ+8jd55+F5Kc/rRt1ORdhepug/OHafzGtOm51ULIL4NsXU+jQQW3N+AG7eyUN/4oHfyNZy2qN25FvSRmysxXxrQyKrmuUP6ayXdUFuUmrA1NZN1G7+eYCBqnQeJaXOQqUeCRakaroCiqhp65wGemUKn5zxQb79zrb9sxtyORSLbhL2VELc5Ya9RBn+nHN/H4QPuMB18AuZm6X2Zt3E3KITF0VQe33Zl/eTN3L9eZ6tQ/ts4/Eq2r46XFestjZzi0ay4ue1geuT+8//9xzp6KiN+1uSW1DEVVH+QgsoQB+LlXn3Xg1XN5LGWo7R9DF+U/lyEvu5ZHfzUcwZng/AfLVVwSfhXPvnamCnL/uPgaR91OGM8f7M6wFdyUJcOrJsc5FDczqNb+X80EY35inK6xSjTbZTsfFfzHNWBnMSUUNVJlmdzX4mJfQVmvtktoo/g==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '3aabe8b1-e4bb-420d-819a-b5e5f5d283e0';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

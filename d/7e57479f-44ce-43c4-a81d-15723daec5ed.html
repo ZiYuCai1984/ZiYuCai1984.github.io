@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#x7981;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x7A0B;&#x5E8F;&#x53D1;&#x51FA;&#x7684;&#x901A;&#x77E5;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">qq6vndpQtA0tiet27KaJt3VUmDBdtsDt211HqOk8PS86W5AyldzIVJCCIBuzzJoTVSjYnvixqsRD4WcEMmpN7mXmfwdRo1BXA5qwqSLAeIjcOwR2lXXIEDBn36JNTfHb9pCBVieDgKC12lljcr5yNcAYN6+GCkWrbQfoGiuFVLAFWS+cJZjTQlRyrMirpQbHlm8EehP/YePX02fTXnySMpKzjuDOxDFs2SfcqsrZFKimdzvArznJyfbVAqfv+bKGw+oSDC95k1A2iKReb/shdnHFmW9vCKz/Z4CWxHmvL2rpkedH/TZ2DcgWksza9ki6y5pFVSyIVUcJ7rW/AKkT3/BTh8rxoBYAsg/Xbwo+MQnVWtddEuboLGJUOiFapcPYKRJcxJ7St7IHfwgLzUd/H0Re/K4oRj9x2BUil51rnkMbbhOsZuG6LrN2hbJMDB6w5M2bYis4CTx0lC9CbEqC+A==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '7e57479f-44ce-43c4-a81d-15723daec5ed';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

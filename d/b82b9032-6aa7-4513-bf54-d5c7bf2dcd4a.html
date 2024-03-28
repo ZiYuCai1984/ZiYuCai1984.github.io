@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>dotnet-ef-migrations-add-update</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">JmPGQ3oroixN7XN6vCQ5RObtW307IFw87+xRSng5iZGFR8nftPxbswi/iHjvp7T3t7mb89D0cyVChlLzIE0Vsa1qQYJKmQFAHxpOq7jWr4TX0qF05K3ntRUtZtrPYVAfC+PNOpaDVK60o6cPmArrTIe3Lx/lbavoVnGOlKFXDv7X3N2r7LHie5JO9GKhwaKCqcCnd7Y8euNTtqyaWWyHlNaLqo5Sk2lW5/7sgwF3zeihwKEqcdHu8Y1zKDrpc4TF16V1/XoZqXDhD9boIXDNVVM1lX2J2oduZoo9LQqc7795EjZuhJqBWncIguH58xDJ33QGqqLFCXhMDxcUV9Hdd1m6agUREPdVr93+265buQHMQz/12O28SGwYoAIcZJ6F/gOeYTqYH9VWHI22Ow4kU4pXCyTfdLroAEPh7g2+fq7CDrjZm9fW7TYwytT5IElVt8EPLprHdclgbSqJmCxSqA==</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'b82b9032-6aa7-4513-bf54-d5c7bf2dcd4a';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

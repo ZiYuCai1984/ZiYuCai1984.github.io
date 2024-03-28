@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>azure pipeline clone repo&#x65F6;,clone&#x5355;&#x4E2A;repo&#x548C;&#x591A;&#x4E2A;repo &#x521D;&#x59CB;&#x6267;&#x884C;&#x8DEF;&#x5F84;&#x548C;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x5B58;&#x5728;&#x5DEE;&#x5F02;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">jrHkQ63Jl/FoV37E3rkfDVKCgzdKX7g46awK8jYsNkMCBHsdYCKl0gAi8ZQZ9Jq1ypHLcbRsTPE1KOt7bASISaQK2i6IxEOTMUvzYiZUSWJmsc8XXiTEFepnj23d8Jsd9CP9D36VPPbs4OgJbl+HfeMNa3D3S616z87XrpRoEIFIj6eMM1HIpobvpiHEA/ZcUc/cLR6dnskToZX22N6xIqSiZq1RAwX3LwFtlPUEDB/oS/5QRQP2Vn/6LT+rERflJTgtkDHI5bfvbHlyf+e9muTNm2IrOAk8dJQvQmxKgvg=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = '3f73574e-1512-494b-b6da-afe1b852ddfc';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>

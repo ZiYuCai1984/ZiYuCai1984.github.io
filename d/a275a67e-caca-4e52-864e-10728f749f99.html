@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>docker&#x914D;&#x7F6E;&#x865A;&#x62DF;&#x7F51;&#x5361;</title>
+        <base href="/">
+        <style></style></head>
+    <body><div id="documentRaw" style="overflow: hidden; visibility: collapse;">FFaQJNpMDG4PP08IcDhXcQ/Me+pvSAquDHxwxS+ZvgnPH73BMrpkD+/ldrTI/Ti4MENkQMenfnUNwh+JyZ2sw1O84S7zXT0zWm6VquNf3mE83XiqsdNQ38AYfc20N+ly3G73BDuEK/EnqLu+FbzP373zAJB2XDF0zS0xp4jdOeLZucNyy96iSKsGXJ0JAKGkAuQTeXsMwZHS4LiO0a8TjHq+bcPlULVF5OR2LvRvA9Es0+ZADSETB1gNrO44yYmLiddU4mvPoIT1UmTCZcKN4OfH7c+33e3l/6KLaAfKbrSmx8/nKvq1aiC1JdnR0UfT97jCcF4cEEEkD6jCXzHq7+UNcfzFl5rF62IhLmbiPHtEvaXpr+Yg4oz21x5SL09zbArMuvQM2xXeJZ7s1g3sjBq9yvzR6vJlyXQ5VxKExnyJ5uh0U8MqC3BjhOf4EWOd1QlpcDLO0CUjo7iDJvwMG4sG/PeWX819qn9WjxOUdyW+pWD2yEr5HSkj5zbCEbuXbxaxqwa2zpuqNwV6H5ZU9pW59k2pBAeRyRS+kQ9IVb1gRuLYWYW38OyOdWcy6lEvsPk6Ai+p/xJFBxeEmeUb9lIoy1Qr4m6yWqFPlIMCtiaTp7Wer0h7i/i6fQjw3XmEHBTbea735LBwIOXKnb2f59WWZaFfqFk9gTizBeOQ7Vprk7Gz5TPCSeuGR/ynzXGePsehAAnulwtaQraeBQiJql/sYP90YUOvO8Vz19FB4Y4efaOabdbj2Jm/f+bZRIA5foSBuVgAzxj3E0bf94HdN45C7kGjd4wjDzQpP3Enwcwp2sCOpbA8fbuXSwqX+5yVgXXYWaajTkNPdqiIG8X0s7UOfnPy9vSkLJ3YUsabQn0Fi/I71VMuEYYUYOREvusPvKi8WsiTk3VyY1dF2Ph8FUjUeVB5tdByfy4EsRRIFSJ9eg7IwctYhDElCIUn4sDsxcIx9v00yt3vhEgdMMxtQM+/2+aZe9I9Z1NOtNXTCBYaQSo4YUq98D/rHgNALRbyisQ5y6ESoHgEor+DvTrnFKOih6PeyE+ttHz9gDa4eYYcGCkwDRy00d7QMAdrZFjI7P+GhtKPmJPbIkHK7z/NDi8vdElPzU/j35AGtpPuEok/E91spSZqCGJbq0K5YkhBgCZAeSFxaTxLhe+8VqaB/jkENzyDtEQN2RTDENp+7cqxoGyiebobCL7zFT9XozpIazIAGBPOO+Jx9ey8qHIWBSBpdLZz8PUvle+Bu1TboNmW3l1IidFSHjeUt7TStPsfQDZIIEAS+2JsZ996V9RPTvPSLC2D+26ImA7AQBz5PXcV4p66dLP9mXFSDAMixNFkf0TMRL+Nf7RFEUmC0vthEWQMVC87E+0sUf9nARt4QZY=</div><script suppress-error="BL9992" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script suppress-error="BL9992">
+        function document_decrypt(encrypt, aseKey) {
+            return CryptoJS.AES.decrypt(encrypt,
+                CryptoJS.enc.Utf8.parse(aseKey),
+                {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                }).toString(CryptoJS.enc.Utf8);
+        }
+        window.addEventListener('load',
+            () => {
+                //TODO Parse the generic Key passed in from the url
+                var id = 'a275a67e-caca-4e52-864e-10728f749f99';
+                var key = localStorage.getItem(id);
+                if (key === null) {
+                    key = prompt('Prompt', '');
+                    if (key !== null) {
+                        localStorage.setItem(id, key);
+                    }
+                }
+
+                var documentRaw = document.getElementById('documentRaw');
+
+                documentRaw.innerHTML = document_decrypt(documentRaw.innerHTML, key);
+                documentRaw.style.visibility = 'visible';
+            });
+
+    </script></body></html>
