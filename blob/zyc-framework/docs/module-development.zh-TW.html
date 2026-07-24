@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>模組開發 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="模組開發 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/module-development.zh-TW.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="module-development.html">English</a> |
+  <a href="module-development.ja.html">日本語</a> |
+  <a href="module-development.zh-CN.html">简体中文</a> |
+  <a href="module-development.zh-TW.html">繁體中文</a> |
+  <a href="module-development.ko.html">한국어</a> |
+</p>
+<h1 id="模組開發">模組開發</h1>
+<p>這篇文件說明如何撰寫符合 ZYC.Framework Host 執行階段模型的模組：以依賴注入為入口，使用 URI 驅動 Tab 導覽，按需接入主選單，並清楚分離公開契約與 WPF 實作。</p>
+<h2 id="什麼時候建立模組">什麼時候建立模組</h2>
+<p>當一個功能需要由 ZYC.Framework Host 發現並載入，而不是直接編譯進 Shell 時，就應該做成模組。模組可以提供 View、Tab factory、主選單項目、設定、狀態、背景服務與命令列選項。</p>
+<p>如果功能契約需要被其他模組重用，請建立 <code>*.Abstractions</code> 專案。公開 DTO、常數、服務介面、選單 Provider 介面放在這裡。WPF View、TabItem 實作與執行階段註冊邏輯放在實作專案。</p>
+<h2 id="建議專案結構">建議專案結構</h2>
+<table>
+<thead>
+<tr>
+<th>區域</th>
+<th>常見檔案</th>
+<th>職責</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Abstractions</td>
+<td><code>*ModuleConstants.cs</code>, <code>I*MainMenuItemsProvider.cs</code>, service interfaces</td>
+<td>其他模組可引用的公開契約，不依賴 WPF 實作細節。</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><code>Module.cs</code></td>
+<td>模組生命週期入口。註冊 factory、選單項目、Provider 與服務。</td>
+</tr>
+<tr>
+<td>Navigation</td>
+<td><code>*TabItemFactory.cs</code>, <code>*TabItem.cs</code></td>
+<td>匹配 <code>zyc://</code> 或 app URI，並建立 Tab 實例。</td>
+</tr>
+<tr>
+<td>Menu</td>
+<td><code>*MainMenuItem.cs</code>, optional <code>*MainMenuItemsProvider.cs</code></td>
+<td>加入使用者可見命令，用於導覽到模組 Tab 或執行模組動作。</td>
+</tr>
+<tr>
+<td>UI</td>
+<td><code>UI/*View.xaml</code>, <code>UI/*View.xaml.cs</code></td>
+<td>TabItem 使用的 WPF View。</td>
+</tr>
+</tbody>
+</table>
+<p>Abstractions 專案不要暴露 WPF 控制項型別。如果需要命令契約，可以在 Abstractions 中使用 <code>System.Windows.Input.ICommand</code>。</p>
+<h2 id="生命週期">生命週期</h2>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>時機</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>Autofac 容器建構之前。</td>
+<td>註冊必須在整個容器中可用的服務。</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>容器建構之後，且模組處於啟用狀態時。</td>
+<td>註冊 Tab factory、主選單項目、狀態列項目與執行階段 Hook。</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>所有啟用模組載入完成之後。</td>
+<td>需要依賴其他模組已完成註冊的跨模組初始化。</td>
+</tr>
+</tbody>
+</table>
+<p>大多數 UI 模組只需要實作 <code>LoadAsync</code>。</p>
+<h2 id="最小-view-模組">最小 View 模組</h2>
+<p>對於單一 View 模組，可以在 <code>LoadAsync</code> 中註冊 simple tab factory：</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac;
+using ZYC.Framework.Abstractions;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core;
+using MyCompany.Tools.UI;
+
+namespace MyCompany.Tools;
+
+internal class Module : ModuleBase
+{
+    public override Task LoadAsync(ILifetimeScope lifetimeScope)
+    {
+        lifetimeScope.RegisterSimpleTabItemFactory(
+            new SimpleTabItemFactoryInfo(typeof(ToolsView)));
+
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<p>這是 <code>minimal</code> 專案範本使用的模式。當模組只需要把一個 WPF <code>UserControl</code> 暴露為 Tab 時，這種方式就足夠。</p>
+<h2 id="帶路由的-tab-模組">帶路由的 Tab 模組</h2>
+<p>如果模組需要穩定 URI、路由匹配、參數、客製單例行為或多個 Tab，請使用 <code>TabItemFactoryBase</code>。</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core;
+using ZYC.Framework.Modules.Reports.Abstractions;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[RegisterSingleInstance]
+[TabItemRoute(Host = ReportsModuleConstants.Host)]
+internal class ReportsTabItemFactory : TabItemFactoryBase
+{
+    public override async Task&lt;ITabItemInstance&gt; CreateTabItemInstanceAsync(
+        TabItemCreationContext context)
+    {
+        await Task.CompletedTask;
+        return context.Resolve&lt;ReportsTabItem&gt;(
+            new TypedParameter(
+                typeof(TabReference),
+                new TabReference(context.Uri)));
+    }
+}
+</code></pre>
+<p><code>TabItemRouteAttribute</code> 可以依 <code>Scheme</code>、<code>Host</code>、<code>Path</code> 與 <code>PathMatch</code> 匹配 URI。如果多個 factory 匹配同一個 URI，<code>Priority</code> 較高的 factory 會優先。<code>TabItemFactoryBase</code> 預設 <code>IsSingle = true</code>；如果模組允許開啟多個實例，請覆寫它。</p>
+<h2 id="tabitem-與-view">TabItem 與 View</h2>
+<p>帶路由的 Tab 通常用 <code>TabItemInstanceBase&lt;TView&gt;</code> 包裝 WPF View：</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core.Tab;
+using ZYC.Framework.Modules.Reports.Abstractions;
+using ZYC.Framework.Modules.Reports.UI;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[Register]
+[ConstantsSource(typeof(ReportsModuleConstants))]
+internal class ReportsTabItem : TabItemInstanceBase&lt;ReportsView&gt;
+{
+    public ReportsTabItem(
+        ILifetimeScope lifetimeScope,
+        TabReference tabReference) : base(lifetimeScope, tabReference)
+    {
+    }
+}
+</code></pre>
+<p>Tab 生命週期行為放在 TabItem 中，視覺行為放在 View 中。這樣可以把路由、Tab 識別與 UI 組合拆開。</p>
+<h2 id="主選單入口">主選單入口</h2>
+<p>選單項目通常導覽到模組 URI：</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.MainMenu;
+using ZYC.Framework.Core;
+using ZYC.Framework.Modules.Reports.Abstractions;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[RegisterSingleInstance]
+internal class ReportsMainMenuItem : MainMenuItem
+{
+    public ReportsMainMenuItem(ILifetimeScope lifetimeScope)
+    {
+        Info = new MenuItemInfo
+        {
+            Title = ReportsModuleConstants.Title,
+            Icon = ReportsModuleConstants.Icon
+        };
+
+        Command = lifetimeScope.CreateNavigateCommand(ReportsModuleConstants.Uri);
+    }
+}
+</code></pre>
+<p>然後從模組註冊：</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>優先使用符合功能位置的既有選單 Provider，例如 File、View、Tools、Extensions 或 About。只有當功能擁有多個子命令時，才增加模組自己的 Provider。</p>
+<h2 id="設定與狀態">設定與狀態</h2>
+<p>實作 <code>IConfig</code> 或 <code>IState</code> 的型別會在模組註冊期間從 settings 目錄讀取，並自動註冊到 Autofac。使用者可編輯設定使用 config；執行階段持久化內容，例如選中路徑、待處理操作、視窗狀態，使用 state。</p>
+<p>不要把大型業務資料放進 config/state 類別。它們應保持小型、可序列化，並且能承受版本演進。</p>
+<h2 id="模組載入與依賴">模組載入與依賴</h2>
+<p>Host 會發現命名類似 <code>ZYC.Framework.Modules*.dll</code> 的標準模組組件，然後追加 <code>ModuleConfig.AdditionalAssemblyNames</code> 中列出的組件。<code>ModuleConfig.DisabledAssemblyNames</code> 中的組件會被發現，但不會作為啟用模組載入。</p>
+<p>依賴關係會透過對其他模組 <code>*.Abstractions.dll</code> 的引用推斷。如果模組 A 引用了 <code>ZYC.Framework.Modules.B.Abstractions.dll</code>，執行階段就可以報告 A 依賴 B，而不需要 A 直接引用 B 的 WPF 實作。</p>
+<h2 id="檢查清單">檢查清單</h2>
+<ul>
+<li>公開常數與契約放在 <code>*.Abstractions</code>。</li>
+<li>WPF View 與 TabItem 放在實作專案。</li>
+<li>只有必須在容器建構前存在的服務才放進 <code>RegisterAsync</code>。</li>
+<li>Tab factory 與選單項目在 <code>LoadAsync</code> 中註冊。</li>
+<li>穩定 URI 路由使用 <code>TabItemRouteAttribute</code>。</li>
+<li>新增選單 Provider 前，優先使用既有主選單 Provider。</li>
+<li>config/state 類別保持小型且可序列化。</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/module-development.zh-TW.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

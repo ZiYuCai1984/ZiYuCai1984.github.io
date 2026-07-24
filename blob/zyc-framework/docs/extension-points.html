@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Extension Points </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Extension Points ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="extension-points.html">English</a> |
+  <a href="extension-points.ja.html">日本語</a> |
+  <a href="extension-points.zh-CN.html">简体中文</a> |
+  <a href="extension-points.zh-TW.html">繁體中文</a> |
+  <a href="extension-points.ko.html">한국어</a> |
+</p>
+<h1 id="extension-points">Extension Points</h1>
+<p>ZYC.Framework extensions are mostly registered through modules and Autofac. A module loads with the host, registers services or UI contributions, and then the shell composes menus, tabs, workspace operations, status bar items, taskbar menu items, drag/drop actions, and Aspire resources from those registrations.</p>
+<h2 id="extension-point-map">Extension Point Map</h2>
+<table>
+<thead>
+<tr>
+<th>Extension point</th>
+<th>Register from</th>
+<th>Runtime consumer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Module lifecycle</td>
+<td><code>ModuleBase.RegisterAsync</code>, <code>LoadAsync</code>, <code>AfterLoadedAsync</code></td>
+<td>Host startup and module loader.</td>
+</tr>
+<tr>
+<td>URI tabs</td>
+<td><code>ITabItemFactoryManager.RegisterFactory&lt;T&gt;()</code></td>
+<td><code>TabManager.InternalNavigateAsync(...)</code>.</td>
+</tr>
+<tr>
+<td>Simple view tabs</td>
+<td><code>ISimpleTabItemFactoryManager.Register(...)</code></td>
+<td>Built-in <code>SimpleTabItemFactory</code>.</td>
+</tr>
+<tr>
+<td>Main menu</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code></td>
+<td><code>MainMenuManager</code> and main menu views.</td>
+</tr>
+<tr>
+<td>Window title</td>
+<td><code>IWindowTitleManager</code>, <code>IWindowTitleExtendManager</code></td>
+<td><code>WindowTitleView</code>.</td>
+</tr>
+<tr>
+<td>Workspace menu</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td><code>WorkspaceMenuView</code>.</td>
+</tr>
+<tr>
+<td>Workspace context menu manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td>Manager exists and sorts items; use it when wiring a context-menu surface.</td>
+</tr>
+<tr>
+<td>Tab header context menu</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+<td><code>TabItemHeaderContextMenuItemsResolver</code>.</td>
+</tr>
+<tr>
+<td>Status bar</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code></td>
+<td><code>StatusBarManager</code>.</td>
+</tr>
+<tr>
+<td>Taskbar menu</td>
+<td><code>ITaskbarMenuManager</code></td>
+<td><code>TaskbarContextMenu</code>.</td>
+</tr>
+<tr>
+<td>Config/state</td>
+<td><code>IConfig</code>, <code>IState</code></td>
+<td><code>ModuleTools.RegisterAllFromAssembly(...)</code>.</td>
+</tr>
+<tr>
+<td>Events</td>
+<td><code>IEventAggregator</code></td>
+<td>Runtime publish/subscribe bus.</td>
+</tr>
+<tr>
+<td>Toasts</td>
+<td><code>IToastManager</code>, <code>IToast</code></td>
+<td>Toast popup host.</td>
+</tr>
+<tr>
+<td>Drag/drop</td>
+<td><code>IDropActionProvider</code></td>
+<td><code>DropOrchestrator</code>.</td>
+</tr>
+<tr>
+<td>Aspire resources</td>
+<td><code>IExtensionResourcesProvider</code></td>
+<td><code>AspireService.Build(...)</code>.</td>
+</tr>
+<tr>
+<td>CLI options</td>
+<td><code>ModuleBase.RegisterCommandLineOption(...)</code></td>
+<td><code>ZYC.Framework.CLI</code> root command.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="module-lifecycle">Module Lifecycle</h2>
+<p>Use the module lifecycle to decide where each registration belongs:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>Autofac registrations that must exist before the container is built.</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>Runtime contributions such as tab factories, menu items, status bar providers, and Aspire resource registration.</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>Cross-module work that needs all modules to already be loaded.</td>
+</tr>
+<tr>
+<td><code>RegisterCommandLineOption(...)</code></td>
+<td>CLI flags owned by the module.</td>
+</tr>
+</tbody>
+</table>
+<p>Most UI modules only need <code>LoadAsync</code>.</p>
+<h2 id="uri-tabs">URI Tabs</h2>
+<p>URI tabs are the primary way to expose a feature surface. Register an <code>ITabItemFactory</code>, usually by using the helper on <code>ILifetimeScope</code>:</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>Use <code>TabItemRouteAttribute</code> when the route can be described by URI parts. Override <code>CheckUriMatchedAsync</code> when the decision needs a service, file type check, or more complex policy.</p>
+<p>Use <code>RegisterSimpleTabItemFactory(...)</code> only for the small single-view case where a <code>UserControl</code> can be opened without a dedicated route model.</p>
+<h2 id="main-menu">Main Menu</h2>
+<p>The root menu contains built-in providers for File, View, Tools, Extensions, and About. Module menu items normally register under one of those providers:</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>Menu ordering uses <code>Anchor</code> first and <code>Priority</code> inside the anchor group. <code>MainMenuManager</code> inserts separators between anchor groups and sorts sub-items recursively.</p>
+<p>Create a module-owned <code>IMainMenuItemsProvider</code> only when the module needs a parent menu with multiple child commands. For one command, register an <code>IMainMenuItem</code> under an existing provider.</p>
+<h2 id="window-title">Window Title</h2>
+<p>Use <code>IWindowTitleManager</code> for compact command-style title-bar buttons and <code>IWindowTitleExtendManager</code> for richer title-bar content. Extension items implement <code>IWindowTitleExtendItem</code> and return the view object that should be displayed in the title bar.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWindowTitleExtendManager&gt;()
+        .RegisterItem&lt;ReportsWindowTitleItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>Use this surface for module-owned status or account controls that must stay visible near the window chrome. Use quick bar items for user-favorited shortcuts instead of module-owned title-bar UI.</p>
+<h2 id="workspace-menus">Workspace Menus</h2>
+<p>Use <code>IWorkspaceMenuManager</code> for commands that should appear in the visible workspace drop-down beside the workspace index:</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWorkspaceMenuManager&gt;()
+        .RegisterItem&lt;ReportsWorkspaceMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>IWorkspaceMenuItem</code> supports <code>Title</code>, <code>Command</code>, <code>SubItems</code>, <code>Icon</code>, <code>Anchor</code>, <code>Priority</code>, and <code>Localization</code>. The visible <code>WorkspaceMenuView</code> currently reads <code>IWorkspaceMenuManager.GetItems()</code>.</p>
+<p><code>IWorkspaceContextMenuManager</code> is a separate manager that sorts items by <code>Anchor</code> and <code>Priority</code> recursively. Do not assume its items are visible unless a context-menu view has been wired to it.</p>
+<h2 id="tab-header-context-menu">Tab Header Context Menu</h2>
+<p>Tab header menu items are WPF menu item views registered as <code>ITabItemHeaderContextMenuItemView</code>:</p>
+<pre><code class="lang-csharp">[RegisterAs(typeof(ITabItemHeaderContextMenuItemView))]
+internal partial class ReportsTabHeaderMenuItem :
+    ITabItemHeaderContextMenuItemView
+{
+    public int Order =&gt; 20;
+}
+</code></pre>
+<p><code>TabItemHeaderContextMenuItemsResolver</code> resolves all registered views and orders them by <code>Order</code>. Because WPF context menus are late-bound, prefer command parameters and the existing <code>ContextMenuItemBase</code> pattern when the item needs the current tab instance.</p>
+<h2 id="status-bar">Status Bar</h2>
+<p>A status bar extension contributes an <code>IStatusBarItemsProvider</code>; the provider returns one or more <code>IStatusBarItem</code> instances. <code>StatusBarManager</code> aggregates all registered providers and orders items by <code>Order</code>.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IStatusBarManager&gt;()
+        .RegisterStatusBarItemsProvider&lt;ReportsStatusBarItemsProvider&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>Each item chooses its side with <code>StatusBarSection.Left</code> or <code>StatusBarSection.Right</code>.</p>
+<h2 id="taskbar-menu">Taskbar Menu</h2>
+<p>Taskbar menu items implement <code>ITaskbarMenuItem</code> and are registered with <code>ITaskbarMenuManager</code>:</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ITaskbarMenuManager&gt;()
+    .RegisterMenuItem(lifetimeScope.Resolve&lt;ReportsTaskbarMenuItem&gt;());
+</code></pre>
+<p>The taskbar menu groups by <code>Info.Anchor</code>, orders by <code>Info.Priority</code>, and recursively sorts sub-items. Use this surface for tray/window-level commands, not for feature navigation that belongs in the main menu.</p>
+<h2 id="config-and-state">Config and State</h2>
+<p>Any concrete type implementing <code>IConfig</code> or <code>IState</code> is loaded from the settings directory during module assembly registration and registered into Autofac. Use this for small JSON-serializable settings and state.</p>
+<p>Guidelines:</p>
+<ul>
+<li>Put user-editable options in <code>IConfig</code>.</li>
+<li>Put runtime persistence in <code>IState</code>.</li>
+<li>Keep the type small and version-tolerant.</li>
+<li>Do not use config/state as a large business data store.</li>
+</ul>
+<h2 id="events-and-toasts">Events and Toasts</h2>
+<p>Use <code>IEventAggregator</code> for decoupled runtime notifications:</p>
+<pre><code class="lang-csharp">lifetimeScope.PublishEvent(new ReportsChangedEvent());
+lifetimeScope.SubscribeEvent&lt;ReportsChangedEvent&gt;(OnReportsChanged, onUiThread: true);
+</code></pre>
+<p>Use <code>IToastManager</code> for user-facing transient feedback:</p>
+<pre><code class="lang-csharp">toastManager.PromptMessage(ToastMessage.Info(&quot;Report exported.&quot;, localization: false));
+toastManager.PromptException(exception);
+</code></pre>
+<p>Events are for coordination. Toasts are for visible feedback. Avoid using toast messages as control flow.</p>
+<h2 id="drag-and-drop">Drag and Drop</h2>
+<p>Drag/drop actions are contributed through <code>IDropActionProvider</code>. The orchestrator asks every provider for compatible <code>DropAction</code> items, filters by <code>CanRun()</code>, de-duplicates by <code>Id</code>, and then either executes the default action or shows a picker.</p>
+<p>Use this extension point when a module wants to handle dropped files, paths, or tab payloads in a workspace-aware way. The <code>DropContext</code> includes the target object, workspace id, modifier keys, screen point, and cancellation token.</p>
+<h2 id="aspire-resources">Aspire Resources</h2>
+<p>Aspire extension modules register <code>IExtensionResourcesProvider</code>. <code>AspireService.Build(...)</code> resolves all providers and calls <code>ConfigureResources(builder)</code> on each one.</p>
+<p>For command-line child services, register through <code>ICommandlineResourcesProvider</code>:</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ICommandlineResourcesProvider&gt;()
+    .Register(new CommandlineServiceOptions
+    {
+        Name = &quot;reports-worker&quot;,
+        WorkDirectory = workerDirectory,
+        Command = &quot;dotnet run&quot;
+    });
+</code></pre>
+<p>Use this for sidecar services that should be launched by the Aspire host instead of by a large in-app UI.</p>
+<h2 id="cli-options">CLI Options</h2>
+<p>The CLI loads modules and calls <code>RegisterCommandLineOption(container, optionRegister)</code> before finalizing the root command. Use this when the module needs its own command-line switch.</p>
+<p>For full scaffolding commands, use explicit subcommands such as the built-in <code>zyc new</code> and <code>zyc new-module</code> pattern instead of overloading unrelated flags.</p>
+<h2 id="choosing-the-right-surface">Choosing the Right Surface</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open a feature view</td>
+<td>URI + <code>ITabItemFactory</code></td>
+</tr>
+<tr>
+<td>Add one top-level app command</td>
+<td>Existing main menu provider</td>
+</tr>
+<tr>
+<td>Add several commands under one module parent</td>
+<td>Module-owned <code>IMainMenuItemsProvider</code></td>
+</tr>
+<tr>
+<td>Add a workspace operation</td>
+<td><code>IWorkspaceMenuManager</code></td>
+</tr>
+<tr>
+<td>Add a tab header action</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+</tr>
+<tr>
+<td>Show lightweight runtime status</td>
+<td>Status bar provider</td>
+</tr>
+<tr>
+<td>Add tray/window command</td>
+<td><code>ITaskbarMenuManager</code></td>
+</tr>
+<tr>
+<td>Persist small settings or state</td>
+<td><code>IConfig</code> / <code>IState</code></td>
+</tr>
+<tr>
+<td>Coordinate runtime behavior</td>
+<td><code>IEventAggregator</code></td>
+</tr>
+<tr>
+<td>Show user feedback</td>
+<td><code>IToastManager</code></td>
+</tr>
+<tr>
+<td>Add dropped-file behavior</td>
+<td><code>IDropActionProvider</code></td>
+</tr>
+<tr>
+<td>Launch a sidecar service</td>
+<td>Aspire resource provider</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

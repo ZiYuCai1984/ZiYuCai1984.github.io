@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>&#128640; Quick Start: Getting Started with ZYC.Framework Host </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="&#128640; Quick Start: Getting Started with ZYC.Framework Host ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/quick-start.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="quick-start.html">English</a> |
+  <a href="quick-start.ja.html">日本語</a> |
+  <a href="quick-start.zh-CN.html">简体中文</a> |
+  <a href="quick-start.zh-TW.html">繁體中文</a> |
+  <a href="quick-start.ko.html">한국어</a> |
+</p>
+<h1 id="-quick-start-getting-started-with-zycframework-host">🚀 Quick Start: Getting Started with ZYC.Framework Host</h1>
+<p>This guide will walk you through creating a <strong>ZYC.Framework Host</strong> project from scratch. You will learn how to integrate the framework via NuGet and use the modular system (Module + UserControl) to mount your custom UI into the host environment. 🛠️</p>
+<hr>
+<h2 id="recommended-create-with-the-dotnet-tool">Recommended: Create with the dotnet tool</h2>
+<p>Install or update the ZYC.Framework CLI tool:</p>
+<pre><code class="lang-bash">dotnet tool install --global ZYC.Framework.CLI --version 1.4.0
+# If the tool is already installed:
+dotnet tool update --global ZYC.Framework.CLI --version 1.4.0
+</code></pre>
+<p>Create a minimal host project:</p>
+<pre><code class="lang-bash">zyc new WpfApp1
+</code></pre>
+<p>The default project template is <code>minimal</code>, which generates the same host shape described in the manual section below. You can also pass the template explicitly:</p>
+<pre><code class="lang-bash">zyc new WpfApp1 --template minimal
+</code></pre>
+<p>Use <code>modular</code> when you want a solution with an <code>Entry</code> project, a module project, and an <code>Abstractions</code> project:</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools --template modular
+</code></pre>
+<p>Useful options:</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools --output ./MyCompany.Tools --package-version 1.4.0
+</code></pre>
+<p>Open the generated solution or project, set it as the startup project, and start debugging. The generated files already include the package reference, <code>Module.cs</code>, <code>ModuleConfig.json</code>, and an initial view.</p>
+<hr>
+<h2 id="manual-creation-method">Manual Creation Method</h2>
+<p>The following steps show the equivalent setup if you want to create the host project by hand.</p>
+<h3 id="1--project-setup--prerequisites">1. 🧱 Project Setup &amp; Prerequisites</h3>
+<ol>
+<li><strong>Create Project</strong>: Create a new <strong>WPF Application</strong> targeting <strong>.NET 10</strong> (e.g., name it <code>WpfApp1</code>). ✨</li>
+<li><strong>Add NuGet Package</strong>: Install the core framework package <code>ZYC.Framework.Alpha</code> via NuGet Package Manager. 📦</li>
+</ol>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+  &lt;PackageReference Include=&quot;ZYC.Framework.Alpha&quot; Version=&quot;1.4.0&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<ol start="3">
+<li><strong>Clean Up Default Entry Point</strong>: 🧹
+The framework provides its own unified entry point (<code>Entry.cs</code>). You <strong>must delete</strong> the following default files generated by the template:</li>
+</ol>
+<ul>
+<li><code>App.xaml</code></li>
+<li><code>App.xaml.cs</code></li>
+</ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>⚠️ <strong>Critical Step</strong>: You must delete <code>App.xaml</code>, otherwise a global entry point conflict will occur. The framework will take full control of the application startup logic.</p>
+</div>
+<hr>
+<h3 id="2--configure-assembly-references">2. ⚙️ Configure Assembly References</h3>
+<p>To ensure the host correctly identifies and loads the abstraction interfaces, manually add the reference to the <code>Abstractions</code> assembly in your <code>.csproj</code> file: 🔗</p>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+  &lt;Reference Include=&quot;ZYC.Framework.Abstractions&quot;&gt;
+    &lt;HintPath&gt;$(OutputPath)ZYC.Framework.Abstractions.dll&lt;/HintPath&gt;
+  &lt;/Reference&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<hr>
+<h3 id="3--implement-the-business-module-modulecs">3. 🛠️ Implement the Business Module (Module.cs)</h3>
+<p>Create a <code>Module.cs</code> file in your project root. This class acts as the &quot;brain&quot; of your module, defining loading logic and registering UI pages to the host. 🧠</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.CoreToolkit;
+using ZYC.CoreToolkit.Extensions.Autofac;
+
+namespace WpfApp1;
+
+internal class Module : ModuleBase
+{
+    public override Task LoadAsync(ILifetimeScope lifetimeScope)
+    {
+        // Optional: Attach the built-in debugger tools
+        DebuggerTools.Attach();
+
+        // Resolve the Tab Manager and register your UI component
+        var simpleTabItemFactoryManager = lifetimeScope.Resolve&lt;ISimpleTabItemFactoryManager&gt;();
+        simpleTabItemFactoryManager.Register(new SimpleTabItemFactoryInfo(typeof(UserControl1)));
+
+        return base.LoadAsync(lifetimeScope);
+    }
+}
+</code></pre>
+<hr>
+<h3 id="4--create-the-ui-component">4. 🎨 Create the UI Component</h3>
+<p>Create a new <code>UserControl1</code> (WPF User Control) and add the <code>[Register]</code> attribute. This allows the framework's Dependency Injection (DI) container to automatically recognize and manage it. 🖥️</p>
+<pre><code class="lang-csharp">using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+
+namespace WpfApp1;
+
+[Register] // Automatically register to DI container
+public partial class UserControl1
+{
+    public UserControl1()
+    {
+        InitializeComponent();
+    }
+}
+</code></pre>
+<hr>
+<h3 id="5--add-module-configuration">5. 📄 Add Module Configuration</h3>
+<p>Create a <code>ModuleConfig.json</code> file in the project root. This file serves as a &quot;map&quot; for the host, telling it which assemblies to load dynamically. Configure your project to copy it to <code>../settings/ModuleConfig.json</code> relative to the main executable. ⚙️</p>
+<ol>
+<li><strong>File Content</strong>:</li>
+</ol>
+<pre><code class="lang-json">{
+  &quot;AdditionalAssemblyNames&quot;: [
+    &quot;WpfApp1.dll&quot;
+  ],
+  &quot;DisabledAssemblyNames&quot;: []
+}
+</code></pre>
+<ol start="2">
+<li><strong>Project Item Settings</strong>: 📌
+Add the following configuration to your <code>.csproj</code> file so <code>ModuleConfig.json</code> is generated into <code>../settings/ModuleConfig.json</code> during build:</li>
+</ol>
+<pre><code class="lang-xml">&lt;ItemGroup&gt;
+  &lt;None Update=&quot;ModuleConfig.json&quot;&gt;
+    &lt;CopyToOutputDirectory&gt;Always&lt;/CopyToOutputDirectory&gt;
+    &lt;Link&gt;../settings/ModuleConfig.json&lt;/Link&gt;
+  &lt;/None&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<blockquote>
+<p>💡 <strong>Tip</strong>: <code>AdditionalAssemblyNames</code> must include the name of the assembly that contains your <code>Module.cs</code>.</p>
+</blockquote>
+<hr>
+<h3 id="6--run-and-debug">6. ▶️ Run and Debug</h3>
+<ol>
+<li><strong>Set Startup Project</strong>: Set this WPF project as the <strong>Startup Project</strong> of your solution.</li>
+<li><strong>Start Debugging</strong>: Press <code>F5</code>.</li>
+</ol>
+<p>🎉 <strong>Expected Result</strong>:
+The host will launch, scan <code>ModuleConfig.json</code>, and load the <code>WpfApp1</code> module. Your registered <code>UserControl1</code> page will automatically appear as a new tab in the main interface!</p>
+<hr>
+<p><img src="images/quick-start-ui.png" alt="quick-start-ui.png"></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/quick-start.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

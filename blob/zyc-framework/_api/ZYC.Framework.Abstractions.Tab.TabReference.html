@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class TabReference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class TabReference ">
+      
+      <meta name="description" content="Represents a unique reference to a tab, identified by a persistent ID and an associated URI.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/new/master/apiSpec/new?filename=ZYC_Framework_Abstractions_Tab_TabReference.md&amp;value=---%0Auid%3A%20ZYC.Framework.Abstractions.Tab.TabReference%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ZYC.Framework.Abstractions.Tab.TabReference">
+
+
+
+  <h1 id="ZYC_Framework_Abstractions_Tab_TabReference" data-uid="ZYC.Framework.Abstractions.Tab.TabReference" class="text-break">
+Class TabReference  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ZYC.html">ZYC</a>.<a class="xref" href="ZYC.Framework.html">Framework</a>.<a class="xref" href="ZYC.Framework.Abstractions.html">Abstractions</a>.<a class="xref" href="ZYC.Framework.Abstractions.Tab.html">Tab</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ZYC.Framework.Abstractions.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a unique reference to a tab, identified by a persistent ID and an associated URI.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class TabReference : IEquatable&lt;TabReference&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">TabReference</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a>&gt;</div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="ZYC.Framework.Abstractions.Tab.MutableTabReference.html">MutableTabReference</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference__ctor_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.#ctor*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference__ctor_System_Uri_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.#ctor(System.Uri)">
+  TabReference(Uri)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a> class with a specific URI.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TabReference(Uri uri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd><p>The initial address of the tab.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_CreateTime_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.CreateTime*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_CreateTime" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.CreateTime">
+  CreateTime
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the timestamp when this tab reference was first created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTimeOffset CreateTime { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_Id_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Id*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_Id" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Id">
+  Id
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the unique identifier for this tab reference.
+This ID remains constant even if the URI changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid Id { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_Uri_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Uri*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_Uri" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Uri">
+  Uri
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the current URI of the tab.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Uri Uri { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_Equals_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Equals*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_Equals_System_Object_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified object is a <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a> and has the same <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html#ZYC_Framework_Abstractions_Tab_TabReference_Id">Id</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_Equals_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Equals*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_Equals_ZYC_Framework_Abstractions_Tab_TabReference_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.Equals(ZYC.Framework.Abstractions.Tab.TabReference)">
+  Equals(TabReference?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a> is equal to the current instance based on the
+<a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html#ZYC_Framework_Abstractions_Tab_TabReference_Id">Id</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(TabReference? other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a></dt>
+    <dd><p>The other tab reference to compare.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True if the IDs match; otherwise, false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_GetHashCode_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.GetHashCode*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_GetHashCode" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Serves as the default hash function, using the <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html#ZYC_Framework_Abstractions_Tab_TabReference_Id">Id</a> to generate the hash code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_ToString_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.ToString*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_ToString" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns a string representation of the tab reference containing its ID and URI.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_op_Equality_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.op_Equality*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_op_Equality_ZYC_Framework_Abstractions_Tab_TabReference_ZYC_Framework_Abstractions_Tab_TabReference_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.op_Equality(ZYC.Framework.Abstractions.Tab.TabReference,ZYC.Framework.Abstractions.Tab.TabReference)">
+  operator ==(TabReference?, TabReference?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares two <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a> instances for equality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(TabReference? left, TabReference? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_TabReference_op_Inequality_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.op_Inequality*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_TabReference_op_Inequality_ZYC_Framework_Abstractions_Tab_TabReference_ZYC_Framework_Abstractions_Tab_TabReference_" data-uid="ZYC.Framework.Abstractions.Tab.TabReference.op_Inequality(ZYC.Framework.Abstractions.Tab.TabReference,ZYC.Framework.Abstractions.Tab.TabReference)">
+  operator !=(TabReference?, TabReference?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares two <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a> instances for inequality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(TabReference? left, TabReference? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabReference.html">TabReference</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/TabReference.cs/#L6" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

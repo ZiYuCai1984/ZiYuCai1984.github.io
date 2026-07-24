@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ZYC.Framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ZYC.Framework ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="docs/toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/README.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="README.html">English</a> |
+  <a href="README.ja.html">日本語</a> |
+  <a href="README.zh-CN.html">简体中文</a> |
+  <a href="README.zh-TW.html">繁體中文</a> |
+  <a href="README.ko.html">한국어</a> |
+</p>
+<p align="center">
+  <img src="docs/images/app.png" alt="ZYC.Framework Logo" width="120">
+</p>
+<h1 align="center">ZYC.Framework</h1>
+<p align="center">
+<p>A high-performance, modular, and extensible desktop automation framework built with <b>.NET 10</b> and <b>WPF</b>.</p>
+
+<p align="center">
+  <a href="https://www.nuget.org/packages/ZYC.Framework.Alpha">
+    <img src="https://img.shields.io/nuget/v/ZYC.Framework.Alpha?include_prereleases=true&logo=nuget" alt="NuGet Version">
+  </a>
+  <a href="https://www.nuget.org/packages/ZYC.Framework.Alpha">
+    <img src="https://img.shields.io/nuget/dt/ZYC.Framework.Alpha?logo=nuget&label=Downloads" alt="NuGet Downloads">
+  </a>
+  <img src="https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white" alt=".NET 10">
+  <img src="https://img.shields.io/badge/Platform-WPF-orange" alt="Platform">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
+<p align="center">
+  <a href="https://github.com/ZiYuCai1984/ZYC.Framework/actions/workflows/publish-nuget-manual.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/ZiYuCai1984/ZYC.Framework/publish-nuget-manual.yml?branch=main&label=build&logo=github" alt="NuGet manual workflow">
+  </a>
+  <a href="https://github.com/ZiYuCai1984/ZYC.Framework/actions/workflows/publish-nuget-nightly.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/ZiYuCai1984/ZYC.Framework/build-nightly.yml?branch=main&label=nightly%20build&logo=github" alt="Build nightly workflow">
+  </a>
+</p>
+<hr>
+<h2 id="--overview">📖  Overview</h2>
+<p><strong>ZYC.Framework</strong> is a modern desktop automation solution that combines the expressive UI capabilities of <strong>WPF</strong> with the latest features of <strong>.NET 10</strong>. It is designed to simplify the development of complex automation systems through a modular architecture.</p>
+<p>The project deeply integrates <strong>.NET Aspire</strong> for distributed application orchestration, and supports a hybrid approach with <strong>Blazor</strong> and <strong>WebView2</strong>, so you can choose between a Web-based UI and a native desktop experience as needed.</p>
+<hr>
+<h2 id="--key-features">✨  Key Features</h2>
+<ul>
+<li><strong>Modular Architecture</strong>: Decoupled business logic with dynamic loading and independent development.</li>
+<li><strong>Modern UI Experience</strong>: Built on WPF with support for <strong>multi-workspace</strong> and <strong>multi-tab</strong> interactions.</li>
+<li><strong>Hybrid Development</strong>:
+<ul>
+<li><strong>WebView2</strong> integration for embedding modern Web applications.</li>
+<li><strong>Blazor</strong> integration to reuse Web components seamlessly in desktop scenarios.</li>
+</ul>
+</li>
+<li><strong>Cloud-Native Ready</strong>: Built-in <strong>.NET Aspire</strong> support to simplify service discovery, governance, and deployment.</li>
+<li><strong>Batteries Included (Enterprise-Oriented)</strong>:
+<ul>
+<li><strong>Task Management</strong>: Task scheduling and lifecycle management.</li>
+<li><strong>Exception Handling</strong>: Robust global error capture and diagnostics.</li>
+<li><strong>Localization</strong>: Built-in multi-language support for global-ready apps.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="--tech-stack">🛠️  Tech Stack</h2>
+<ul>
+<li><strong>Runtime</strong>: .NET 10 SDK</li>
+<li><strong>UI Framework</strong>: WPF (Windows Presentation Foundation)</li>
+<li><strong>Hybrid UI</strong>: WebView2 + Blazor</li>
+<li><strong>Orchestration</strong>: .NET Aspire</li>
+<li><strong>Architecture</strong>: Modular Monolith / Plugin-based</li>
+</ul>
+<hr>
+<h2 id="--quick-start">🚀  Quick Start</h2>
+<p>Please refer to the detailed guide:</p>
+<p>👉 <strong><a href="docs/quick-start.html">Quick Start (quick-start.md)</a></strong></p>
+<p>👉 <strong><a href="https://github.com/ZiYuCai1984/ZYC.Framework/releases/download/v1.4.0/ZYC.Framework.Setup.1.4.0.exe">Download Demo Installer</a></strong></p>
+<h3 id="create-a-project">Create a Project</h3>
+<p>The recommended way to start is the global dotnet tool. Install or update the CLI, then create a host project with <code>zyc new</code>:</p>
+<pre><code class="lang-bash">dotnet tool install --global ZYC.Framework.CLI --version 1.4.0
+dotnet tool update --global ZYC.Framework.CLI --version 1.4.0
+zyc new MyCompany.Tools --template minimal
+</code></pre>
+<p>For manual integration, the core package can still be added directly with NuGet:</p>
+<pre><code class="lang-bash">dotnet add package ZYC.Framework.Alpha --version 1.4.0
+</code></pre>
+<hr>
+<h2 id="documentation">Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Guide</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="docs/quick-start.html">Quick Start</a></td>
+<td>Create a project and understand the manual fallback setup.</td>
+</tr>
+<tr>
+<td><a href="docs/architecture.html">Architecture</a></td>
+<td>Understand startup, module loading, configuration, navigation, and runtime services.</td>
+</tr>
+<tr>
+<td><a href="docs/navigation-workspace.html">Navigation and Workspace</a></td>
+<td>Work with URI navigation, tabs, workspaces, and restore timing.</td>
+</tr>
+<tr>
+<td><a href="docs/extension-points.html">Extension Points</a></td>
+<td>Find the public places where modules can extend the host.</td>
+</tr>
+<tr>
+<td><a href="docs/built-in-modules.html">Built-in Modules</a></td>
+<td>Review the built-in modules and their main responsibilities.</td>
+</tr>
+<tr>
+<td><a href="docs/module-development.html">Module Development</a></td>
+<td>Build a runtime module with contracts, <code>ModuleBase</code>, menus, and tabs.</td>
+</tr>
+<tr>
+<td><a href="docs/project-templates.html">Project Templates</a></td>
+<td>Choose and understand the <code>minimal</code> and <code>modular</code> CLI templates.</td>
+</tr>
+<tr>
+<td><a href="docs/troubleshooting.html">Troubleshooting</a></td>
+<td>Diagnose CLI, module loading, routing, NuGet module, Aspire, and terminal issues.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="features">Features</h2>
+<h3 id="core-framework">Core Framework</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modular Architecture</td>
+<td>Organize features as modules with support for dynamic loading and extension.</td>
+</tr>
+<tr>
+<td>Multi-Workspace Layout</td>
+<td>Split, merge, reorder, and change workspace layout directions.</td>
+</tr>
+<tr>
+<td>Multi-Tab Navigation</td>
+<td>URI-based tab navigation with switching, restoration, and cross-workspace movement.</td>
+</tr>
+<tr>
+<td>Extensible Menu System</td>
+<td>Extension points for main menu, hamburger menu, title bar, status bar, and taskbar menus.</td>
+</tr>
+<tr>
+<td>Notification System</td>
+<td>Built-in Toast and Banner notifications for status and error feedback.</td>
+</tr>
+<tr>
+<td>Interaction Utilities</td>
+<td>Desktop interaction helpers such as BusyWindow, overlays, and drag-and-drop.</td>
+</tr>
+<tr>
+<td>Hybrid UI Support</td>
+<td>Embed web content using <code>WebView2</code> and build hybrid UI with <code>Blazor</code>.</td>
+</tr>
+<tr>
+<td>Configuration &amp; State</td>
+<td>Local persistence for configuration, application state, and task history.</td>
+</tr>
+<tr>
+<td>Single Instance</td>
+<td>Supports single-instance application startup control.</td>
+</tr>
+<tr>
+<td>MCP Exposure</td>
+<td>Automatically expose public framework and module capabilities as MCP tools.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="built-in-modules">Built-in Modules</h3>
+<p>The README keeps only the high-level feature summary. See <a href="docs/built-in-modules.html">Built-in Modules</a> for the current module list, loading notes, and module responsibilities.</p>
+<h3 id="development--delivery">Development &amp; Delivery</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLI Tools</td>
+<td>Standalone CLI entry with module command extension support.</td>
+</tr>
+<tr>
+<td>Module Scaffolding</td>
+<td>Generate new modules and abstraction projects from templates.</td>
+</tr>
+<tr>
+<td>Documentation Generation</td>
+<td>Generate README and documentation templates.</td>
+</tr>
+<tr>
+<td>NuGet Packaging</td>
+<td>Build NuGet packages for framework and modules.</td>
+</tr>
+<tr>
+<td>Installer Build</td>
+<td>Build desktop installers for distribution.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="--ui-preview">📸  UI Preview</h2>
+<table align="center">
+  <tr>
+    <td>
+      <img src="docs/images/workspace.png" alt="workspace" width="400">
+      <p align="center">Workspace View</p>
+    </td>
+    <td>
+      <img src="docs/images/multiple-tabs.png" alt="multiple-tabs" width="400">
+      <p align="center">Multiple Tabs</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="docs/images/workspace-4.png" alt="workspace-4" width="400">
+      <p align="center">Multiple Workspaces</p>
+    </td>
+    <td>
+      <img src="docs/images/workspace-4-tabs.gif" alt="workspace-4-tabs" width="400">
+      <p align="center">Workspaces + Tabs</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="docs/images/aspire-dashboard.gif" alt="aspire-dashboard" width="400">
+      <p align="center">Aspire Dashboard</p>
+    </td>
+    <td>
+      <img src="docs/images/blazor-auth.gif" alt="blazor-auth" width="400">
+      <p align="center">Blazor (with Auth)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="docs/images/exception.png" alt="exception" width="400">
+      <p align="center">Exception Handling</p>
+    </td>
+    <td>
+      <img src="docs/images/taskmanager.png" alt="taskmanager" width="400">
+      <p align="center">Task Manager</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<h2 id="--license">📄  License</h2>
+<p>This project is open-sourced under the <a href="LICENSE">MIT License</a>.</p>
+<hr>
+<h2 id="--acknowledgements">💖  Acknowledgements</h2>
+<p>This project uses (and/or references parts of implementations from) the following open-source projects:</p>
+<ul>
+<li><a href="https://github.com/MahApps/MahApps.Metro">MahApps.Metro</a>: UI framework.</li>
+<li><a href="https://github.com/whistyun/MdXaml">MdXaml</a>: Markdown rendering.</li>
+<li><a href="https://github.com/justcoding121/titanium-web-proxy">titanium-web-proxy</a>: Proxy core.</li>
+<li><a href="https://github.com/mitchcapper/EasyWindowsTerminalControl">EasyWindowsTerminalControl</a>: Terminal integration.</li>
+</ul>
+<blockquote>
+<p>Licenses and copyrights belong to their respective authors.
+This repository uses or references them in compliance with each project's license terms.</p>
+</blockquote>
+<hr>
+<h2 id="--contributing">🤝  Contributing</h2>
+<p>Issues and pull requests are welcome. If you have suggestions or found a bug, please open an issue or submit a PR.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/README.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

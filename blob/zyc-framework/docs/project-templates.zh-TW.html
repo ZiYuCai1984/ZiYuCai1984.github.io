@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>專案範本 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="專案範本 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/project-templates.zh-TW.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="project-templates.html">English</a> |
+  <a href="project-templates.ja.html">日本語</a> |
+  <a href="project-templates.zh-CN.html">简体中文</a> |
+  <a href="project-templates.zh-TW.html">繁體中文</a> |
+  <a href="project-templates.ko.html">한국어</a> |
+</p>
+<h1 id="專案範本">專案範本</h1>
+<p>ZYC.Framework 透過 <code>dotnet tool</code> 命令支援兩類常見鷹架任務：建立新的 Host 專案，以及向既有原始碼樹新增新模組。本文說明範本類型、生成結構與命令選項。</p>
+<h2 id="命令入口">命令入口</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>目的</th>
+<th>適用場景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zyc new &lt;ProjectName&gt;</code></td>
+<td>從專案範本建立一個外部 ZYC.Framework Host 專案。</td>
+<td>在框架儲存庫之外啟動新應用或範例。</td>
+</tr>
+<tr>
+<td><code>zyc new-module &lt;ModuleName&gt; --src-root &lt;SourceRoot&gt;</code></td>
+<td>在既有原始碼樹中建立模組實作專案與對應的 <code>*.Abstractions</code> 專案。</td>
+<td>擴展既有的 ZYC.Framework 風格儲存庫。</td>
+</tr>
+</tbody>
+</table>
+<p>以 .NET tool 方式安裝或更新 CLI：</p>
+<pre><code class="lang-bash">dotnet tool install -g ZYC.Framework.CLI --version 1.4.0
+dotnet tool update -g ZYC.Framework.CLI --version 1.4.0
+</code></pre>
+<p>然後確認命令可用：</p>
+<pre><code class="lang-bash">zyc --help
+zyc new --help
+zyc new-module --help
+</code></pre>
+<h2 id="minimal-範本"><code>minimal</code> 範本</h2>
+<p><code>minimal</code> 是 <code>zyc new</code> 的預設範本。它會建立一個小型 WPF Host 專案，引用 <code>ZYC.Framework.Alpha</code>，並把一個 WPF View 註冊為 simple tab。</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools
+</code></pre>
+<p>等價的明確命令：</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools --template minimal
+</code></pre>
+<p>生成結構：</p>
+<pre><code class="lang-text">MyCompany.Tools/
+  MyCompany.Tools.csproj
+  MyCompany.Tools.slnx
+  Module.cs
+  ModuleConfig.json
+  UI/
+    ToolsView.xaml
+    ToolsView.xaml.cs
+</code></pre>
+<p>當你想用最短路徑得到可執行 Host，且功能表面只是一個簡單 WPF View 時，使用這個範本。</p>
+<h2 id="modular-範本"><code>modular</code> 範本</h2>
+<p><code>modular</code> 會建立一個小型解決方案，包含 Entry 專案、模組實作專案與模組 Abstractions 專案。</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools --template modular
+</code></pre>
+<p>生成結構：</p>
+<pre><code class="lang-text">MyCompany.Tools/
+  Directory.Build.props
+  Directory.Build.targets
+  version.props
+  MyCompany.Tools.slnx
+  Entry/
+    Entry.csproj
+  ZYC.Framework.Modules.MyCompany.Tools/
+    ZYC.Framework.Modules.MyCompany.Tools.csproj
+    Module.cs
+    ToolsMainMenuItem.cs
+    ToolsTabItem.cs
+    ToolsTabItemFactory.cs
+    UI/
+      ToolsView.xaml
+      ToolsView.xaml.cs
+  ZYC.Framework.Modules.MyCompany.Tools.Abstractions/
+    ToolsModuleConstants.cs
+    ZYC.Framework.Modules.MyCompany.Tools.Abstractions.csproj
+</code></pre>
+<p>當功能應該像真實框架模組一樣組織時使用它：公開常數在 Abstractions，模組提供帶路由的 Tab factory、主選單項目與模組入口。</p>
+<h2 id="zyc-new-選項"><code>zyc new</code> 選項</h2>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;ProjectName&gt;</code></td>
+<td>必填專案名。必須是有效的點分隔 C# 識別碼，例如 <code>Acme.Tools</code>。</td>
+</tr>
+<tr>
+<td><code>--template</code>, <code>-t</code></td>
+<td>專案範本。支援 <code>minimal</code> 與 <code>modular</code>，預設 <code>minimal</code>。</td>
+</tr>
+<tr>
+<td><code>--output</code>, <code>-o</code></td>
+<td>輸出目錄。預設 <code>./&lt;ProjectName&gt;</code>。</td>
+</tr>
+<tr>
+<td><code>--package-version</code></td>
+<td><code>ZYC.Framework.Alpha</code> 套件版本。預設使用 CLI 產品版本。</td>
+</tr>
+<tr>
+<td><code>--overwrite</code>, <code>-f</code></td>
+<td>覆蓋既有檔案。不指定時，如果目標檔案已存在，生成會失敗。</td>
+</tr>
+</tbody>
+</table>
+<p>包含常用選項的範例：</p>
+<pre><code class="lang-bash">zyc new Acme.Tools --template modular --output ./Acme.Tools --package-version 1.4.0
+</code></pre>
+<h2 id="面向既有原始碼樹的-new-module">面向既有原始碼樹的 <code>new-module</code></h2>
+<p>當儲存庫已經有 <code>src</code> 樹，且你想新增一組模組專案時，使用 <code>new-module</code>。</p>
+<pre><code class="lang-bash">zyc new-module Reports --src-root ./src --slnx ./ZYC.Framework.slnx
+</code></pre>
+<p>該命令會建立：</p>
+<pre><code class="lang-text">src/
+  ZYC.Framework.Modules.Reports/
+    ZYC.Framework.Modules.Reports.csproj
+    Module.cs
+    ReportsMainMenuItem.cs
+    ReportsTabItem.cs
+    ReportsTabItemFactory.cs
+    UI/
+      ReportsView.xaml
+      ReportsView.xaml.cs
+  ZYC.Framework.Modules.Reports.Abstractions/
+    ReportsModuleConstants.cs
+    ZYC.Framework.Modules.Reports.Abstractions.csproj
+</code></pre>
+<p><code>--slnx</code> 是可選項。提供它時，生成的專案會被加入解決方案檔案的 <code>/Modules/</code> 資料夾。相對 <code>--slnx</code> 路徑會從 <code>--src-root</code> 解析。</p>
+<p><code>new-module</code> 會正規化目標名。下面這些輸入都會生成同一個模組目標：</p>
+<pre><code class="lang-bash">zyc new-module Reports --src-root ./src
+zyc new-module ZYC.Framework.Modules.Reports --src-root ./src
+zyc new-module ZYC.Framework.Modules.Reports.Abstractions --src-root ./src
+</code></pre>
+<h2 id="new-module-選項"><code>new-module</code> 選項</h2>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;ModuleName&gt;</code></td>
+<td>位置參數形式的目標模組名。</td>
+</tr>
+<tr>
+<td><code>--target</code>, <code>-t</code></td>
+<td>目標模組名。請使用位置參數或此選項之一，不要提供衝突值。</td>
+</tr>
+<tr>
+<td><code>--src-root</code>, <code>-s</code></td>
+<td>必填原始碼根目錄，模組專案會建立在這裡。</td>
+</tr>
+<tr>
+<td><code>--slnx</code></td>
+<td>可選的 solution XML 檔案路徑。無需更新解決方案時省略。</td>
+</tr>
+<tr>
+<td><code>--overwrite</code>, <code>-f</code></td>
+<td>覆蓋既有檔案或模組目錄。不指定時，如果目標目錄已存在，生成會失敗。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="範本-token">範本 Token</h2>
+<p>專案範本會替換路徑與文字檔案中的這些 Token：</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__PROJECT_NAME__</code></td>
+<td>完整專案名，例如 <code>MyCompany.Tools</code>。</td>
+</tr>
+<tr>
+<td><code>__PROJECT_SHORT_NAME__</code></td>
+<td>最後一個點分隔片段，例如 <code>Tools</code>。</td>
+</tr>
+<tr>
+<td><code>__PROJECT_HOST__</code></td>
+<td>用作 URI Host 的小寫短名稱，例如 <code>tools</code>。</td>
+</tr>
+<tr>
+<td><code>__PACKAGE_VERSION__</code></td>
+<td>由 <code>--package-version</code> 或 CLI 產品版本決定的套件版本。</td>
+</tr>
+</tbody>
+</table>
+<p>文字範本檔案會以 UTF-8 with BOM 寫入，並統一為 CRLF 換行。</p>
+<h2 id="如何選擇範本">如何選擇範本</h2>
+<table>
+<thead>
+<tr>
+<th>情況</th>
+<th>建議命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>你想最快得到一個只有一個 View 的 Host。</td>
+<td><code>zyc new MyCompany.Tools</code></td>
+</tr>
+<tr>
+<td>你想為新應用建立模組化解決方案。</td>
+<td><code>zyc new MyCompany.Tools --template modular</code></td>
+</tr>
+<tr>
+<td>你正在向既有儲存庫新增模組。</td>
+<td><code>zyc new-module Reports --src-root ./src</code></td>
+</tr>
+<tr>
+<td>你需要把模組專案加入既有 <code>.slnx</code>。</td>
+<td><code>zyc new-module Reports --src-root ./src --slnx ./ZYC.Framework.slnx</code></td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/project-templates.zh-TW.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Built-in Modules </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Built-in Modules ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/built-in-modules.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="built-in-modules.html">English</a> |
+  <a href="built-in-modules.ja.html">日本語</a> |
+  <a href="built-in-modules.zh-CN.html">简体中文</a> |
+  <a href="built-in-modules.zh-TW.html">繁體中文</a> |
+  <a href="built-in-modules.ko.html">한국어</a> |
+</p>
+<h1 id="built-in-modules">Built-in Modules</h1>
+<p>This page summarizes the built-in modules that are part of the current ZYC.Framework source tree. A built-in module here means a <code>ZYC.Framework.Modules.*</code> project that contains a <code>Module : ModuleBase</code> entrypoint and is intended to be discovered by the module loader.</p>
+<p>Abstractions projects such as <code>ZYC.Framework.Modules.*.Abstractions</code> are contract assemblies, not runtime modules by themselves.</p>
+<h2 id="how-built-in-modules-load">How Built-in Modules Load</h2>
+<p>At startup, the module loader scans the application directory for assemblies named like <code>ZYC.Framework.Modules*.dll</code>. For each module assembly, it:</p>
+<ul>
+<li>registers Autofac services from the assembly;</li>
+<li>loads concrete <code>IConfig</code> and <code>IState</code> types from the settings directory;</li>
+<li>finds the first type derived from <code>ModuleBase</code>;</li>
+<li>creates the module instance and calls <code>RegisterAsync</code>;</li>
+<li>later calls <code>LoadAsync</code> only for enabled modules.</li>
+</ul>
+<p><code>ModuleConfig.DisabledAssemblyNames</code> disables discovered module assemblies by file name. <code>ModuleConfig.AdditionalAssemblyNames</code> adds extra assemblies from the application directory.</p>
+<h2 id="module-list">Module List</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Main surface</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>About</code></td>
+<td>About menu and routed tab</td>
+<td>Shows product/about information.</td>
+</tr>
+<tr>
+<td><code>Accounts</code></td>
+<td>Window title extension and account services</td>
+<td>Initializes provider-based account sessions and exposes sign-in/sign-out actions.</td>
+</tr>
+<tr>
+<td><code>Accounts.GitHub</code></td>
+<td>GitHub OAuth WebView2 tab</td>
+<td>Provides a GitHub account provider and callback handling for sign-in.</td>
+</tr>
+<tr>
+<td><code>ApiReference</code></td>
+<td>About menu and WebView2 tab</td>
+<td>Hosts API reference content.</td>
+</tr>
+<tr>
+<td><code>Aspire</code></td>
+<td>Tools menu, routed tab, status bar</td>
+<td>Starts and monitors Aspire resources; resolves <code>IExtensionResourcesProvider</code> contributions.</td>
+</tr>
+<tr>
+<td><code>BlazorDemo</code></td>
+<td>Tools menu and routed tab</td>
+<td>Demonstrates Blazor integration inside the desktop host.</td>
+</tr>
+<tr>
+<td><code>ChromeExtensions</code></td>
+<td>Extensions menu and routed tab</td>
+<td>Manages locally installed Chrome Web Store extension packages for WebBrowser.</td>
+</tr>
+<tr>
+<td><code>CLI</code></td>
+<td>Tools menu and terminal tab</td>
+<td>Hosts the embedded terminal and loads terminal native dependencies.</td>
+</tr>
+<tr>
+<td><code>FileExplorer</code></td>
+<td>File menu and routed tab</td>
+<td>Opens file-system browsing surfaces.</td>
+</tr>
+<tr>
+<td><code>FileExplorer.Features</code></td>
+<td>File menu sub-provider</td>
+<td>Adds recent-path style File menu features on top of FileExplorer contracts.</td>
+</tr>
+<tr>
+<td><code>Language</code></td>
+<td>Settings menu and routed tabs</td>
+<td>Provides language selection and localization resource management.</td>
+</tr>
+<tr>
+<td><code>Log</code></td>
+<td>File menu and logging provider</td>
+<td>Registers the log4net-backed logger provider and exposes log viewing.</td>
+</tr>
+<tr>
+<td><code>MCP.Server</code></td>
+<td>Tools menu provider</td>
+<td>Exposes MCP server operations.</td>
+</tr>
+<tr>
+<td><code>Mock</code></td>
+<td>Root mock menu and demo tabs</td>
+<td>Development/testing module for dialogs, notifications, tasks, CLI, and sample views.</td>
+</tr>
+<tr>
+<td><code>ModuleManager</code></td>
+<td>Extensions menu and routed tabs</td>
+<td>Manages local modules and NuGet-installed modules.</td>
+</tr>
+<tr>
+<td><code>NuGet</code></td>
+<td>File menu</td>
+<td>Provides NuGet cache tooling.</td>
+</tr>
+<tr>
+<td><code>Secrets</code></td>
+<td>Settings menu and routed tab</td>
+<td>Provides secret-like settings management through <code>ISecrets</code>.</td>
+</tr>
+<tr>
+<td><code>Settings</code></td>
+<td>Root Settings menu and routed tab</td>
+<td>Hosts the settings shell used by other modules.</td>
+</tr>
+<tr>
+<td><code>TaskManager</code></td>
+<td>Tools menu, routed tab, status bar</td>
+<td>Initializes task management and exposes task status/actions.</td>
+</tr>
+<tr>
+<td><code>TextEditor</code></td>
+<td>File/Open menu and routed tabs</td>
+<td>Provides text preview and edit surfaces, including generic <code>file://</code> preview handling.</td>
+</tr>
+<tr>
+<td><code>Translator</code></td>
+<td>Aspire command-line resource</td>
+<td>Registers LibreTranslate as an Aspire-launched sidecar when Aspire support is available.</td>
+</tr>
+<tr>
+<td><code>Update</code></td>
+<td>About menu and routed tab</td>
+<td>Provides update checking; can check after tab/workspace restore.</td>
+</tr>
+<tr>
+<td><code>WebBrowser</code></td>
+<td>Tools menu and WebView2 tab</td>
+<td>Opens browser tabs inside the host.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shell-and-diagnostics-modules">Shell and Diagnostics Modules</h2>
+<p><code>Settings</code>, <code>Language</code>, <code>Secrets</code>, <code>Log</code>, <code>TaskManager</code>, <code>ModuleManager</code>, <code>Update</code>, <code>About</code>, <code>Accounts</code>, <code>ChromeExtensions</code>, and <code>ApiReference</code> are mostly shell or operational modules. They make the framework easier to inspect, configure, and maintain.</p>
+<p>These modules usually register menu items and routed tabs from <code>LoadAsync</code>. Some also register services earlier:</p>
+<ul>
+<li><code>Log</code> registers logging providers in <code>RegisterAsync</code>.</li>
+<li><code>Language</code> registers language-resource adapters and loads default language resources.</li>
+<li><code>Secrets</code> registers an adapter from config objects to <code>ISecrets</code>.</li>
+<li><code>TaskManager</code> initializes <code>ITaskManager</code> before exposing its UI.</li>
+<li><code>Accounts</code> initializes <code>IAccountManager</code> and registers a window-title account surface.</li>
+<li><code>ChromeExtensions</code> registers the extension package manager tab under Extensions.</li>
+<li><code>Update</code> subscribes after all modules load and waits for <code>TabManagerRestoreCompleted</code> before startup checks.</li>
+</ul>
+<h2 id="navigation-and-content-modules">Navigation and Content Modules</h2>
+<p><code>WebBrowser</code>, <code>FileExplorer</code>, <code>TextEditor</code>, <code>CLI</code>, and <code>BlazorDemo</code> expose user-facing content surfaces. They all rely on tab routing rather than direct view construction from the shell.</p>
+<p><code>Accounts.GitHub</code> and <code>ChromeExtensions</code> also use WebView2-backed tabs for provider sign-in and Chrome Web Store package discovery. They are still loaded as regular modules; their browser-specific behavior is handled through WebView2 infrastructure and module contracts.</p>
+<p>If one of these modules opens the wrong tab or a Not Found tab, check the registered <code>ITabItemFactory</code>, route attributes, factory priority, and the URI being passed to <code>ITabManager.NavigateAsync(...)</code>.</p>
+<h2 id="aspire-and-sidecar-modules">Aspire and Sidecar Modules</h2>
+<p><code>Aspire</code> is the host-side module for running Aspire resources. It registers an Aspire dashboard tab, a Tools menu entry, and a status bar item. If <code>AspireConfig.AutoStart</code> is true, it starts the Aspire service during module load.</p>
+<p><code>Translator</code> is a sidecar-style module. It does not expose a large UI; instead, it registers a command-line resource with <code>ICommandlineResourcesProvider</code> so the Aspire module can launch LibreTranslate.</p>
+<h2 id="development-and-demo-modules">Development and Demo Modules</h2>
+<p><code>Mock</code> and <code>BlazorDemo</code> are useful when developing or validating framework behavior. <code>Mock</code> registers demo tabs and sample views for notifications, dialogs, task manager behavior, and CLI integration. Keep production features out of Mock unless they are intentionally diagnostic or sample-only.</p>
+<h2 id="incomplete-or-non-module-directories">Incomplete or Non-module Directories</h2>
+<p>Only directories with a real module project and <code>Module.cs</code> should be treated as active built-in modules. A folder that only contains <code>obj</code>, generated files, or a <code>UI</code> subfolder is not enough for runtime discovery.</p>
+<p>When documenting or troubleshooting module loading, start from the compiled output and <code>Module.cs</code>, not from folder names alone.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/built-in-modules.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

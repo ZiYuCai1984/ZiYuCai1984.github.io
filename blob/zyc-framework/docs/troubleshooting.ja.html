@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>トラブルシューティング </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="トラブルシューティング ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/troubleshooting.ja.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="troubleshooting.html">English</a> |
+  <a href="troubleshooting.ja.html">日本語</a> |
+  <a href="troubleshooting.zh-CN.html">简体中文</a> |
+  <a href="troubleshooting.zh-TW.html">繁體中文</a> |
+  <a href="troubleshooting.ko.html">한국어</a> |
+</p>
+<h1 id="トラブルシューティング">トラブルシューティング</h1>
+<p>このページは、ZYC.Framework のホストまたはモジュール プロジェクトでよく発生する失敗点をまとめたものです。まず見えている症状から始め、その動作を担当する層を確認してください。</p>
+<h2 id="クイック-トリアージ">クイック トリアージ</h2>
+<table>
+<thead>
+<tr>
+<th>症状</th>
+<th>最初に確認すること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zyc</code> が見つからない</td>
+<td>グローバル <code>ZYC.Framework.CLI</code> ツールをインストールまたは更新し、新しいシェルで <code>zyc new --help</code> を実行します。</td>
+</tr>
+<tr>
+<td><code>zyc new</code> が失敗する</td>
+<td>プロジェクト名、<code>--template</code>、<code>--output</code>、<code>--package-version</code>、対象フォルダーに既存ファイルがあるかを確認します。<code>--overwrite</code> は置き換えが意図されている場合だけ使います。</td>
+</tr>
+<tr>
+<td>モジュールが見つからない</td>
+<td>ランタイム DLL が app ディレクトリにあり、<code>ZYC.Framework.Modules*.dll</code> に一致するか <code>ModuleConfig.AdditionalAssemblyNames</code> に列挙され、<code>ModuleBase</code> エントリポイントを含むか確認します。</td>
+</tr>
+<tr>
+<td>モジュールは発見されるがロードされない</td>
+<td><code>ModuleConfig.DisabledAssemblyNames</code> を確認します。無効化されたモジュールは情報として登録されますが、<code>LoadAsync</code> はスキップされます。</td>
+</tr>
+<tr>
+<td>モジュール ロード エラー ページが開く</td>
+<td>モジュール名、例外、関数名を確認します。失敗は <code>LoadAsync</code> または <code>AfterLoadedAsync</code> で発生しています。</td>
+</tr>
+<tr>
+<td>メニュー項目が表示されない</td>
+<td>所有モジュールがロードされ、正しいメニュー プロバイダーに登録され、項目が hidden になっていないか確認します。</td>
+</tr>
+<tr>
+<td>ナビゲーションが Not Found を開く</td>
+<td>URI に一致する <code>ITabItemFactory</code> がありません。ルート属性、ファクトリ登録、<code>ITabManager.NavigateAsync(...)</code> に渡す URI を確認します。</td>
+</tr>
+<tr>
+<td>ナビゲーションがエラー タブを開く</td>
+<td>ファクトリ、タブ項目、ビュー、またはタブの <code>LoadAsync</code> が失敗しています。エラー タブとログの例外を確認します。</td>
+</tr>
+<tr>
+<td>NuGet インストール済みモジュールが有効にならない</td>
+<td>ModuleManager から再インストールまたは更新し、<code>settings/nuget.module.assets.json</code> が書き込まれたことを確認してからホストを再起動します。</td>
+</tr>
+<tr>
+<td>Aspire リソースが表示されない</td>
+<td>モジュールが <code>IExtensionResourcesProvider</code> または <code>ICommandlineResourcesProvider</code> を登録しているか、Aspire が有効または開始済みか確認します。</td>
+</tr>
+<tr>
+<td>組み込みターミナルが失敗する</td>
+<td>ターミナルの native DLL が出力ディレクトリの想定された <code>runtimes</code> フォルダーにコピーされているか確認します。</td>
+</tr>
+<tr>
+<td>ドキュメント変更が反映されない</td>
+<td><code>src/ZYC.Framework.Build.Doc/Templates</code> 配下を編集し、必要に応じて公開ドキュメントを再生成します。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cli-とプロジェクト作成">CLI とプロジェクト作成</h2>
+<p>推奨される作成フローは、グローバル dotnet ツールを使います。</p>
+<pre><code class="lang-bash">dotnet tool install --global ZYC.Framework.CLI --version 1.4.0
+dotnet tool update --global ZYC.Framework.CLI --version 1.4.0
+zyc new MyCompany.Tools --template minimal
+</code></pre>
+<p>インストール後も <code>zyc</code> を使えない場合:</p>
+<ul>
+<li>新しいターミナルを開き、更新された tool path を反映します。</li>
+<li><code>dotnet tool list --global</code> を実行し、<code>ZYC.Framework.CLI</code> がインストール済みであることを確認します。</li>
+<li><code>zyc new --help</code> を実行し、CLI コマンドが解決されることを確認します。</li>
+</ul>
+<p>プロジェクト作成が失敗する場合:</p>
+<ul>
+<li><code>MyCompany.Tools</code> のような有効なドット区切りの C# プロジェクト名を使います。</li>
+<li>ホストだけなら <code>--template minimal</code>、ホストとモジュール分割なら <code>--template modular</code> を使います。</li>
+<li>対象フォルダーをプロジェクト名から導出したくない場合は <code>--output</code> を使います。</li>
+<li>生成プロジェクトで特定のパッケージ バージョンを参照する場合は <code>--package-version</code> を使います。</li>
+<li>既存の生成ファイルを置き換える意図がある場合だけ <code>--overwrite</code> を使います。</li>
+</ul>
+<h2 id="モジュール発見">モジュール発見</h2>
+<p>起動時、ホストはアプリケーション ディレクトリからモジュール アセンブリを発見します。標準の組み込みモジュール DLL はファイル名で照合され、追加モジュールは <code>ModuleConfig.AdditionalAssemblyNames</code> に列挙できます。</p>
+<pre><code class="lang-json">{
+  &quot;AdditionalAssemblyNames&quot;: [
+    &quot;MyCompany.Tools.dll&quot;
+  ],
+  &quot;DisabledAssemblyNames&quot;: []
+}
+</code></pre>
+<p>モジュールが発見されない場合:</p>
+<ul>
+<li>DLL がアプリケーション ディレクトリにあることを確認します。</li>
+<li>DLL 名が標準の <code>ZYC.Framework.Modules*.dll</code> パターンに一致するか、<code>AdditionalAssemblyNames</code> に列挙されていることを確認します。</li>
+<li>アセンブリに <code>ModuleBase</code> から派生した具象型が含まれることを確認します。</li>
+<li><code>*.Abstractions</code> アセンブリだけを列挙しないでください。Abstractions プロジェクトは契約を定義するだけで、ランタイム モジュールのエントリポイントではありません。</li>
+</ul>
+<p>モジュール情報には表示されるがロードされない場合:</p>
+<ul>
+<li>DLL ファイル名が <code>DisabledAssemblyNames</code> に含まれていないか確認します。</li>
+<li>無効化されたモジュールは発見されますが、<code>LoadAsync</code> は呼ばれません。</li>
+<li><code>DisabledAssemblyNames</code> からファイル名を削除するか、ModuleManager で再有効化し、実行中ホストが動的リロードしない場合は再起動します。</li>
+</ul>
+<h2 id="モジュール-ロード-エラー">モジュール ロード エラー</h2>
+<p>ホストは 2 つのフェーズのロード失敗を記録します。</p>
+<ul>
+<li><code>LoadAsync</code>: 通常、メニュー、タブ、ステータス項目、ランタイム サービスを登録します。</li>
+<li><code>AfterLoadedAsync</code>: 他のモジュールのロード後に依存する処理を実行できます。</li>
+</ul>
+<p>モジュール ロード エラー ページが開いたら、表示されるモジュール名、関数名、例外から調査します。<code>AppConfig.SuppressModuleLoadError</code> はページを抑制できますが、根本原因は修正しません。</p>
+<p>典型的な原因:</p>
+<ul>
+<li>必要なサービスが解決される前に登録されていない。</li>
+<li>ビューまたはタブ項目のコンストラクターが、登録時または起動ナビゲーション時に例外を投げる。</li>
+<li>モジュールが別のモジュールの有効化を前提にしているが、その依存モジュールが無効または欠落している。</li>
+<li>モジュールが期待するローカル ファイル、native DLL、外部プロセスが欠落している。</li>
+</ul>
+<h2 id="メニュータブルーティング">メニュー、タブ、ルーティング</h2>
+<p>メニュー項目は通常、モジュールの <code>LoadAsync</code> から登録されます。メニュー項目が表示されない場合:</p>
+<ul>
+<li>モジュール自体がエラーなくロードされたことを確認します。</li>
+<li>File、Tools、Extensions、About、Settings など正しいプロバイダーに登録します。</li>
+<li>状態または構成で項目が hidden になっていないか確認します。</li>
+<li>priority と anchor は項目を作成しないため、順序確認は項目が見えるようになってから行います。</li>
+</ul>
+<p>タブ ナビゲーションは <code>ITabItemFactory</code> に依存します。Not Found が開く場合:</p>
+<ul>
+<li>ファクトリがロード済みアセンブリに登録されていることを確認します。</li>
+<li><code>TabItemRoute</code> の scheme、host、path がナビゲーション URI と一致することを確認します。</li>
+<li>ファイル プレビューのような汎用ルートが、より具体的なルートより先に一致し得る場合は factory priority を確認します。</li>
+<li>single-instance タブが新規作成ではなく既存タブを再利用していないか確認します。</li>
+</ul>
+<p>エラー タブが開く場合、ルートには一致していますが、作成またはロードが失敗しています。エラー タブの例外を確認し、ファクトリ、タブ項目コンストラクター、ビュー コンストラクター、タブ <code>LoadAsync</code> を調べます。</p>
+<h2 id="ワークスペースと復元タイミング">ワークスペースと復元タイミング</h2>
+<p>起動ナビゲーション、プロトコル転送ナビゲーション、復元時のモジュール処理は、ワークスペースとタブ復元パイプラインの準備完了を待つ必要があります。タブが別ワークスペースで開く、または復元後に消える場合:</p>
+<ul>
+<li><code>TabManagerRestoreCompleted</code> の後で起動ナビゲーションを実行します。</li>
+<li>ユーザー操作の場合はフォーカス中のワークスペースを使います。</li>
+<li>復元または既知のワークスペースへの転送では明示的な workspace id を使います。</li>
+<li>タブの移動、作成、クローズは UI コレクションを直接変更せず、<code>ITabManager</code> 経由で行います。</li>
+</ul>
+<h2 id="config-と-state">Config と State</h2>
+<p>具象 <code>IConfig</code> と <code>IState</code> 型は、モジュール アセンブリ登録時に settings ディレクトリからロードされます。設定が読み書きされない場合:</p>
+<ul>
+<li>config または state 型が具象型で、ロード済みランタイム アセンブリに存在することを確認します。</li>
+<li>config または state 型を期待する前に、モジュール アセンブリが発見されていることを確認します。</li>
+<li>settings ファイルがソース ツリーではなく、ホストの settings ディレクトリにあることを確認します。</li>
+<li>contract 型だけを abstractions アセンブリに置いて、そこからランタイム state が作成されると期待しないでください。</li>
+</ul>
+<h2 id="シングル-インスタンスと-mutex-override">シングル インスタンスと Mutex override</h2>
+<p><code>settings/mutex-id.override</code> が存在しない限り、ホストは製品情報から single-instance mutex id を作ります。Tools &gt; Override Mutex Id でこのファイルを作成、更新、削除できます。</p>
+<p>Override を変更した後はホストを再起動してください。Mutex と startup URI pipe 名は起動時に作られるため、実行中のプロセスはすぐには identity を切り替えません。Side-by-side instance、startup URI forwarding、foreground-window activation が想定外に動く場合は、まず現在の <code>mutex-id.override</code> を確認します。</p>
+<h2 id="nuget-モジュール">NuGet モジュール</h2>
+<p>ModuleManager は一時プロジェクトを restore し、解決された runtime asset graph を <code>settings/nuget.module.assets.json</code> に書き込んで NuGet モジュールをインストールします。ホストは次回起動時にそのファイルを読み取ります。</p>
+<p>NuGet モジュールをインストールしたのに有効にならない場合:</p>
+<ul>
+<li>restore が成功し、assets ファイルが <code>settings</code> 配下に存在することを確認します。</li>
+<li>起動時発見で runtime assembly をロードできるよう、ホストを再起動します。</li>
+<li>パッケージが現在のホスト ターゲットである <code>net10.0-windows</code> と互換の runtime assembly を含むことを確認します。</li>
+<li>インストール済みモジュール アセンブリが <code>ModuleConfig.DisabledAssemblyNames</code> で無効化されていないか確認します。</li>
+<li>assets ファイルが古いパッケージ内容を指す場合は、再インストールまたは削除後に再インストールします。</li>
+</ul>
+<p>既知のパッケージが検索結果に出ない場合、NuGet search は <code>IncludeRegex</code> より先に実行される点に注意してください。返された NuGet page に含まれないパッケージは regex filter に届きません。<code>NuGetModuleConfig.SearchTerm</code>、<code>SearchSkip</code>、<code>SearchTake</code> を確認します。<code>SearchTake</code> は NuGet.org の 1 request 上限である 1000 に clamp されるため、後続ページには <code>SearchSkip</code> を使います。</p>
+<p>Install、uninstall、refresh は同じ module-assets pipeline を共有し、ModuleManager operation coordinator により直列化されます。これらの command が無効に見える場合は、現在の restore/search operation が完了するまで待ってから次の操作を開始してください。</p>
+<h2 id="aspire-とサイドカー-リソース">Aspire とサイドカー リソース</h2>
+<p>Aspire リソースは、モジュールの extension provider から提供されます。モジュールは直接 Aspire builder をカスタマイズする <code>IExtensionResourcesProvider</code>、またはコマンドライン サイドカー用の <code>ICommandlineResourcesProvider</code> を登録できます。</p>
+<p>リソースが表示されない場合:</p>
+<ul>
+<li>Aspire が resource graph を構築する前に、提供元モジュールがロードされたことを確認します。</li>
+<li>provider 型がモジュール アセンブリに登録されていることを確認します。</li>
+<li>コマンドライン リソースでは、リソース名、作業ディレクトリ、コマンドが有効であることを確認します。</li>
+<li><code>AspireConfig.AutoStart</code> が無効な場合は、必要に応じて Aspire を手動で開始します。</li>
+</ul>
+<p>Aspire dashboard が開けない場合は、Aspire プロセスが <code>ASPNETCORE_URLS</code> と <code>AppHost:BrowserToken</code> を生成したか確認します。dashboard URI はこれらの値から構築されます。</p>
+<h2 id="cli-ターミナルの-native-依存">CLI ターミナルの native 依存</h2>
+<p>CLI モジュールは、アプリケーション出力からターミナル native 依存をロードします。組み込みターミナルが早期に失敗する場合、次のファイルが存在することを確認してください。</p>
+<pre><code class="lang-text">runtimes\win10-x64\native\conpty.dll
+runtimes\win-x64\native\Microsoft.Terminal.Control.dll
+</code></pre>
+<p>欠落している場合は、CLI モジュールとターミナル依存の package output および copy-local 動作を確認します。</p>
+<h2 id="ドキュメント-テンプレート">ドキュメント テンプレート</h2>
+<p><code>ZYC.Framework.Build.Doc</code> が使うドキュメント ソースは次の場所です。</p>
+<pre><code class="lang-text">src\ZYC.Framework.Build.Doc\Templates
+</code></pre>
+<p>生成済みの root <code>docs</code> ファイルを編集すると一時的には効いたように見えても、後で消える可能性があります。対応する template file に変更を移し、ドキュメントを再生成してください。</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/troubleshooting.ja.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IParallelWorkspaceManager </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IParallelWorkspaceManager ">
+      
+      <meta name="description" content="Defines the contract for managing parallel workspaces, handling layout operations such as splitting, merging, and workspace state management.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/new/master/apiSpec/new?filename=ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager.md&amp;value=---%0Auid%3A%20ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager">
+
+
+
+  <h1 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager" class="text-break">
+Interface IParallelWorkspaceManager  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ZYC.html">ZYC</a>.<a class="xref" href="ZYC.Framework.html">Framework</a>.<a class="xref" href="ZYC.Framework.Abstractions.html">Abstractions</a>.<a class="xref" href="ZYC.Framework.Abstractions.Workspace.html">Workspace</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ZYC.Framework.Abstractions.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the contract for managing parallel workspaces, handling layout operations
+such as splitting, merging, and workspace state management.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IParallelWorkspaceManager</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_ApplyLayoutAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.ApplyLayoutAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_ApplyLayoutAsync_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.ApplyLayoutAsync(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  ApplyLayoutAsync(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously applies the specified workspace layout tree to the current workspace surface.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ApplyLayoutAsync(WorkspaceNode workspaceLayout)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceLayout</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace layout tree to apply.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_CanMerge_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.CanMerge*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_CanMerge_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.CanMerge(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  CanMerge(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified workspace node can currently be merged.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanMerge(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node to check.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True if merging is possible; otherwise, false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_CanSwap_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.CanSwap*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_CanSwap_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.CanSwap(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  CanSwap(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified workspace node is eligible for a swap operation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanSwap(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node to check.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True if swapping is allowed; otherwise, false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_CanToggleOrientation_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.CanToggleOrientation*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_CanToggleOrientation_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.CanToggleOrientation(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  CanToggleOrientation(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the orientation of the specified workspace node can be toggled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanToggleOrientation(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node to check.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True if the orientation can be changed; otherwise, false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_GetFocusedWorkspace_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.GetFocusedWorkspace*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_GetFocusedWorkspace" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.GetFocusedWorkspace">
+  GetFocusedWorkspace()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the workspace node that currently has focus.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">WorkspaceNode GetFocusedWorkspace()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The focused <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_GetWorkspaceDictionary_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.GetWorkspaceDictionary*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_GetWorkspaceDictionary" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.GetWorkspaceDictionary">
+  GetWorkspaceDictionary()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a read-only dictionary containing all workspace nodes indexed by their unique identifiers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;Guid, WorkspaceNode&gt; GetWorkspaceDictionary()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a>, <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a>&gt;</dt>
+    <dd><p>A dictionary of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a> and <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a> pairs.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_MergeAllAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.MergeAllAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_MergeAllAsync" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.MergeAllAsync">
+  MergeAllAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously merges all existing workspace nodes into a single primary workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task MergeAllAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_MergeAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.MergeAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_MergeAsync_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.MergeAsync(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  MergeAsync(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously merges the specified workspace node with its neighbor or parent container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task MergeAsync(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node to be merged.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_ResetAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.ResetAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_ResetAsync" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.ResetAsync">
+  ResetAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously resets the workspace manager to its default state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ResetAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SetFocusedWorkspace_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SetFocusedWorkspace*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SetFocusedWorkspace_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SetFocusedWorkspace(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  SetFocusedWorkspace(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the specified workspace node as the currently focused workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetFocusedWorkspace(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node to focus.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SetHighlight_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SetHighlight*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SetHighlight_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_System_Boolean_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SetHighlight(ZYC.Framework.Abstractions.Workspace.WorkspaceNode,System.Boolean)">
+  SetHighlight(WorkspaceNode, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Updates the visual highlight state for a specific workspace node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetHighlight(WorkspaceNode workspace, bool highlight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspace</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The target workspace node.</p>
+</dd>
+    <dt><code>highlight</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True to enable highlighting, false to disable it.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SplitHorizontalAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SplitHorizontalAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SplitHorizontalAsync_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SplitHorizontalAsync(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  SplitHorizontalAsync(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously splits the specified workspace node horizontally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task SplitHorizontalAsync(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The target workspace node to split.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SplitVerticalAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SplitVerticalAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SplitVerticalAsync_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SplitVerticalAsync(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  SplitVerticalAsync(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously splits the specified workspace node vertically.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task SplitVerticalAsync(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The target workspace node to split.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SwapAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SwapAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_SwapAsync_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.SwapAsync(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  SwapAsync(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously swaps the position of the specified workspace node with another relevant node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task SwapAsync(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node to swap.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_ToggleOrientationAsync_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.ToggleOrientationAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Workspace_IParallelWorkspaceManager_ToggleOrientationAsync_ZYC_Framework_Abstractions_Workspace_WorkspaceNode_" data-uid="ZYC.Framework.Abstractions.Workspace.IParallelWorkspaceManager.ToggleOrientationAsync(ZYC.Framework.Abstractions.Workspace.WorkspaceNode)">
+  ToggleOrientationAsync(WorkspaceNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously toggles the layout orientation (horizontal/vertical) for the specified node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ToggleOrientationAsync(WorkspaceNode workspaceNode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceNode</code> <a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The target workspace node.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Workspace/IParallelWorkspaceManager.cs/#L9" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

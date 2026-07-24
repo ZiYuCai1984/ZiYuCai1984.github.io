@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>プロジェクト テンプレート </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="プロジェクト テンプレート ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/project-templates.ja.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="project-templates.html">English</a> |
+  <a href="project-templates.ja.html">日本語</a> |
+  <a href="project-templates.zh-CN.html">简体中文</a> |
+  <a href="project-templates.zh-TW.html">繁體中文</a> |
+  <a href="project-templates.ko.html">한국어</a> |
+</p>
+<h1 id="プロジェクト-テンプレート">プロジェクト テンプレート</h1>
+<p>ZYC.Framework は、よく使う 2 つのスキャフォールド作業のために <code>dotnet tool</code> コマンドを提供します。新しい Host プロジェクトの作成と、既存ソース ツリーへの新しいモジュール追加です。このページではテンプレート、生成される構成、コマンド オプションを説明します。</p>
+<h2 id="コマンドの範囲">コマンドの範囲</h2>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>目的</th>
+<th>向いている用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zyc new &lt;ProjectName&gt;</code></td>
+<td>プロジェクト テンプレートから外部 ZYC.Framework Host プロジェクトを作成する。</td>
+<td>フレームワーク リポジトリ外で新しいアプリやサンプルを始める。</td>
+</tr>
+<tr>
+<td><code>zyc new-module &lt;ModuleName&gt; --src-root &lt;SourceRoot&gt;</code></td>
+<td>既存ソース ツリー内にモジュール実装プロジェクトと対応する <code>*.Abstractions</code> プロジェクトを作成する。</td>
+<td>既存の ZYC.Framework 形式のリポジトリを拡張する。</td>
+</tr>
+</tbody>
+</table>
+<p>CLI を .NET tool としてインストールまたは更新します。</p>
+<pre><code class="lang-bash">dotnet tool install -g ZYC.Framework.CLI --version 1.4.0
+dotnet tool update -g ZYC.Framework.CLI --version 1.4.0
+</code></pre>
+<p>コマンドを確認します。</p>
+<pre><code class="lang-bash">zyc --help
+zyc new --help
+zyc new-module --help
+</code></pre>
+<h2 id="minimal-テンプレート"><code>minimal</code> テンプレート</h2>
+<p><code>minimal</code> は <code>zyc new</code> の既定テンプレートです。<code>ZYC.Framework.Alpha</code> を参照する小さな WPF Host プロジェクトを作成し、1 つの WPF ビューを simple tab として登録します。</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools
+</code></pre>
+<p>明示的に指定すると次のコマンドと同じです。</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools --template minimal
+</code></pre>
+<p>生成される構成:</p>
+<pre><code class="lang-text">MyCompany.Tools/
+  MyCompany.Tools.csproj
+  MyCompany.Tools.slnx
+  Module.cs
+  ModuleConfig.json
+  UI/
+    ToolsView.xaml
+    ToolsView.xaml.cs
+</code></pre>
+<p>最短で実行可能な Host を作り、機能面が 1 つの単純な WPF ビューで足りる場合に使います。</p>
+<h2 id="modular-テンプレート"><code>modular</code> テンプレート</h2>
+<p><code>modular</code> は Entry プロジェクト、モジュール実装プロジェクト、モジュール Abstractions プロジェクトを持つ小さなソリューションを作成します。</p>
+<pre><code class="lang-bash">zyc new MyCompany.Tools --template modular
+</code></pre>
+<p>生成される構成:</p>
+<pre><code class="lang-text">MyCompany.Tools/
+  Directory.Build.props
+  Directory.Build.targets
+  version.props
+  MyCompany.Tools.slnx
+  Entry/
+    Entry.csproj
+  ZYC.Framework.Modules.MyCompany.Tools/
+    ZYC.Framework.Modules.MyCompany.Tools.csproj
+    Module.cs
+    ToolsMainMenuItem.cs
+    ToolsTabItem.cs
+    ToolsTabItemFactory.cs
+    UI/
+      ToolsView.xaml
+      ToolsView.xaml.cs
+  ZYC.Framework.Modules.MyCompany.Tools.Abstractions/
+    ToolsModuleConstants.cs
+    ZYC.Framework.Modules.MyCompany.Tools.Abstractions.csproj
+</code></pre>
+<p>公開定数を Abstractions に置き、ルーティング付きタブ ファクトリ、メインメニュー項目、モジュール入口を持つ、実際のフレームワーク モジュールに近い構成が必要な場合に使います。</p>
+<h2 id="zyc-new-オプション"><code>zyc new</code> オプション</h2>
+<table>
+<thead>
+<tr>
+<th>オプション</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;ProjectName&gt;</code></td>
+<td>必須のプロジェクト名。<code>Acme.Tools</code> のような有効なドット区切り C# 識別子である必要があります。</td>
+</tr>
+<tr>
+<td><code>--template</code>, <code>-t</code></td>
+<td>プロジェクト テンプレート。対応値は <code>minimal</code> と <code>modular</code>。既定は <code>minimal</code>。</td>
+</tr>
+<tr>
+<td><code>--output</code>, <code>-o</code></td>
+<td>出力ディレクトリ。既定は <code>./&lt;ProjectName&gt;</code>。</td>
+</tr>
+<tr>
+<td><code>--package-version</code></td>
+<td><code>ZYC.Framework.Alpha</code> のパッケージ バージョン。既定は CLI の製品バージョン。</td>
+</tr>
+<tr>
+<td><code>--overwrite</code>, <code>-f</code></td>
+<td>既存ファイルを上書きする。この指定がない場合、対象ファイルが存在すると生成は失敗します。</td>
+</tr>
+</tbody>
+</table>
+<p>よく使うオプションをすべて指定する例:</p>
+<pre><code class="lang-bash">zyc new Acme.Tools --template modular --output ./Acme.Tools --package-version 1.4.0
+</code></pre>
+<h2 id="既存ソース-ツリー向けの-new-module">既存ソース ツリー向けの <code>new-module</code></h2>
+<p>既に <code>src</code> ツリーがあるリポジトリへモジュール ペアを追加する場合は <code>new-module</code> を使います。</p>
+<pre><code class="lang-bash">zyc new-module Reports --src-root ./src --slnx ./ZYC.Framework.slnx
+</code></pre>
+<p>このコマンドは次を作成します。</p>
+<pre><code class="lang-text">src/
+  ZYC.Framework.Modules.Reports/
+    ZYC.Framework.Modules.Reports.csproj
+    Module.cs
+    ReportsMainMenuItem.cs
+    ReportsTabItem.cs
+    ReportsTabItemFactory.cs
+    UI/
+      ReportsView.xaml
+      ReportsView.xaml.cs
+  ZYC.Framework.Modules.Reports.Abstractions/
+    ReportsModuleConstants.cs
+    ZYC.Framework.Modules.Reports.Abstractions.csproj
+</code></pre>
+<p><code>--slnx</code> は任意です。指定すると、生成されたプロジェクトはソリューション ファイルの <code>/Modules/</code> フォルダーへ追加されます。相対 <code>--slnx</code> パスは <code>--src-root</code> から解決されます。</p>
+<p><code>new-module</code> はターゲット名を正規化します。次の入力はすべて同じモジュール ターゲットを生成します。</p>
+<pre><code class="lang-bash">zyc new-module Reports --src-root ./src
+zyc new-module ZYC.Framework.Modules.Reports --src-root ./src
+zyc new-module ZYC.Framework.Modules.Reports.Abstractions --src-root ./src
+</code></pre>
+<h2 id="new-module-オプション"><code>new-module</code> オプション</h2>
+<table>
+<thead>
+<tr>
+<th>オプション</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;ModuleName&gt;</code></td>
+<td>位置引数のターゲット モジュール名。</td>
+</tr>
+<tr>
+<td><code>--target</code>, <code>-t</code></td>
+<td>ターゲット モジュール名。位置引数またはこのオプションのどちらかを使い、矛盾する値を指定しないでください。</td>
+</tr>
+<tr>
+<td><code>--src-root</code>, <code>-s</code></td>
+<td>モジュール プロジェクトを作成する必須のソース ルート。</td>
+</tr>
+<tr>
+<td><code>--slnx</code></td>
+<td>更新する任意の solution XML ファイル。ソリューション更新が不要な場合は省略します。</td>
+</tr>
+<tr>
+<td><code>--overwrite</code>, <code>-f</code></td>
+<td>既存ファイルまたはモジュール ディレクトリを上書きする。この指定がない場合、対象ディレクトリが存在すると生成は失敗します。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="テンプレート-トークン">テンプレート トークン</h2>
+<p>プロジェクト テンプレートは、パスとテキスト ファイル内の次のトークンを置換します。</p>
+<table>
+<thead>
+<tr>
+<th>トークン</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__PROJECT_NAME__</code></td>
+<td>完全なプロジェクト名。例: <code>MyCompany.Tools</code>。</td>
+</tr>
+<tr>
+<td><code>__PROJECT_SHORT_NAME__</code></td>
+<td>最後のドット区切りセグメント。例: <code>Tools</code>。</td>
+</tr>
+<tr>
+<td><code>__PROJECT_HOST__</code></td>
+<td>URI host として使う小文字の短い名前。例: <code>tools</code>。</td>
+</tr>
+<tr>
+<td><code>__PACKAGE_VERSION__</code></td>
+<td><code>--package-version</code> または CLI 製品バージョンで選択されたパッケージ バージョン。</td>
+</tr>
+</tbody>
+</table>
+<p>テキスト テンプレート ファイルは UTF-8 with BOM で書き込まれ、CRLF 改行に正規化されます。</p>
+<h2 id="テンプレートの選び方">テンプレートの選び方</h2>
+<table>
+<thead>
+<tr>
+<th>状況</th>
+<th>推奨コマンド</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 つのビューを持つ最速の Host が欲しい。</td>
+<td><code>zyc new MyCompany.Tools</code></td>
+</tr>
+<tr>
+<td>新しいアプリでモジュール形式のソリューションが欲しい。</td>
+<td><code>zyc new MyCompany.Tools --template modular</code></td>
+</tr>
+<tr>
+<td>既存リポジトリへモジュールを追加したい。</td>
+<td><code>zyc new-module Reports --src-root ./src</code></td>
+</tr>
+<tr>
+<td>生成したモジュール プロジェクトを既存 <code>.slnx</code> に追加したい。</td>
+<td><code>zyc new-module Reports --src-root ./src --slnx ./ZYC.Framework.slnx</code></td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/project-templates.ja.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

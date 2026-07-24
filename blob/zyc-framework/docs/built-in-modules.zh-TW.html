@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>內建模組 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="內建模組 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/built-in-modules.zh-TW.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="built-in-modules.html">English</a> |
+  <a href="built-in-modules.ja.html">日本語</a> |
+  <a href="built-in-modules.zh-CN.html">简体中文</a> |
+  <a href="built-in-modules.zh-TW.html">繁體中文</a> |
+  <a href="built-in-modules.ko.html">한국어</a> |
+</p>
+<h1 id="內建模組">內建模組</h1>
+<p>本文彙總目前 ZYC.Framework 原始碼樹中的內建模組。這裡的內建模組指包含 <code>Module : ModuleBase</code> 入口，並 intended 由模組載入器發現的 <code>ZYC.Framework.Modules.*</code> 專案。</p>
+<p><code>ZYC.Framework.Modules.*.Abstractions</code> 這類 Abstractions 專案是契約組件，本身不是執行階段模組。</p>
+<h2 id="內建模組如何載入">內建模組如何載入</h2>
+<p>啟動時，模組載入器會在應用程式目錄掃描命名類似 <code>ZYC.Framework.Modules*.dll</code> 的組件。對於每個模組組件，它會：</p>
+<ul>
+<li>註冊組件裡的 Autofac 服務；</li>
+<li>從 settings 目錄載入具體的 <code>IConfig</code> 和 <code>IState</code> 型別；</li>
+<li>找到第一個繼承 <code>ModuleBase</code> 的型別；</li>
+<li>建立模組實例並呼叫 <code>RegisterAsync</code>；</li>
+<li>稍後只對啟用的模組呼叫 <code>LoadAsync</code>。</li>
+</ul>
+<p><code>ModuleConfig.DisabledAssemblyNames</code> 依檔名停用已發現的模組組件。<code>ModuleConfig.AdditionalAssemblyNames</code> 從應用目錄追加額外組件。</p>
+<h2 id="模組清單">模組清單</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>主要表面</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>About</code></td>
+<td>About 選單與路由 Tab</td>
+<td>顯示產品/about 資訊。</td>
+</tr>
+<tr>
+<td><code>Accounts</code></td>
+<td>視窗標題列擴充與帳號服務</td>
+<td>初始化 provider-based account session，並暴露登入/登出操作。</td>
+</tr>
+<tr>
+<td><code>Accounts.GitHub</code></td>
+<td>GitHub OAuth WebView2 Tab</td>
+<td>提供 GitHub account provider 與登入 callback 處理。</td>
+</tr>
+<tr>
+<td><code>ApiReference</code></td>
+<td>About 選單與 WebView2 Tab</td>
+<td>承載 API reference 內容。</td>
+</tr>
+<tr>
+<td><code>Aspire</code></td>
+<td>Tools 選單、路由 Tab、狀態列</td>
+<td>啟動與監控 Aspire resources；解析 <code>IExtensionResourcesProvider</code> 貢獻。</td>
+</tr>
+<tr>
+<td><code>BlazorDemo</code></td>
+<td>Tools 選單與路由 Tab</td>
+<td>示範桌面 Host 內的 Blazor 整合。</td>
+</tr>
+<tr>
+<td><code>ChromeExtensions</code></td>
+<td>Extensions 選單與路由 Tab</td>
+<td>管理 WebBrowser 使用的本地 Chrome Web Store extension packages。</td>
+</tr>
+<tr>
+<td><code>CLI</code></td>
+<td>Tools 選單與終端 Tab</td>
+<td>承載嵌入式終端，並載入終端 native dependencies。</td>
+</tr>
+<tr>
+<td><code>FileExplorer</code></td>
+<td>File 選單與路由 Tab</td>
+<td>開啟檔案系統瀏覽表面。</td>
+</tr>
+<tr>
+<td><code>FileExplorer.Features</code></td>
+<td>File menu sub-provider</td>
+<td>在 FileExplorer 契約之上新增 recent-path 類 File 選單能力。</td>
+</tr>
+<tr>
+<td><code>Language</code></td>
+<td>Settings 選單與路由 Tab</td>
+<td>提供語言選擇與在地化資源管理。</td>
+</tr>
+<tr>
+<td><code>Log</code></td>
+<td>File 選單與 logging provider</td>
+<td>註冊 log4net-backed logger provider，並暴露日誌檢視。</td>
+</tr>
+<tr>
+<td><code>MCP.Server</code></td>
+<td>Tools menu provider</td>
+<td>暴露 MCP server 操作。</td>
+</tr>
+<tr>
+<td><code>Mock</code></td>
+<td>Root mock menu 與 demo tabs</td>
+<td>面向對話框、通知、任務、CLI 與範例 View 的開發/測試模組。</td>
+</tr>
+<tr>
+<td><code>ModuleManager</code></td>
+<td>Extensions 選單與路由 Tab</td>
+<td>管理本地模組與 NuGet-installed modules。</td>
+</tr>
+<tr>
+<td><code>NuGet</code></td>
+<td>File 選單</td>
+<td>提供 NuGet cache tooling。</td>
+</tr>
+<tr>
+<td><code>Secrets</code></td>
+<td>Settings 選單與路由 Tab</td>
+<td>透過 <code>ISecrets</code> 管理 secret-like settings。</td>
+</tr>
+<tr>
+<td><code>Settings</code></td>
+<td>Root Settings 選單與路由 Tab</td>
+<td>承載其他模組使用的 settings shell。</td>
+</tr>
+<tr>
+<td><code>TaskManager</code></td>
+<td>Tools 選單、路由 Tab、狀態列</td>
+<td>初始化 task management，並暴露任務狀態/操作。</td>
+</tr>
+<tr>
+<td><code>TextEditor</code></td>
+<td>File/Open 選單與路由 Tab</td>
+<td>提供 text preview/edit 表面，包括 generic <code>file://</code> preview handling。</td>
+</tr>
+<tr>
+<td><code>Translator</code></td>
+<td>Aspire command-line resource</td>
+<td>在 Aspire 可用時註冊 LibreTranslate sidecar。</td>
+</tr>
+<tr>
+<td><code>Update</code></td>
+<td>About 選單與路由 Tab</td>
+<td>提供更新檢查；可在 tab/workspace restore 後執行啟動檢查。</td>
+</tr>
+<tr>
+<td><code>WebBrowser</code></td>
+<td>Tools 選單與 WebView2 Tab</td>
+<td>在 Host 內開啟瀏覽器 Tab。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shell-與診斷模組">Shell 與診斷模組</h2>
+<p><code>Settings</code>、<code>Language</code>、<code>Secrets</code>、<code>Log</code>、<code>TaskManager</code>、<code>ModuleManager</code>、<code>Update</code>、<code>About</code>、<code>Accounts</code>、<code>ChromeExtensions</code>、<code>ApiReference</code> 主要是 Shell 或維運類模組。它們讓框架更容易檢查、設定與維護。</p>
+<p>這些模組通常從 <code>LoadAsync</code> 註冊選單項目與路由 Tab。有些模組也會更早註冊服務：</p>
+<ul>
+<li><code>Log</code> 在 <code>RegisterAsync</code> 中註冊 logging providers。</li>
+<li><code>Language</code> 註冊 language-resource adapters，並載入 default language resources。</li>
+<li><code>Secrets</code> 註冊從 config objects 到 <code>ISecrets</code> 的 adapter。</li>
+<li><code>TaskManager</code> 在暴露 UI 前初始化 <code>ITaskManager</code>。</li>
+<li><code>Accounts</code> 初始化 <code>IAccountManager</code>，並註冊視窗標題列帳號表面。</li>
+<li><code>ChromeExtensions</code> 在 Extensions 下註冊 extension package manager Tab。</li>
+<li><code>Update</code> 在所有模組載入後訂閱事件，並在啟動檢查前等待 <code>TabManagerRestoreCompleted</code>。</li>
+</ul>
+<h2 id="導覽與內容模組">導覽與內容模組</h2>
+<p><code>WebBrowser</code>、<code>FileExplorer</code>、<code>TextEditor</code>、<code>CLI</code>、<code>BlazorDemo</code> 暴露面向使用者的內容表面。它們都依賴 Tab routing，而不是由 Shell 直接建構 View。</p>
+<p><code>Accounts.GitHub</code> 與 <code>ChromeExtensions</code> 也使用 WebView2-backed tabs，分別用於 provider 登入與 Chrome Web Store package discovery。它們仍然作為一般模組載入；瀏覽器相關行為由 WebView2 infrastructure 與 module contracts 承載。</p>
+<p>如果這些模組開啟了錯誤 Tab 或 Not Found Tab，請檢查已註冊的 <code>ITabItemFactory</code>、route attributes、factory priority，以及傳給 <code>ITabManager.NavigateAsync(...)</code> 的 URI。</p>
+<h2 id="aspire-與-sidecar-模組">Aspire 與 Sidecar 模組</h2>
+<p><code>Aspire</code> 是執行 Aspire resources 的 Host 側模組。它註冊 Aspire dashboard tab、Tools menu entry 與 status bar item。如果 <code>AspireConfig.AutoStart</code> 為 true，它會在模組載入期間啟動 Aspire service。</p>
+<p><code>Translator</code> 是 sidecar 風格模組。它不暴露大型 UI，而是向 <code>ICommandlineResourcesProvider</code> 註冊 command-line resource，讓 Aspire 模組可以啟動 LibreTranslate。</p>
+<h2 id="開發與-demo-模組">開發與 Demo 模組</h2>
+<p><code>Mock</code> 與 <code>BlazorDemo</code> 適合開發或驗證框架行為。<code>Mock</code> 註冊用於通知、對話框、task manager behavior 與 CLI integration 的 demo tabs 與 sample views。除非明確是診斷或範例用途，不要把生產功能放進 Mock。</p>
+<h2 id="不完整或非模組目錄">不完整或非模組目錄</h2>
+<p>只有同時具備真實 module project 與 <code>Module.cs</code> 的目錄，才應該被視為 active built-in module。只有 <code>obj</code>、生成檔案或 <code>UI</code> 子目錄的資料夾，不足以作為 runtime discovery 的依據。</p>
+<p>文件化或排查模組載入時，請從 compiled output 與 <code>Module.cs</code> 開始，不要只看資料夾名稱。</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/built-in-modules.zh-TW.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Navigation and Workspace </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Navigation and Workspace ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/navigation-workspace.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="navigation-workspace.html">English</a> |
+  <a href="navigation-workspace.ja.html">日本語</a> |
+  <a href="navigation-workspace.zh-CN.html">简体中文</a> |
+  <a href="navigation-workspace.zh-TW.html">繁體中文</a> |
+  <a href="navigation-workspace.ko.html">한국어</a> |
+</p>
+<h1 id="navigation-and-workspace">Navigation and Workspace</h1>
+<p>ZYC.Framework separates <strong>what to open</strong> from <strong>where to show it</strong>. A URI describes the target content. A tab factory creates the tab instance for that URI. A workspace decides which tab surface receives the instance.</p>
+<h2 id="mental-model">Mental Model</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Runtime role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URI</td>
+<td>The address of a feature, file, page, or tool. Examples include <code>zyc://...</code>, <code>file://...</code>, and module-owned schemes.</td>
+</tr>
+<tr>
+<td><code>ITabItemFactory</code></td>
+<td>Checks whether it can handle a URI and creates an <code>ITabItemInstance</code>.</td>
+</tr>
+<tr>
+<td><code>ITabItemInstance</code></td>
+<td>Owns tab identity, title, icon, view, lifecycle, and close behavior.</td>
+</tr>
+<tr>
+<td><code>ITabManager</code></td>
+<td>Coordinates URI navigation, tab creation, reuse, focus, close, reload, move, and restore.</td>
+</tr>
+<tr>
+<td><code>WorkspaceNode</code></td>
+<td>Represents one node in the workspace layout tree. Leaf nodes contain navigation state.</td>
+</tr>
+<tr>
+<td><code>IParallelWorkspaceManager</code></td>
+<td>Splits, merges, focuses, swaps, resets, and applies workspace layouts.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="navigation-flow">Navigation Flow</h2>
+<pre><code class="lang-mermaid">graph TD
+    A[&quot;Menu command, URI bar, startup URI, or module code&quot;] --&gt; B[&quot;ITabManager.NavigateAsync(...)&quot;]
+    B --&gt; C[&quot;Choose focused workspace or explicit workspaceId&quot;]
+    C --&gt; D[&quot;TabManager.InternalNavigateAsync(...)&quot;]
+    D --&gt; E[&quot;Find matching ITabItemFactory&quot;]
+    E --&gt; F[&quot;Reuse existing singleton tab when allowed&quot;]
+    E --&gt; G[&quot;Create and load new ITabItemInstance&quot;]
+    G --&gt; H[&quot;Attach tab to workspace&quot;]
+    F --&gt; I[&quot;Focus tab&quot;]
+    H --&gt; I
+    I --&gt; J[&quot;Publish NavigateCompletedEvent&quot;]
+</code></pre>
+<p><code>NavigateAsync(Uri)</code> navigates in the currently focused workspace. <code>NavigateAsync(Guid workspaceId, Uri uri)</code> targets a specific workspace.</p>
+<h2 id="uri-routing-and-factories">URI Routing and Factories</h2>
+<p>Factories are registered through <code>ITabItemFactoryManager</code>, usually from <code>Module.LoadAsync</code>:</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>TabItemFactoryBase</code> uses <code>TabItemRouteAttribute</code> for route matching:</p>
+<pre><code class="lang-csharp">[RegisterSingleInstance]
+[TabItemRoute(Host = ReportsModuleConstants.Host)]
+internal class ReportsTabItemFactory : TabItemFactoryBase
+{
+    public override async Task&lt;ITabItemInstance&gt; CreateTabItemInstanceAsync(
+        TabItemCreationContext context)
+    {
+        await Task.CompletedTask;
+        return context.Resolve&lt;ReportsTabItem&gt;(
+            new TypedParameter(
+                typeof(TabReference),
+                new TabReference(context.Uri)));
+    }
+}
+</code></pre>
+<p>Important behavior:</p>
+<ul>
+<li>Factories are checked in manager order.</li>
+<li><code>TabItemRouteAttribute</code> can match <code>Scheme</code>, <code>Host</code>, <code>Path</code>, and <code>PathMatch</code>.</li>
+<li><code>TabItemFactoryBase.IsSingle</code> defaults to <code>true</code>.</li>
+<li>If a singleton factory matches a URI that is already open, the existing tab is reused.</li>
+<li>If no factory matches, the host opens the built-in Not Found tab.</li>
+<li>If creation or loading throws, the host opens the built-in Error tab.</li>
+</ul>
+<h2 id="workspace-selection">Workspace Selection</h2>
+<p>The focused workspace is stored in <code>ParallelWorkspaceState.FocusedWorkspaceId</code>. <code>IParallelWorkspaceManager.GetFocusedWorkspace()</code> resolves the active leaf node and falls back to the first available leaf if the stored id is no longer valid.</p>
+<p>The UI changes focus when a workspace menu button, empty workspace surface, URI bar, or tab surface is interacted with. Module code can also target a workspace explicitly:</p>
+<pre><code class="lang-csharp">var workspace = parallelWorkspaceManager.GetFocusedWorkspace();
+await tabManager.NavigateAsync(workspace.Id, ReportsModuleConstants.Uri);
+</code></pre>
+<p>Use the overload with <code>workspaceId</code> when a command is clearly tied to a specific workspace. Use the plain <code>NavigateAsync(Uri)</code> overload when the command should follow the user's current focus.</p>
+<h2 id="workspace-layout-tree">Workspace Layout Tree</h2>
+<p>The workspace layout is a tree of <code>WorkspaceNode</code> objects:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Id</code></td>
+<td>Stable workspace node identity.</td>
+</tr>
+<tr>
+<td><code>Left</code> / <code>Right</code></td>
+<td>Child nodes. A node with no children is a leaf workspace.</td>
+</tr>
+<tr>
+<td><code>IsHorizontal</code></td>
+<td>Split orientation for child nodes.</td>
+</tr>
+<tr>
+<td><code>Ratio</code></td>
+<td>Split ratio between child nodes.</td>
+</tr>
+<tr>
+<td><code>IsSplitterLocked</code></td>
+<td>Prevents splitter dragging while keeping the split visible.</td>
+</tr>
+<tr>
+<td><code>NavigationState</code></td>
+<td>Per-workspace tab URIs, focus URI, and history.</td>
+</tr>
+<tr>
+<td><code>IsNavigationBarVisible</code></td>
+<td>Controls whether the workspace navigation bar is visible.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ParallelWorkspaceView</code> is both the visual host and the <code>IParallelWorkspaceManager</code> implementation. Each leaf workspace resolves a <code>TabManagerView</code>, and each <code>TabManagerView</code> displays the tab collection for its <code>WorkspaceNode</code>.</p>
+<h2 id="split-merge-and-layout-operations">Split, Merge, and Layout Operations</h2>
+<p><code>IParallelWorkspaceManager</code> owns layout operations:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SplitHorizontalAsync</code></td>
+<td>Splits a leaf into side-by-side workspaces.</td>
+</tr>
+<tr>
+<td><code>SplitVerticalAsync</code></td>
+<td>Splits a leaf into stacked workspaces.</td>
+</tr>
+<tr>
+<td><code>MergeAsync</code></td>
+<td>Merges a workspace back into its parent structure when possible.</td>
+</tr>
+<tr>
+<td><code>MergeAllAsync</code></td>
+<td>Collapses the layout to one workspace.</td>
+</tr>
+<tr>
+<td><code>ToggleOrientationAsync</code></td>
+<td>Toggles a parent split orientation.</td>
+</tr>
+<tr>
+<td><code>SwapAsync</code></td>
+<td>Swaps a workspace with the related sibling position.</td>
+</tr>
+<tr>
+<td><code>ApplyLayoutAsync</code></td>
+<td>Rebuilds the layout from a saved <code>WorkspaceNode</code> tree.</td>
+</tr>
+</tbody>
+</table>
+<p>When a workspace is removed, <code>ParallelWorkspaceView</code> moves its tabs to a fallback workspace through <code>ITabManager.MoveAllTabItemInstances(...)</code> before detaching the workspace view.</p>
+<h2 id="state-restore">State Restore</h2>
+<p>Startup restore happens after the workspace visual tree is ready:</p>
+<ol>
+<li><code>ParallelWorkspaceView</code> creates the root <code>WorkspaceView</code>.</li>
+<li>Each leaf workspace resolves a <code>TabManagerView</code>.</li>
+<li><code>TabManager.RestoreStateAsync()</code> reopens saved tab URIs from every leaf <code>NavigationState</code>.</li>
+<li>The previously focused URI is focused when possible.</li>
+<li><code>TabManagerRestoreCompleted</code> is published.</li>
+</ol>
+<p>Startup URI handling waits for <code>TabManagerRestoreCompleted</code>, so protocol or command-line navigation does not race against tab/workspace restoration.</p>
+<h2 id="moving-tabs-between-workspaces">Moving Tabs Between Workspaces</h2>
+<p>Tabs can move in three ways:</p>
+<ul>
+<li><code>ITabManager.MoveTabItemInstance(instance, from, to)</code> moves one tab to another workspace.</li>
+<li><code>ITabManager.MoveTabItemInstance(source, target, position)</code> reorders tabs or moves them relative to a target tab.</li>
+<li><code>ITabManager.MoveAllTabItemInstances(from, to)</code> moves all tabs when a workspace is removed.</li>
+</ul>
+<p>The built-in tab header context menu uses <code>IMoveWorkspaceTabItemHeaderContextMenuItemManager</code> to build the &quot;move to workspace&quot; targets. Drag/drop uses <code>IDropActionProvider</code> and <code>DropOrchestrator</code>; the built-in <code>TabManagerDropProvider</code> handles tab movement payloads.</p>
+<h2 id="workspace-menus">Workspace Menus</h2>
+<p>There are two workspace menu surfaces:</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Manager</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workspace navigation drop-down</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td>Active visible menu near the workspace index. Built-in items include reset, split, merge, swap, orientation toggle, and focus.</td>
+</tr>
+<tr>
+<td>Workspace context menu manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td>Provides recursive sorting by <code>Anchor</code> and <code>Priority</code>. Wire a view surface before assuming items appear in the current blank-area context menu.</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>IWorkspaceMenuManager.RegisterItem&lt;T&gt;()</code> for commands that should appear in the visible workspace menu. Use <code>IWorkspaceContextMenuManager</code> only when you are extending or wiring a context-menu surface.</p>
+<h2 id="practical-rules">Practical Rules</h2>
+<ul>
+<li>Navigate by URI; do not instantiate views directly from menu commands.</li>
+<li>Register a tab factory for every URI surface a module owns.</li>
+<li>Use <code>NavigateAsync(Uri)</code> for &quot;open in focused workspace&quot; behavior.</li>
+<li>Use <code>NavigateAsync(Guid, Uri)</code> when the command is workspace-specific.</li>
+<li>Treat <code>WorkspaceNode.NavigationState</code> as the persisted tab state for that workspace.</li>
+<li>Wait for <code>TabManagerRestoreCompleted</code> before running startup navigation that depends on restored tabs.</li>
+<li>Move tabs through <code>ITabManager</code>, not by editing UI collections.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/navigation-workspace.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

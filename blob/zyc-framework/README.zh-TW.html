@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ZYC.Framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ZYC.Framework ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/README.zh-TW.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="README.html">English</a> |
+  <a href="README.ja.html">日本語</a> |
+  <a href="README.zh-CN.html">简体中文</a> |
+  <a href="README.zh-TW.html">繁體中文</a> |
+  <a href="README.ko.html">한국어</a> |
+</p>
+<p align="center">
+  <img src="docs/images/app.png" alt="ZYC.Framework Logo" width="120">
+</p>
+<h1 align="center">ZYC.Framework</h1>
+<p align="center">
+<p>一個基於 <b>.NET 10</b> 與 <b>WPF</b> 構建的高效能、模組化、可擴充的桌面自動化框架。</p>
+
+<p align="center">
+  <a href="https://www.nuget.org/packages/ZYC.Framework.Alpha">
+    <img src="https://img.shields.io/nuget/v/ZYC.Framework.Alpha?include_prereleases=true&logo=nuget" alt="NuGet Version">
+  </a>
+  <a href="https://www.nuget.org/packages/ZYC.Framework.Alpha">
+    <img src="https://img.shields.io/nuget/dt/ZYC.Framework.Alpha?logo=nuget&label=Downloads" alt="NuGet Downloads">
+  </a>
+  <img src="https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white" alt=".NET 10">
+  <img src="https://img.shields.io/badge/Platform-WPF-orange" alt="Platform">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
+<p align="center">
+  <a href="https://github.com/ZiYuCai1984/ZYC.Framework/actions/workflows/publish-nuget-manual.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/ZiYuCai1984/ZYC.Framework/publish-nuget-manual.yml?branch=main&label=build&logo=github" alt="NuGet manual workflow">
+  </a>
+  <a href="https://github.com/ZiYuCai1984/ZYC.Framework/actions/workflows/publish-nuget-nightly.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/ZiYuCai1984/ZYC.Framework/build-nightly.yml?branch=main&label=nightly%20build&logo=github" alt="Build nightly workflow">
+  </a>
+</p>
+<hr>
+<h2 id="--專案概覽">📖  專案概覽</h2>
+<p><strong>ZYC.Framework</strong> 是一個現代化的桌面自動化解決方案，結合了 <strong>WPF</strong> 的高表現力 UI 能力與 <strong>.NET 10</strong> 的最新技術特性。其核心目標是透過模組化架構，降低複雜自動化系統的開發與維護成本。</p>
+<p>本專案深度整合 <strong>.NET Aspire</strong> 以實現分散式應用程式的協調與管理，同時支援 <strong>Blazor</strong> 與 <strong>WebView2</strong> 的混合架構，讓你可以依需求在 Web UI 與原生桌面體驗之間自由取捨。</p>
+<hr>
+<h2 id="--主要特性">✨  主要特性</h2>
+<ul>
+<li><strong>模組化架構</strong>：業務邏輯高度解耦，支援動態載入與獨立開發。</li>
+<li><strong>現代化 UI 體驗</strong>：基於 WPF，支援 <strong>多工作區</strong> 與 <strong>多分頁</strong> 操作模式。</li>
+<li><strong>混合式開發</strong>：
+<ul>
+<li>整合 <strong>WebView2</strong>，可嵌入現代 Web 應用程式。</li>
+<li>整合 <strong>Blazor</strong>，在桌面應用中重用 Web 元件。</li>
+</ul>
+</li>
+<li><strong>雲原生就緒</strong>：內建 <strong>.NET Aspire</strong> 支援，簡化服務探索、治理與部署流程。</li>
+<li><strong>內建企業級能力（Batteries Included）</strong>：
+<ul>
+<li><strong>任務管理</strong>：任務排程與完整的生命週期管理。</li>
+<li><strong>例外處理</strong>：健全的全域錯誤捕捉與診斷機制。</li>
+<li><strong>在地化支援</strong>：內建多語系架構，支援全球化應用需求。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="--技術棧">🛠️  技術棧</h2>
+<ul>
+<li><strong>Runtime</strong>: .NET 10 SDK</li>
+<li><strong>UI Framework</strong>: WPF (Windows Presentation Foundation)</li>
+<li><strong>Hybrid UI</strong>: WebView2 + Blazor</li>
+<li><strong>Orchestration</strong>: .NET Aspire</li>
+<li><strong>Architecture</strong>: Modular Monolith / Plugin-based</li>
+</ul>
+<hr>
+<h2 id="--快速開始">🚀  快速開始</h2>
+<p>請參閱完整指南：</p>
+<p>👉 <strong><a href="docs/quick-start.zh-TW.html">快速開始指南 (quick-start.zh-TW.md)</a></strong></p>
+<p>👉 <strong><a href="https://github.com/ZiYuCai1984/ZYC.Framework/releases/download/v1.4.0/ZYC.Framework.Setup.1.4.0.exe">下載 Demo 安裝程式</a></strong></p>
+<h3 id="建立專案">建立專案</h3>
+<p>推薦的開始方式是全域 dotnet tool。先安裝或更新 CLI，然後透過 <code>zyc new</code> 建立 Host 專案：</p>
+<pre><code class="lang-bash">dotnet tool install --global ZYC.Framework.CLI --version 1.4.0
+dotnet tool update --global ZYC.Framework.CLI --version 1.4.0
+zyc new MyCompany.Tools --template minimal
+</code></pre>
+<p>如果需要手動整合，仍然可以透過 NuGet 直接加入核心套件：</p>
+<pre><code class="lang-bash">dotnet add package ZYC.Framework.Alpha --version 1.4.0
+</code></pre>
+<hr>
+<h2 id="說明文件">說明文件</h2>
+<table>
+<thead>
+<tr>
+<th>指南</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="docs/quick-start.zh-TW.html">快速開始</a></td>
+<td>建立專案，並了解手動建立的備用流程。</td>
+</tr>
+<tr>
+<td><a href="docs/architecture.zh-TW.html">架構</a></td>
+<td>理解啟動、模組載入、設定、導航和執行時服務。</td>
+</tr>
+<tr>
+<td><a href="docs/navigation-workspace.zh-TW.html">導航與 Workspace</a></td>
+<td>處理 URI 導航、Tab、Workspace 和還原時機。</td>
+</tr>
+<tr>
+<td><a href="docs/extension-points.zh-TW.html">擴充點</a></td>
+<td>查看模組可以擴充 Host 的公開位置。</td>
+</tr>
+<tr>
+<td><a href="docs/built-in-modules.zh-TW.html">內建模組</a></td>
+<td>查看內建模組及其主要職責。</td>
+</tr>
+<tr>
+<td><a href="docs/module-development.zh-TW.html">模組開發</a></td>
+<td>建構包含契約、<code>ModuleBase</code>、選單和 Tab 的執行時模組。</td>
+</tr>
+<tr>
+<td><a href="docs/project-templates.zh-TW.html">專案模板</a></td>
+<td>選擇並理解 <code>minimal</code> 與 <code>modular</code> CLI 模板。</td>
+</tr>
+<tr>
+<td><a href="docs/troubleshooting.zh-TW.html">故障排查</a></td>
+<td>診斷 CLI、模組載入、路由、NuGet 模組、Aspire 和終端問題。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="功能">功能</h2>
+<h3 id="核心框架">核心框架</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模組化架構</td>
+<td>支援模組化功能組織與動態載入。</td>
+</tr>
+<tr>
+<td>多工作區佈局</td>
+<td>支援工作區分割、合併與重新排列。</td>
+</tr>
+<tr>
+<td>多分頁導航</td>
+<td>基於 URI 的分頁導航與恢復。</td>
+</tr>
+<tr>
+<td>可擴展選單</td>
+<td>主選單、Hamburger 選單等擴展點。</td>
+</tr>
+<tr>
+<td>通知系統</td>
+<td>內建 Toast 與 Banner 通知。</td>
+</tr>
+<tr>
+<td>互動輔助</td>
+<td>BusyWindow、Overlay、拖放處理。</td>
+</tr>
+<tr>
+<td>混合 UI</td>
+<td><code>WebView2</code> + <code>Blazor</code> 混合桌面應用。</td>
+</tr>
+<tr>
+<td>設定與狀態</td>
+<td>本地持久化設定與應用狀態。</td>
+</tr>
+<tr>
+<td>單例執行</td>
+<td>支援單實例應用啟動。</td>
+</tr>
+<tr>
+<td>MCP 暴露</td>
+<td>可將功能暴露為 MCP 工具。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="內建模組">內建模組</h3>
+<p>README 只保留高層功能概覽。目前模組清單、載入說明和模組職責請查看 <a href="docs/built-in-modules.zh-TW.html">內建模組</a>。</p>
+<h3 id="開發與交付">開發與交付</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLI 工具</td>
+<td>命令列入口。</td>
+</tr>
+<tr>
+<td>模組模板</td>
+<td>快速建立新模組。</td>
+</tr>
+<tr>
+<td>文件生成</td>
+<td>README / Docs 生成。</td>
+</tr>
+<tr>
+<td>NuGet 打包</td>
+<td>NuGet 套件生成。</td>
+</tr>
+<tr>
+<td>安裝包</td>
+<td>桌面安裝程式建構。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="--ui-預覽">📸  UI 預覽</h2>
+<table align="center">
+  <tr>
+    <td>
+      <img src="docs/images/workspace.png" alt="workspace" width="400">
+      <p align="center">工作區展示</p>
+    </td>
+    <td>
+      <img src="docs/images/multiple-tabs.png" alt="multiple-tabs" width="400">
+      <p align="center">多分頁展示</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="docs/images/workspace-4.png" alt="workspace-4" width="400">
+      <p align="center">多工作區展示</p>
+    </td>
+    <td>
+      <img src="docs/images/workspace-4-tabs.gif" alt="workspace-4-tabs" width="400">
+      <p align="center">工作區 + 分頁</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="docs/images/aspire-dashboard.gif" alt="aspire-dashboard" width="400">
+      <p align="center">Aspire 儀表板</p>
+    </td>
+    <td>
+      <img src="docs/images/blazor-auth.gif" alt="blazor-auth" width="400">
+      <p align="center">Blazor（含驗證）</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="docs/images/exception.png" alt="exception" width="400">
+      <p align="center">例外處理</p>
+    </td>
+    <td>
+      <img src="docs/images/taskmanager.png" alt="taskmanager" width="400">
+      <p align="center">任務管理</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<h2 id="--授權條款">📄  授權條款</h2>
+<p>本專案以 <a href="LICENSE">MIT License</a> 授權並開源。</p>
+<hr>
+<h2 id="--致謝">💖  致謝</h2>
+<p>本專案使用（或參考了部分實作）以下開源專案：</p>
+<ul>
+<li><a href="https://github.com/MahApps/MahApps.Metro">MahApps.Metro</a>: UI 框架。</li>
+<li><a href="https://github.com/whistyun/MdXaml">MdXaml</a>: Markdown 呈現。</li>
+<li><a href="https://github.com/justcoding121/titanium-web-proxy">titanium-web-proxy</a>: 代理核心。</li>
+<li><a href="https://github.com/mitchcapper/EasyWindowsTerminalControl">EasyWindowsTerminalControl</a>: 終端機整合。</li>
+</ul>
+<blockquote>
+<p>授權與著作權歸各專案原作者所有。
+本倉庫對其使用與引用皆遵循各自的授權條款。</p>
+</blockquote>
+<hr>
+<h2 id="--參與貢獻">🤝  參與貢獻</h2>
+<p>歡迎提交 Issue 與 Pull Request。如果你有任何建議或發現問題，請隨時提出。</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/README.zh-TW.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

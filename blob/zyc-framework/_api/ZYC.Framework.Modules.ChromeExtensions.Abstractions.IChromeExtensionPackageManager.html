@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IChromeExtensionPackageManager </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IChromeExtensionPackageManager ">
+      
+      <meta name="description" content="Manages Chrome Web Store extension packages in the local application package store.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/new/master/apiSpec/new?filename=ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager.md&amp;value=---%0Auid%3A%20ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager">
+
+
+
+  <h1 id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager" class="text-break">
+Interface IChromeExtensionPackageManager  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ZYC.html">ZYC</a>.<a class="xref" href="ZYC.Framework.html">Framework</a>.<a class="xref" href="ZYC.Framework.Modules.html">Modules</a>.<a class="xref" href="ZYC.Framework.Modules.ChromeExtensions.html">ChromeExtensions</a>.<a class="xref" href="ZYC.Framework.Modules.ChromeExtensions.Abstractions.html">Abstractions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ZYC.Framework.Modules.ChromeExtensions.Abstractions.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Manages Chrome Web Store extension packages in the local application package store.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IChromeExtensionPackageManager</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_GetInstalledExtension_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.GetInstalledExtension*"></a>
+
+  <h3 id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_GetInstalledExtension_System_String_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.GetInstalledExtension(System.String)">
+  GetInstalledExtension(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a locally installed extension package record by extension identifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ChromeInstalledExtension? GetInstalledExtension(string extensionId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>extensionId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The Chrome Web Store extension identifier or detail page URL.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ZYC.Framework.Modules.ChromeExtensions.Abstractions.ChromeInstalledExtension.html">ChromeInstalledExtension</a></dt>
+    <dd><p>The installed extension package record, or <code>null</code> when it is not installed locally.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_GetInstalledExtensions_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.GetInstalledExtensions*"></a>
+
+  <h3 id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_GetInstalledExtensions" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.GetInstalledExtensions">
+  GetInstalledExtensions()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets all locally installed extension package records.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;ChromeInstalledExtension&gt; GetInstalledExtensions()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="ZYC.Framework.Modules.ChromeExtensions.Abstractions.ChromeInstalledExtension.html">ChromeInstalledExtension</a>&gt;</dt>
+    <dd><p>The locally installed extension packages.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_InstallAsync_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.InstallAsync*"></a>
+
+  <h3 id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_InstallAsync_System_String_System_Threading_CancellationToken_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.InstallAsync(System.String,System.Threading.CancellationToken)">
+  InstallAsync(string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Downloads the latest CRX package, unpacks it, and stores it locally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;ChromeInstalledExtension&gt; InstallAsync(string extensionId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>extensionId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The Chrome Web Store extension identifier or detail page URL.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token used to cancel the operation.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="ZYC.Framework.Modules.ChromeExtensions.Abstractions.ChromeInstalledExtension.html">ChromeInstalledExtension</a>&gt;</dt>
+    <dd><p>The local extension package record.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_IsInstalled_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.IsInstalled*"></a>
+
+  <h3 id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_IsInstalled_System_String_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.IsInstalled(System.String)">
+  IsInstalled(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified extension identifier is installed locally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsInstalled(string extensionId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>extensionId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The Chrome Web Store extension identifier or detail page URL.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if a local package record exists; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_UninstallAsync_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.UninstallAsync*"></a>
+
+  <h3 id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_UninstallAsync_System_String_" data-uid="ZYC.Framework.Modules.ChromeExtensions.Abstractions.IChromeExtensionPackageManager.UninstallAsync(System.String)">
+  UninstallAsync(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes the local package and package record for the specified extension identifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; UninstallAsync(string extensionId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>extensionId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The Chrome Web Store extension identifier or detail page URL.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p><code>true</code> if a package was removed; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="ZYC_Framework_Modules_ChromeExtensions_Abstractions_IChromeExtensionPackageManager_UninstallAsync_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method only removes the local package store content. It does not remove extensions from any WebView2
+profile that may have loaded the unpacked extension directory.</p>
+</div>
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Modules.ChromeExtensions.Abstractions/IChromeExtensionPackageManager.cs/#L6" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
