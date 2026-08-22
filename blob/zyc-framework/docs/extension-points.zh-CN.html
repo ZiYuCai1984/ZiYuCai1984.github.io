@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>扩展点 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="扩展点 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.zh-CN.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="extension-points.html">English</a> |
+  <a href="extension-points.ja.html">日本語</a> |
+  <a href="extension-points.zh-CN.html">简体中文</a> |
+  <a href="extension-points.zh-TW.html">繁體中文</a> |
+  <a href="extension-points.ko.html">한국어</a> |
+</p>
+<h1 id="扩展点">扩展点</h1>
+<p>ZYC.Framework 的扩展大多通过模块和 Autofac 注册。模块随 Host 加载，注册服务或 UI 贡献；随后 Shell 从这些注册中组合菜单、Tab、工作区操作、状态栏项、任务栏菜单项、拖放动作和 Aspire 资源。</p>
+<h2 id="扩展点地图">扩展点地图</h2>
+<table>
+<thead>
+<tr>
+<th>扩展点</th>
+<th>注册位置</th>
+<th>运行时消费方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模块生命周期</td>
+<td><code>ModuleBase.RegisterAsync</code>, <code>LoadAsync</code>, <code>AfterLoadedAsync</code></td>
+<td>Host 启动和模块加载器。</td>
+</tr>
+<tr>
+<td>URI Tab</td>
+<td><code>ITabItemFactoryManager.RegisterFactory&lt;T&gt;()</code></td>
+<td><code>TabManager.InternalNavigateAsync(...)</code>。</td>
+</tr>
+<tr>
+<td>简单视图 Tab</td>
+<td><code>ISimpleTabItemFactoryManager.Register(...)</code></td>
+<td>内置 <code>SimpleTabItemFactory</code>。</td>
+</tr>
+<tr>
+<td>主菜单</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code></td>
+<td><code>MainMenuManager</code> 和主菜单 View。</td>
+</tr>
+<tr>
+<td>窗口标题栏</td>
+<td><code>IWindowTitleManager</code>, <code>IWindowTitleExtendManager</code></td>
+<td><code>WindowTitleView</code>。</td>
+</tr>
+<tr>
+<td>工作区菜单</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td><code>WorkspaceMenuView</code>。</td>
+</tr>
+<tr>
+<td>工作区上下文菜单 Manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td>Manager 存在并提供排序；在接线上下文菜单表面时使用。</td>
+</tr>
+<tr>
+<td>Tab 头部右键菜单</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+<td><code>TabItemHeaderContextMenuItemsResolver</code>。</td>
+</tr>
+<tr>
+<td>状态栏</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code></td>
+<td><code>StatusBarManager</code>。</td>
+</tr>
+<tr>
+<td>任务栏菜单</td>
+<td><code>ITaskbarMenuManager</code></td>
+<td><code>TaskbarContextMenu</code>。</td>
+</tr>
+<tr>
+<td>配置/状态</td>
+<td><code>IConfig</code>, <code>IState</code></td>
+<td><code>ModuleTools.RegisterAllFromAssembly(...)</code>。</td>
+</tr>
+<tr>
+<td>事件</td>
+<td><code>IEventAggregator</code></td>
+<td>运行时发布/订阅总线。</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td><code>IToastManager</code>, <code>IToast</code></td>
+<td>Toast 弹出宿主。</td>
+</tr>
+<tr>
+<td>拖放</td>
+<td><code>IDropActionProvider</code></td>
+<td><code>DropOrchestrator</code>。</td>
+</tr>
+<tr>
+<td>Aspire 资源</td>
+<td><code>IExtensionResourcesProvider</code></td>
+<td><code>AspireService.Build(...)</code>。</td>
+</tr>
+<tr>
+<td>CLI 选项</td>
+<td><code>ModuleBase.RegisterCommandLineOption(...)</code></td>
+<td><code>ZYC.Framework.CLI</code> 根命令。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="模块生命周期">模块生命周期</h2>
+<p>用模块生命周期决定每类注册放在哪里：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>必须在容器构建前完成的 Autofac 注册。</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>运行时贡献，例如 Tab 工厂、菜单项、状态栏 Provider、Aspire 资源注册。</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>需要所有模块都加载完之后再执行的跨模块工作。</td>
+</tr>
+<tr>
+<td><code>RegisterCommandLineOption(...)</code></td>
+<td>模块拥有的 CLI 参数。</td>
+</tr>
+</tbody>
+</table>
+<p>大多数 UI 模块只需要 <code>LoadAsync</code>。</p>
+<h2 id="uri-tab">URI Tab</h2>
+<p>URI Tab 是暴露功能表面的主要方式。注册一个 <code>ITabItemFactory</code>，通常使用 <code>ILifetimeScope</code> 上的辅助方法：</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>当路由可以用 URI 部件表达时，使用 <code>TabItemRouteAttribute</code>。当判断需要服务、文件类型检查或更复杂策略时，覆盖 <code>CheckUriMatchedAsync</code>。</p>
+<p>只有在很小的单视图场景中，才使用 <code>RegisterSimpleTabItemFactory(...)</code>，也就是一个 <code>UserControl</code> 可以直接打开，不需要专门的路由模型。</p>
+<h2 id="主菜单">主菜单</h2>
+<p>根菜单内置 File、View、Tools、Extensions 和 About Provider。模块菜单项通常注册到其中一个 Provider 下：</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>菜单排序先按 <code>Anchor</code>，再按同一组内的 <code>Priority</code>。<code>MainMenuManager</code> 会在 Anchor 组之间插入分隔符，并递归排序子项。</p>
+<p>只有当模块需要一个包含多个子命令的父菜单时，才创建模块自己的 <code>IMainMenuItemsProvider</code>。如果只有一个命令，把 <code>IMainMenuItem</code> 注册到现有 Provider 即可。</p>
+<h2 id="窗口标题栏">窗口标题栏</h2>
+<p>紧凑的 command-style title-bar buttons 使用 <code>IWindowTitleManager</code>；更丰富的标题栏内容使用 <code>IWindowTitleExtendManager</code>。扩展项实现 <code>IWindowTitleExtendItem</code>，并返回要显示在标题栏中的 view object。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWindowTitleExtendManager&gt;()
+        .RegisterItem&lt;ReportsWindowTitleItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>这个 surface 适合需要靠近 window chrome 常驻显示的 module-owned status 或 account controls。用户收藏类快捷入口应使用 quick bar items，而不是模块私有标题栏 UI。</p>
+<h2 id="工作区菜单">工作区菜单</h2>
+<p>如果命令需要出现在工作区编号旁边的可见下拉菜单中，使用 <code>IWorkspaceMenuManager</code>：</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWorkspaceMenuManager&gt;()
+        .RegisterItem&lt;ReportsWorkspaceMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>IWorkspaceMenuItem</code> 支持 <code>Title</code>、<code>Command</code>、<code>SubItems</code>、<code>Icon</code>、<code>Anchor</code>、<code>Priority</code> 和 <code>Localization</code>。当前可见的 <code>WorkspaceMenuView</code> 读取 <code>IWorkspaceMenuManager.GetItems()</code>。</p>
+<p><code>IWorkspaceContextMenuManager</code> 是另一个 Manager，它按 <code>Anchor</code> 和 <code>Priority</code> 递归排序。除非已经有上下文菜单 View 接入它，否则不要假设它的项会显示出来。</p>
+<h2 id="tab-头部右键菜单">Tab 头部右键菜单</h2>
+<p>Tab 头部菜单项是注册为 <code>ITabItemHeaderContextMenuItemView</code> 的 WPF 菜单项 View：</p>
+<pre><code class="lang-csharp">[RegisterAs(typeof(ITabItemHeaderContextMenuItemView))]
+internal partial class ReportsTabHeaderMenuItem :
+    ITabItemHeaderContextMenuItemView
+{
+    public int Order =&gt; 20;
+}
+</code></pre>
+<p><code>TabItemHeaderContextMenuItemsResolver</code> 会解析所有已注册 View，并按 <code>Order</code> 排序。由于 WPF ContextMenu 是 late-bound，如果菜单项需要当前 Tab 实例，优先使用 command parameter 和已有的 <code>ContextMenuItemBase</code> 模式。</p>
+<h2 id="状态栏">状态栏</h2>
+<p>状态栏扩展贡献一个 <code>IStatusBarItemsProvider</code>；Provider 返回一个或多个 <code>IStatusBarItem</code>。<code>StatusBarManager</code> 聚合所有已注册 Provider，并按 <code>Order</code> 排序。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IStatusBarManager&gt;()
+        .RegisterStatusBarItemsProvider&lt;ReportsStatusBarItemsProvider&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>每个 Item 通过 <code>StatusBarSection.Left</code> 或 <code>StatusBarSection.Right</code> 选择显示侧。</p>
+<h2 id="任务栏菜单">任务栏菜单</h2>
+<p>任务栏菜单项实现 <code>ITaskbarMenuItem</code>，并注册到 <code>ITaskbarMenuManager</code>：</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ITaskbarMenuManager&gt;()
+    .RegisterMenuItem(lifetimeScope.Resolve&lt;ReportsTaskbarMenuItem&gt;());
+</code></pre>
+<p>任务栏菜单按 <code>Info.Anchor</code> 分组，按 <code>Info.Priority</code> 排序，并递归排序子项。这个表面适合托盘/窗口级命令，不适合本应放进主菜单的功能导航。</p>
+<h2 id="配置与状态">配置与状态</h2>
+<p>任何实现 <code>IConfig</code> 或 <code>IState</code> 的具体类型，都会在模块程序集注册期间从 settings 目录加载，并注册到 Autofac。它适合小型、可 JSON 序列化的设置和状态。</p>
+<p>准则：</p>
+<ul>
+<li>用户可编辑选项放在 <code>IConfig</code>。</li>
+<li>运行时持久化放在 <code>IState</code>。</li>
+<li>类型保持小型，并能承受版本演进。</li>
+<li>不要把 config/state 当成大型业务数据存储。</li>
+</ul>
+<h2 id="事件与-toast">事件与 Toast</h2>
+<p>解耦的运行时通知使用 <code>IEventAggregator</code>：</p>
+<pre><code class="lang-csharp">lifetimeScope.PublishEvent(new ReportsChangedEvent());
+lifetimeScope.SubscribeEvent&lt;ReportsChangedEvent&gt;(OnReportsChanged, onUiThread: true);
+</code></pre>
+<p>用户可见的临时反馈使用 <code>IToastManager</code>：</p>
+<pre><code class="lang-csharp">toastManager.PromptMessage(ToastMessage.Info(&quot;Report exported.&quot;, localization: false));
+toastManager.PromptException(exception);
+</code></pre>
+<p>事件用于协调，Toast 用于可见反馈。不要把 Toast 消息当成控制流。</p>
+<h2 id="拖放">拖放</h2>
+<p>拖放动作通过 <code>IDropActionProvider</code> 贡献。Orchestrator 会向所有 Provider 询问兼容的 <code>DropAction</code>，用 <code>CanRun()</code> 过滤，按 <code>Id</code> 去重，然后执行默认动作或显示选择器。</p>
+<p>当模块需要以工作区感知的方式处理拖入的文件、路径或 Tab 负载时，使用这个扩展点。<code>DropContext</code> 包含目标对象、工作区 id、修饰键、屏幕坐标和取消令牌。</p>
+<h2 id="aspire-资源">Aspire 资源</h2>
+<p>Aspire 扩展模块注册 <code>IExtensionResourcesProvider</code>。<code>AspireService.Build(...)</code> 会解析所有 Provider，并调用每个 Provider 的 <code>ConfigureResources(builder)</code>。</p>
+<p>对于命令行子服务，通过 <code>ICommandlineResourcesProvider</code> 注册：</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ICommandlineResourcesProvider&gt;()
+    .Register(new CommandlineServiceOptions
+    {
+        Name = &quot;reports-worker&quot;,
+        WorkDirectory = workerDirectory,
+        Command = &quot;dotnet run&quot;
+    });
+</code></pre>
+<p>它适合由 Aspire Host 拉起的 sidecar 服务，而不是大型应用内 UI。</p>
+<h2 id="cli-选项">CLI 选项</h2>
+<p>CLI 会加载模块，并在最终确定根命令前调用 <code>RegisterCommandLineOption(container, optionRegister)</code>。当模块需要自己的命令行开关时使用它。</p>
+<p>如果是完整脚手架命令，使用类似内置 <code>zyc new</code> 和 <code>zyc new-module</code> 的显式子命令，不要把无关含义塞进普通 flag。</p>
+<h2 id="如何选择扩展面">如何选择扩展面</h2>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开功能 View</td>
+<td>URI + <code>ITabItemFactory</code></td>
+</tr>
+<tr>
+<td>添加一个顶层应用命令</td>
+<td>现有主菜单 Provider</td>
+</tr>
+<tr>
+<td>在一个模块父级下添加多个命令</td>
+<td>模块自有 <code>IMainMenuItemsProvider</code></td>
+</tr>
+<tr>
+<td>添加工作区操作</td>
+<td><code>IWorkspaceMenuManager</code></td>
+</tr>
+<tr>
+<td>添加 Tab 头部动作</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+</tr>
+<tr>
+<td>显示轻量运行时状态</td>
+<td>Status bar provider</td>
+</tr>
+<tr>
+<td>添加托盘/窗口命令</td>
+<td><code>ITaskbarMenuManager</code></td>
+</tr>
+<tr>
+<td>持久化小型设置或状态</td>
+<td><code>IConfig</code> / <code>IState</code></td>
+</tr>
+<tr>
+<td>协调运行时行为</td>
+<td><code>IEventAggregator</code></td>
+</tr>
+<tr>
+<td>显示用户反馈</td>
+<td><code>IToastManager</code></td>
+</tr>
+<tr>
+<td>添加拖入文件行为</td>
+<td><code>IDropActionProvider</code></td>
+</tr>
+<tr>
+<td>启动 sidecar 服务</td>
+<td>Aspire resource provider</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.zh-CN.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
