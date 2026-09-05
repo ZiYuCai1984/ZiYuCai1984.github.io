@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface ITabManager </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface ITabManager ">
+      
+      <meta name="description" content="Defines the core functionality for managing tab item instances across multiple workspaces, handling navigation, lifecycle, and focus state.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/new/master/apiSpec/new?filename=ZYC_Framework_Abstractions_Tab_ITabManager.md&amp;value=---%0Auid%3A%20ZYC.Framework.Abstractions.Tab.ITabManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ZYC.Framework.Abstractions.Tab.ITabManager">
+
+
+
+  <h1 id="ZYC_Framework_Abstractions_Tab_ITabManager" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager" class="text-break">
+Interface ITabManager  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ZYC.html">ZYC</a>.<a class="xref" href="ZYC.Framework.html">Framework</a>.<a class="xref" href="ZYC.Framework.Abstractions.html">Abstractions</a>.<a class="xref" href="ZYC.Framework.Abstractions.Tab.html">Tab</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ZYC.Framework.Abstractions.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the core functionality for managing tab item instances across multiple workspaces,
+handling navigation, lifecycle, and focus state.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ITabManager</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_CloseAllAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.CloseAllAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_CloseAllAsync" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.CloseAllAsync">
+  CloseAllAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously closes all open tabs across all workspaces.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task CloseAllAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_CloseAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.CloseAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_CloseAsync_ZYC_Framework_Abstractions_Tab_ITabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.CloseAsync(ZYC.Framework.Abstractions.Tab.ITabItemInstance)">
+  CloseAsync(ITabItemInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously closes a specific tab item instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task CloseAsync(ITabItemInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The instance to be closed.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_FocusAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.FocusAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_FocusAsync_System_Uri_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.FocusAsync(System.Uri)">
+  FocusAsync(Uri)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Searches for an existing tab with the specified URI and brings it into focus.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Obsolete]
+Task FocusAsync(Uri uri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd><p>The URI of the tab to focus.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_GetFocusedTabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetFocusedTabItemInstance*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_GetFocusedTabItemInstance_System_Guid_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetFocusedTabItemInstance(System.Guid)">
+  GetFocusedTabItemInstance(Guid)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the currently focused tab item instance in the specified workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ITabItemInstance? GetFocusedTabItemInstance(Guid workspaceId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The unique identifier of the workspace.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The focused tab item instance, or null if no tab is focused.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_GetNavigationState_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetNavigationState*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_GetNavigationState_System_Guid_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetNavigationState(System.Guid)">
+  GetNavigationState(Guid)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the navigation state (e.g., history, current path) for a specific workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">NavigationState GetNavigationState(Guid workspaceId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The unique identifier of the workspace.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ZYC.Framework.Abstractions.State.NavigationState.html">NavigationState</a></dt>
+    <dd><p>The navigation state object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_GetTabItemInstanceWorkspace_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetTabItemInstanceWorkspace*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_GetTabItemInstanceWorkspace_ZYC_Framework_Abstractions_Tab_ITabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetTabItemInstanceWorkspace(ZYC.Framework.Abstractions.Tab.ITabItemInstance)">
+  GetTabItemInstanceWorkspace(ITabItemInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines which workspace node a specific tab item instance belongs to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">WorkspaceNode GetTabItemInstanceWorkspace(ITabItemInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The tab item instance to locate.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ZYC.Framework.Abstractions.Workspace.WorkspaceNode.html">WorkspaceNode</a></dt>
+    <dd><p>The workspace node containing the instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_GetTabItemInstances_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetTabItemInstances*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_GetTabItemInstances_System_Guid_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.GetTabItemInstances(System.Guid)">
+  GetTabItemInstances(Guid)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves all tab item instances currently open in the specified workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ITabItemInstance[] GetTabItemInstances(Guid workspaceId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The unique identifier of the workspace.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a>[]</dt>
+    <dd><p>An array of tab item instances.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_MoveAllTabItemInstances_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.MoveAllTabItemInstances*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_MoveAllTabItemInstances_System_Guid_System_Guid_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.MoveAllTabItemInstances(System.Guid,System.Guid)">
+  MoveAllTabItemInstances(Guid, Guid)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Transfers all tab item instances from a source workspace to a destination workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MoveAllTabItemInstances(Guid from, Guid to)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The source workspace ID.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The destination workspace ID.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_MoveTabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.MoveTabItemInstance*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_MoveTabItemInstance_ZYC_Framework_Abstractions_Tab_ITabItemInstance_System_Guid_System_Guid_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.MoveTabItemInstance(ZYC.Framework.Abstractions.Tab.ITabItemInstance,System.Guid,System.Guid)">
+  MoveTabItemInstance(ITabItemInstance, Guid, Guid)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves a tab item instance from one workspace to another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MoveTabItemInstance(ITabItemInstance instance, Guid from, Guid to)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The tab item instance to move.</p>
+</dd>
+    <dt><code>from</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The source workspace ID.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The destination workspace ID.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_MoveTabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.MoveTabItemInstance*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_MoveTabItemInstance_ZYC_Framework_Abstractions_Tab_ITabItemInstance_ZYC_Framework_Abstractions_Tab_ITabItemInstance_ZYC_Framework_Abstractions_Tab_TabInsertPosition_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.MoveTabItemInstance(ZYC.Framework.Abstractions.Tab.ITabItemInstance,ZYC.Framework.Abstractions.Tab.ITabItemInstance,ZYC.Framework.Abstractions.Tab.TabInsertPosition)">
+  MoveTabItemInstance(ITabItemInstance, ITabItemInstance, TabInsertPosition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves a specific tab item instance to a new position relative to a target tab item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MoveTabItemInstance(ITabItemInstance source, ITabItemInstance target, TabInsertPosition position)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>source</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The tab item instance that is being moved.</p>
+</dd>
+    <dt><code>target</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The reference tab item instance used to determine the new location.</p>
+</dd>
+    <dt><code>position</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.TabInsertPosition.html">TabInsertPosition</a></dt>
+    <dd><p>The insertion mode (e.g., before or after) relative to the target tab.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_System_Guid_System_String_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync(System.Guid,System.String)">
+  NavigateAsync(Guid, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously navigates to a URI string within a specific workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task NavigateAsync(Guid workspaceId, string uri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The target workspace identifier.</p>
+</dd>
+    <dt><code>uri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The target URI string.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_System_Guid_System_Uri_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync(System.Guid,System.Uri)">
+  NavigateAsync(Guid, Uri)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously navigates to a URI within a specific workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task NavigateAsync(Guid workspaceId, Uri uri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The target workspace identifier.</p>
+</dd>
+    <dt><code>uri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd><p>The target URI.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_System_String_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync(System.String)">
+  NavigateAsync(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously navigates to the specified URI string in the current active context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task NavigateAsync(string uri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The target URI string.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_NavigateAsync_System_Uri_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.NavigateAsync(System.Uri)">
+  NavigateAsync(Uri)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously navigates to the specified URI in the current active context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task NavigateAsync(Uri uri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd><p>The target URI.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_ReloadAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.ReloadAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_ReloadAsync_ZYC_Framework_Abstractions_Tab_ITabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.ReloadAsync(ZYC.Framework.Abstractions.Tab.ITabItemInstance)">
+  ReloadAsync(ITabItemInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reloads the specified tab by replacing it with a freshly created instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ReloadAsync(ITabItemInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The tab item instance to reload.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_RestoreStateAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.RestoreStateAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_RestoreStateAsync" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.RestoreStateAsync">
+  RestoreStateAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously restores the manager's state (e.g., re-opening tabs from a previous session).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task RestoreStateAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_SetFocusedTabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.SetFocusedTabItemInstance*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_SetFocusedTabItemInstance_System_Guid_ZYC_Framework_Abstractions_Tab_ITabItemInstance_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.SetFocusedTabItemInstance(System.Guid,ZYC.Framework.Abstractions.Tab.ITabItemInstance)">
+  SetFocusedTabItemInstance(Guid, ITabItemInstance?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets a specific tab item instance as the focused tab within a workspace.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetFocusedTabItemInstance(Guid workspaceId, ITabItemInstance? instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>workspaceId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd><p>The unique identifier of the workspace.</p>
+</dd>
+    <dt><code>instance</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The tab item instance to focus.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ZYC_Framework_Abstractions_Tab_ITabManager_TabInternalNavigatingAsync_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.TabInternalNavigatingAsync*"></a>
+
+  <h3 id="ZYC_Framework_Abstractions_Tab_ITabManager_TabInternalNavigatingAsync_ZYC_Framework_Abstractions_Tab_ITabItemInstance_System_Uri_System_Uri_" data-uid="ZYC.Framework.Abstractions.Tab.ITabManager.TabInternalNavigatingAsync(ZYC.Framework.Abstractions.Tab.ITabItemInstance,System.Uri,System.Uri)">
+  TabInternalNavigatingAsync(ITabItemInstance, Uri, Uri)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Handles internal navigation within a tab, transitioning from an old URI to a new one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task TabInternalNavigatingAsync(ITabItemInstance instance, Uri oriUri, Uri newUri)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="ZYC.Framework.Abstractions.Tab.ITabItemInstance.html">ITabItemInstance</a></dt>
+    <dd><p>The tab item instance to move.</p>
+</dd>
+    <dt><code>oriUri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd><p>The original URI.</p>
+</dd>
+    <dt><code>newUri</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></dt>
+    <dd><p>The new target URI.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/src/ZYC.Framework.Abstractions/Tab/ITabManager.cs/#L88" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
