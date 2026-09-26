@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>組み込みモジュール </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="組み込みモジュール ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/built-in-modules.ja.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="built-in-modules.html">English</a> |
+  <a href="built-in-modules.ja.html">日本語</a> |
+  <a href="built-in-modules.zh-CN.html">简体中文</a> |
+  <a href="built-in-modules.zh-TW.html">繁體中文</a> |
+  <a href="built-in-modules.ko.html">한국어</a> |
+</p>
+<h1 id="組み込みモジュール">組み込みモジュール</h1>
+<p>このページは、現在の ZYC.Framework ソース ツリーに含まれる組み込みモジュールをまとめます。ここでの組み込みモジュールとは、<code>Module : ModuleBase</code> の入口を持ち、モジュール ローダーに発見されることを意図した <code>ZYC.Framework.Modules.*</code> プロジェクトです。</p>
+<p><code>ZYC.Framework.Modules.*.Abstractions</code> のような Abstractions プロジェクトはコントラクト アセンブリであり、それだけでは実行時モジュールではありません。</p>
+<h2 id="組み込みモジュールのロード方法">組み込みモジュールのロード方法</h2>
+<p>起動時、モジュール ローダーはアプリケーション ディレクトリから <code>ZYC.Framework.Modules*.dll</code> 形式のアセンブリを探します。各モジュール アセンブリについて、次を行います。</p>
+<ul>
+<li>アセンブリ内の Autofac サービスを登録する。</li>
+<li>settings ディレクトリから具象 <code>IConfig</code> / <code>IState</code> 型を読み込む。</li>
+<li><code>ModuleBase</code> を継承した最初の型を探す。</li>
+<li>モジュール インスタンスを作成し、<code>RegisterAsync</code> を呼ぶ。</li>
+<li>後で、有効なモジュールだけ <code>LoadAsync</code> を呼ぶ。</li>
+</ul>
+<p><code>ModuleConfig.DisabledAssemblyNames</code> は発見されたモジュール アセンブリをファイル名で無効化します。<code>ModuleConfig.AdditionalAssemblyNames</code> はアプリケーション ディレクトリから追加アセンブリを読み込みます。</p>
+<h2 id="モジュール一覧">モジュール一覧</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>主な面</th>
+<th>補足</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>About</code></td>
+<td>About メニューとルーティング タブ</td>
+<td>製品/about 情報を表示する。</td>
+</tr>
+<tr>
+<td><code>Accounts</code></td>
+<td>タイトルバー拡張とアカウント サービス</td>
+<td>Provider ベースの account session を初期化し、sign-in/sign-out 操作を公開する。</td>
+</tr>
+<tr>
+<td><code>Accounts.GitHub</code></td>
+<td>GitHub OAuth WebView2 タブ</td>
+<td>GitHub account provider と sign-in callback 処理を提供する。</td>
+</tr>
+<tr>
+<td><code>ApiReference</code></td>
+<td>About メニューと WebView2 タブ</td>
+<td>API reference content をホストする。</td>
+</tr>
+<tr>
+<td><code>Aspire</code></td>
+<td>Tools メニュー、ルーティング タブ、ステータスバー</td>
+<td>Aspire resources を開始・監視し、<code>IExtensionResourcesProvider</code> の寄与を解決する。</td>
+</tr>
+<tr>
+<td><code>BlazorDemo</code></td>
+<td>Tools メニューとルーティング タブ</td>
+<td>デスクトップ Host 内の Blazor 統合を示す。</td>
+</tr>
+<tr>
+<td><code>ChromeExtensions</code></td>
+<td>Extensions メニューとルーティング タブ</td>
+<td>WebBrowser 用のローカル Chrome Web Store extension packages を管理する。</td>
+</tr>
+<tr>
+<td><code>CLI</code></td>
+<td>Tools メニューと terminal タブ</td>
+<td>組み込み terminal をホストし、terminal native dependencies をロードする。</td>
+</tr>
+<tr>
+<td><code>FileExplorer</code></td>
+<td>File メニューとルーティング タブ</td>
+<td>ファイル システム閲覧面を開く。</td>
+</tr>
+<tr>
+<td><code>FileExplorer.Features</code></td>
+<td>File menu sub-provider</td>
+<td>FileExplorer contracts の上に recent-path 系機能を追加する。</td>
+</tr>
+<tr>
+<td><code>Language</code></td>
+<td>Settings メニューとルーティング タブ</td>
+<td>言語選択と localization resource 管理を提供する。</td>
+</tr>
+<tr>
+<td><code>Log</code></td>
+<td>File メニューと logging provider</td>
+<td>log4net ベースの logger provider を登録し、ログ表示を提供する。</td>
+</tr>
+<tr>
+<td><code>MCP.Server</code></td>
+<td>Tools menu provider</td>
+<td>MCP server 操作を公開する。</td>
+</tr>
+<tr>
+<td><code>Mock</code></td>
+<td>Root mock menu と demo tabs</td>
+<td>ダイアログ、通知、タスク、CLI、サンプル View 用の開発/テスト モジュール。</td>
+</tr>
+<tr>
+<td><code>ModuleManager</code></td>
+<td>Extensions メニューとルーティング タブ</td>
+<td>ローカル モジュールと NuGet-installed modules を管理する。</td>
+</tr>
+<tr>
+<td><code>NuGet</code></td>
+<td>File メニュー</td>
+<td>NuGet cache tooling を提供する。</td>
+</tr>
+<tr>
+<td><code>Secrets</code></td>
+<td>Settings メニューとルーティング タブ</td>
+<td><code>ISecrets</code> 経由で secret-like settings を管理する。</td>
+</tr>
+<tr>
+<td><code>Settings</code></td>
+<td>Root Settings メニューとルーティング タブ</td>
+<td>他モジュールが使う settings shell をホストする。</td>
+</tr>
+<tr>
+<td><code>TaskManager</code></td>
+<td>Tools メニュー、ルーティング タブ、ステータスバー</td>
+<td>Task management を初期化し、タスク状態/操作を公開する。</td>
+</tr>
+<tr>
+<td><code>TextEditor</code></td>
+<td>File/Open メニューとルーティング タブ</td>
+<td>text preview/edit 面を提供し、generic <code>file://</code> preview を扱う。</td>
+</tr>
+<tr>
+<td><code>Translator</code></td>
+<td>Aspire command-line resource</td>
+<td>Aspire が利用可能な場合、LibreTranslate sidecar を登録する。</td>
+</tr>
+<tr>
+<td><code>Update</code></td>
+<td>About メニューとルーティング タブ</td>
+<td>update check を提供し、tab/workspace restore 後に起動時チェックできる。</td>
+</tr>
+<tr>
+<td><code>WebBrowser</code></td>
+<td>Tools メニューと WebView2 タブ</td>
+<td>Host 内で browser tab を開く。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shell-と-diagnostics-モジュール">Shell と Diagnostics モジュール</h2>
+<p><code>Settings</code>、<code>Language</code>、<code>Secrets</code>、<code>Log</code>、<code>TaskManager</code>、<code>ModuleManager</code>、<code>Update</code>、<code>About</code>、<code>Accounts</code>、<code>ChromeExtensions</code>、<code>ApiReference</code> は主に Shell/運用系モジュールです。Framework の確認、設定、保守をしやすくします。</p>
+<p>これらのモジュールは通常 <code>LoadAsync</code> からメニュー項目とルーティング タブを登録します。一部はより早い段階でサービスも登録します。</p>
+<ul>
+<li><code>Log</code> は <code>RegisterAsync</code> で logging providers を登録します。</li>
+<li><code>Language</code> は language-resource adapters を登録し、default language resources を読み込みます。</li>
+<li><code>Secrets</code> は config objects から <code>ISecrets</code> への adapter を登録します。</li>
+<li><code>TaskManager</code> は UI 公開前に <code>ITaskManager</code> を初期化します。</li>
+<li><code>Accounts</code> は <code>IAccountManager</code> を初期化し、タイトルバーの account surface を登録します。</li>
+<li><code>ChromeExtensions</code> は extension package manager タブを Extensions 配下に登録します。</li>
+<li><code>Update</code> はすべてのモジュールがロードされた後に購読し、起動時チェック前に <code>TabManagerRestoreCompleted</code> を待ちます。</li>
+</ul>
+<h2 id="navigation-と-content-モジュール">Navigation と Content モジュール</h2>
+<p><code>WebBrowser</code>、<code>FileExplorer</code>、<code>TextEditor</code>、<code>CLI</code>、<code>BlazorDemo</code> はユーザー向け content surface を公開します。Shell から View を直接作るのではなく、いずれも tab routing に依存します。</p>
+<p><code>Accounts.GitHub</code> と <code>ChromeExtensions</code> も provider sign-in と Chrome Web Store package discovery のために WebView2 ベースのタブを使います。どちらも通常のモジュールとしてロードされ、browser-specific behavior は WebView2 infrastructure と module contracts を通じて扱います。</p>
+<p>これらのモジュールが誤ったタブや Not Found タブを開く場合は、登録済み <code>ITabItemFactory</code>、route attributes、factory priority、<code>ITabManager.NavigateAsync(...)</code> に渡している URI を確認してください。</p>
+<h2 id="aspire-と-sidecar-モジュール">Aspire と Sidecar モジュール</h2>
+<p><code>Aspire</code> は Aspire resources を実行する Host 側モジュールです。Aspire dashboard tab、Tools menu entry、status bar item を登録します。<code>AspireConfig.AutoStart</code> が true の場合、module load 中に Aspire service を開始します。</p>
+<p><code>Translator</code> は sidecar 型モジュールです。大きな UI は持たず、<code>ICommandlineResourcesProvider</code> に command-line resource を登録し、Aspire module が LibreTranslate を起動できるようにします。</p>
+<h2 id="development-と-demo-モジュール">Development と Demo モジュール</h2>
+<p><code>Mock</code> と <code>BlazorDemo</code> は framework behavior の開発・検証に役立ちます。<code>Mock</code> は通知、ダイアログ、task manager behavior、CLI integration のための demo tabs と sample views を登録します。Production feature は、明示的に診断/サンプル用途でない限り Mock に入れないでください。</p>
+<h2 id="不完全または非モジュールのディレクトリ">不完全または非モジュールのディレクトリ</h2>
+<p>実際の module project と <code>Module.cs</code> を持つディレクトリだけを active built-in module と扱います。<code>obj</code>、生成ファイル、<code>UI</code> サブフォルダーだけのフォルダーは runtime discovery の根拠になりません。</p>
+<p>モジュール ロードを文書化または調査するときは、フォルダー名だけでなく、compiled output と <code>Module.cs</code> から始めてください。</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/built-in-modules.ja.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

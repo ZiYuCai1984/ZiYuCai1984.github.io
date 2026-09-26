@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>아키텍처 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="아키텍처 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/architecture.ko.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="architecture.html">English</a> |
+  <a href="architecture.ja.html">日本語</a> |
+  <a href="architecture.zh-CN.html">简体中文</a> |
+  <a href="architecture.zh-TW.html">繁體中文</a> |
+  <a href="architecture.ko.html">한국어</a> |
+</p>
+<h1 id="아키텍처">아키텍처</h1>
+<p>이 문서는 저장소 구조와 런타임 로딩 경로를 기준으로 현재 ZYC.Framework의 아키텍처를 설명합니다. 초점은 일반적인 WPF 설명이 아니라, 애플리케이션에서 실제로 사용하는 확장 지점입니다. 모듈, 의존성 주입, URI 기반 탭, 워크스페이스, 설정/상태 영속화, Aspire 리소스, MCP 노출을 다룹니다.</p>
+<h2 id="솔루션-구성">솔루션 구성</h2>
+<p>ZYC.Framework는 모듈형 WPF 데스크톱 프레임워크입니다. 실행 셸은 의도적으로 작게 유지됩니다. 애플리케이션을 시작하고, Autofac 컨테이너를 만들고, 모듈을 로드한 뒤, UI 구성은 메인 메뉴, 탭, 워크스페이스, 상태 표시줄, 알림 등의 Manager에 위임합니다.</p>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>책임</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Abstractions</code></td>
+<td>공개 계약, config/state 타입, 모듈용 DTO, 메뉴/탭/워크스페이스 인터페이스, MCP 특성.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Core</code></td>
+<td>공통 WPF 헬퍼, 명령, 기본 컨트롤, 다이얼로그, 로컬라이제이션 헬퍼, 컨버터, 등록 헬퍼.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.MetroWindow</code></td>
+<td>메인 윈도우 구현과 다이얼로그 호스팅 같은 윈도우 레벨 서비스.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.WebView2</code></td>
+<td>WebView2 호스트 컨트롤과 브라우저 통합 인프라.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework</code></td>
+<td>데스크톱 실행 셸, 시작 흐름, 워크스페이스 UI, 탭 UI, 메뉴 UI, 알림, QuickBar, 상태 표시줄, AppContext 구현.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.*.Abstractions</code></td>
+<td>모듈별 공개 계약, config/state 클래스, 상수, 명령 인터페이스. 다른 모듈이 참조해야 하는 경계입니다.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.*</code></td>
+<td>모듈 구현 프로젝트. 서비스, 메뉴 항목, 탭 팩토리, 상태 표시줄 항목, Aspire 리소스, 명령줄 옵션을 등록합니다.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.CLI</code></td>
+<td>dotnet tool 엔트리포인트. <code>zyc new</code>, <code>zyc new-module</code>을 제공하며 데스크톱 Host와 모듈 발견/로딩 인프라를 공유합니다.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.*</code></td>
+<td>문서, 패키징, 설치 프로그램 생성, 프로젝트/모듈 스캐폴딩 래퍼, 제품 버전 처리를 위한 빌드 타임 도구.</td>
+</tr>
+<tr>
+<td><code>Thirdparty/*</code></td>
+<td>솔루션과 함께 빌드되는 vendored 또는 forked 의존성.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="상위-의존성-그래프">상위 의존성 그래프</h2>
+<pre><code class="lang-mermaid">graph TD
+  Host[&quot;ZYC.Framework executable&quot;]
+  Abs[&quot;ZYC.Framework.Abstractions&quot;]
+  Core[&quot;ZYC.Framework.Core&quot;]
+  Metro[&quot;ZYC.Framework.MetroWindow&quot;]
+  WebView[&quot;ZYC.Framework.WebView2&quot;]
+  Modules[&quot;ZYC.Framework.Modules.*&quot;]
+  ModuleAbs[&quot;ZYC.Framework.Modules.*.Abstractions&quot;]
+  CLI[&quot;ZYC.Framework.CLI&quot;]
+  Build[&quot;ZYC.Framework.Build.*&quot;]
+  Thirdparty[&quot;Thirdparty/*&quot;]
+
+  Host --&gt; Abs
+  Host --&gt; Core
+  Host --&gt; Metro
+  Host --&gt; WebView
+  Host --&gt; CLI
+  Core --&gt; Abs
+  Metro --&gt; Abs
+  Metro --&gt; Core
+  WebView --&gt; Core
+  Modules --&gt; Abs
+  Modules --&gt; Core
+  Modules --&gt; ModuleAbs
+  ModuleAbs --&gt; Abs
+  CLI --&gt; Abs
+  CLI --&gt; Core
+  Build --&gt; Abs
+  Build --&gt; CLI
+  Core --&gt; Thirdparty
+  WebView --&gt; Thirdparty
+</code></pre>
+<p>중요한 경계는 <code>*.Abstractions</code> 프로젝트가 공개 모듈 계약을 정의하고 WPF 구현 세부사항과 독립되어야 한다는 점입니다. 실제 View, 메뉴 항목, 탭 항목을 구현하는 런타임 모듈은 WPF와 프레임워크 UI 인프라에 의존할 수 있습니다.</p>
+<h2 id="시작-흐름">시작 흐름</h2>
+<p>데스크톱 엔트리포인트는 <code>src/ZYC.Framework/Program.cs</code>입니다.</p>
+<ol>
+<li>프로세스는 시작 URI를 읽고, JSON/settings 동작을 초기화하며, Debug 빌드가 아닐 때 단일 인스턴스 제어를 수행하고, 영속화된 시작 버전으로 리디렉션할지 판단합니다.</li>
+<li>Autofac <code>ContainerBuilder</code>를 만듭니다.</li>
+<li><code>ModuleTools.RegisterAllFromAssembly(...)</code>로 핵심 프레임워크 어셈블리를 등록합니다. 대상은 실행 어셈블리, <code>ZYC.Framework.Core</code>, <code>ZYC.Framework.WebView2</code>, <code>ZYC.Framework.MetroWindow</code>, <code>ZYC.Framework.Abstractions</code>입니다.</li>
+<li><code>RegisterAllFromAssembly(...)</code>는 어셈블리의 Autofac 서비스를 등록하고, settings 디렉터리에서 발견된 모든 <code>IConfig</code>와 <code>IState</code> 구현을 로드합니다.</li>
+<li><code>ModuleTools.RegisterModules(...)</code>는 실행 폴더에서 <code>ZYC.Framework.Modules*.dll</code>을 스캔하고, <code>ModuleConfig.AdditionalAssemblyNames</code>에 나열된 어셈블리를 추가하며, <code>ModuleConfig.DisabledAssemblyNames</code>에 있는 어셈블리를 건너뛰고, 대기 중인 파일 삭제를 처리합니다. 또한 <code>settings/nuget.module.assets.json</code>에서 NuGet 모듈을 로드할 수 있습니다.</li>
+<li>각 모듈 인스턴스는 컨테이너가 빌드되기 전에 <code>RegisterAsync(builder)</code>를 실행합니다.</li>
+<li><code>builder.Build()</code> 후 활성화된 모듈은 <code>LoadAsync(container)</code>와 <code>AfterLoadedAsync(container)</code>를 차례로 실행합니다.</li>
+<li>셸은 내장 모듈 로드 탭 팩토리를 등록하고, 모듈 로드 오류를 <code>IModuleLoadInfoManager</code>에 저장하며, 메인 윈도우를 해석한 뒤 WPF를 시작합니다.</li>
+</ol>
+<pre><code class="lang-mermaid">graph TD
+  Start[&quot;Program.Main&quot;]
+  Builder[&quot;Autofac ContainerBuilder 생성&quot;]
+  FrameworkAssemblies[&quot;프레임워크 어셈블리 등록&quot;]
+  ConfigState[&quot;settings에서 IConfig와 IState 로드&quot;]
+  ModuleScan[&quot;모듈 DLL과 NuGet module assets 스캔&quot;]
+  RegisterAsync[&quot;Module.RegisterAsync(builder)&quot;]
+  BuildContainer[&quot;builder.Build()&quot;]
+  LoadAsync[&quot;Module.LoadAsync(container)&quot;]
+  AfterLoaded[&quot;Module.AfterLoadedAsync(container)&quot;]
+  Shell[&quot;메인 윈도우를 해석하고 WPF 앱 실행&quot;]
+
+  Start --&gt; Builder
+  Builder --&gt; FrameworkAssemblies
+  FrameworkAssemblies --&gt; ConfigState
+  ConfigState --&gt; ModuleScan
+  ModuleScan --&gt; RegisterAsync
+  RegisterAsync --&gt; BuildContainer
+  BuildContainer --&gt; LoadAsync
+  LoadAsync --&gt; AfterLoaded
+  AfterLoaded --&gt; Shell
+</code></pre>
+<h2 id="모듈-모델">모듈 모델</h2>
+<p>모듈은 일반적으로 두 프로젝트로 나뉩니다.</p>
+<table>
+<thead>
+<tr>
+<th>프로젝트</th>
+<th>목적</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Modules.&lt;Name&gt;.Abstractions</code></td>
+<td>공개 API, 상수, config/state, 명령, DTO.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.&lt;Name&gt;</code></td>
+<td>구현: <code>Module.cs</code>, View, 탭 항목, 탭 팩토리, 메뉴 항목, Manager, Provider, 서비스 등록.</td>
+</tr>
+</tbody>
+</table>
+<p>런타임 모듈 객체는 <code>ModuleBase</code>의 하위 클래스입니다. 프레임워크는 다음 단계를 사용합니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>실행 시점</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder)</code></td>
+<td>Autofac 루트 컨테이너 빌드 전.</td>
+<td>의존성 해석에 참여해야 하는 서비스 등록.</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope)</code></td>
+<td>컨테이너 빌드 후.</td>
+<td>탭 팩토리, 메뉴 항목, 상태 표시줄 항목, Aspire 리소스, 시작 작업 같은 런타임 확장 지점 등록.</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope)</code></td>
+<td>모든 활성 모듈 로드 후.</td>
+<td>다른 모듈이 이미 사용 가능해야 하는 작업.</td>
+</tr>
+</tbody>
+</table>
+<p>모듈 의존성은 <code>ZYC.Framework.Modules.*.Abstractions.dll</code>에 대한 어셈블리 참조에서 추론됩니다. 이는 모듈 관리자에게 실용적인 의존성 뷰를 제공하지만, 별도의 의미론적 모듈 매니페스트가 아니라 규약 기반 발견입니다.</p>
+<h2 id="ui-구성">UI 구성</h2>
+<p>셸은 모듈 UI를 하드코딩하지 않고 Manager를 통해 구성됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>표면</th>
+<th>주요 계약</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>메인 메뉴와 Hamburger 메뉴</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code>, <code>IMainMenuItem</code>, <code>IHamburgerMenuManager</code></td>
+</tr>
+<tr>
+<td>탭과 탐색</td>
+<td><code>ITabManager</code>, <code>ITabItemFactoryManager</code>, <code>ITabItemFactory</code>, <code>ITabItemInstance</code></td>
+</tr>
+<tr>
+<td>워크스페이스</td>
+<td><code>IParallelWorkspaceManager</code>, 워크스페이스 state/config 타입, 워크스페이스 메뉴 Manager</td>
+</tr>
+<tr>
+<td>QuickBar</td>
+<td><code>IQuickBarManager</code>, QuickBar item/provider 계약</td>
+</tr>
+<tr>
+<td>상태 표시줄</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code>, <code>IStatusBarItem</code></td>
+</tr>
+<tr>
+<td>알림</td>
+<td><code>IToastManager</code>, <code>IBannerManager</code>, Toast/Banner View 인프라</td>
+</tr>
+<tr>
+<td>다이얼로그와 Overlay</td>
+<td><code>IDialogManager</code>, <code>IDialog</code>, <code>IOverlayManager</code></td>
+</tr>
+</tbody>
+</table>
+<p>모듈은 보통 <code>LoadAsync(...)</code>에서 UI를 추가합니다. 예를 들어, 모듈은 탭 팩토리와 Tools 메뉴 항목을 등록할 수 있습니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;MyTabItemFactory&gt;();
+    lifetimeScope.RegisterToolsMainMenuItem&lt;MyMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>간단한 WPF View에는 <code>SimpleTabItemFactoryInfo</code>가 가장 짧은 경로입니다. URI 기반 탭을 만들고 Extensions 아래에 메뉴 항목을 추가하며, 필요하면 QuickBar 항목도 추가합니다. 더 복잡한 라우팅에서는 모듈이 <code>ITabItemFactory</code>를 직접 구현합니다.</p>
+<h2 id="uri-기반-탭-탐색">URI 기반 탭 탐색</h2>
+<p>탭 탐색은 URI로 구동됩니다. 명령과 메뉴 항목은 <code>ITabManager.NavigateAsync(...)</code>를 호출하고, 탭 매니저는 등록된 팩토리에게 URI를 처리할 수 있는지 확인합니다. 가장 잘 맞는 팩토리가 탭 인스턴스를 생성합니다.</p>
+<pre><code class="lang-mermaid">graph TD
+  Command[&quot;메뉴 항목 / 명령 / 시작 URI&quot;]
+  Navigate[&quot;ITabManager.NavigateAsync(uri)&quot;]
+  Factories[&quot;ITabItemFactoryManager.GetTabItemFactories()&quot;]
+  Match[&quot;Factory.CheckUriMatchedAsync(uri)&quot;]
+  Create[&quot;Factory.CreateTabItemInstanceAsync(context)&quot;]
+  Load[&quot;ITabItemInstance.LoadAsync()&quot;]
+  View[&quot;View 해석&quot;]
+  Attach[&quot;포커스된 워크스페이스에 탭 연결&quot;]
+  Fallback[&quot;NotFoundTabItem 또는 ErrorTabItem&quot;]
+
+  Command --&gt; Navigate
+  Navigate --&gt; Factories
+  Factories --&gt; Match
+  Match --&gt; Create
+  Create --&gt; Load
+  Load --&gt; View
+  View --&gt; Attach
+  Match --&gt; Fallback
+</code></pre>
+<p>팩토리는 Priority 내림차순으로 정렬됩니다. Singleton 팩토리는 대상 URI가 이미 열려 있을 때 기존 탭을 재사용할 수 있습니다. 일치하는 팩토리가 없으면 셸은 not-found 탭을 만들고, 생성 중 실패하면 error 탭을 만듭니다.</p>
+<h2 id="설정과-상태">설정과 상태</h2>
+<p>설정과 상태는 마커 인터페이스로 발견됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>인터페이스</th>
+<th>일반적인 용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config</td>
+<td><code>IConfig</code></td>
+<td>사용자 또는 모듈이 편집할 수 있는 설정.</td>
+</tr>
+<tr>
+<td>State</td>
+<td><code>IState</code></td>
+<td>탐색이나 워크스페이스 상태처럼 프로세스 재시작 후에도 유지해야 하는 런타임 상태.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ModuleTools.RegisterAllFromAssembly(...)</code>는 시작 시 settings 디렉터리에서 이러한 타입을 로드하고 인스턴스를 Autofac에 등록합니다. <code>IAppContext</code>는 앱 수준 경로와 <code>SaveAllConfig()</code>, <code>SaveAllState()</code> 같은 저장 작업을 노출합니다.</p>
+<p><code>ModuleConfig</code>는 중심적인 모듈 로딩 설정입니다.</p>
+<table>
+<thead>
+<tr>
+<th>속성</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DisabledAssemblyNames</code></td>
+<td>무시해야 하는 모듈 DLL.</td>
+</tr>
+<tr>
+<td><code>AdditionalAssemblyNames</code></td>
+<td>표준 모듈 DLL 외에 app 폴더에서 추가로 로드할 DLL.</td>
+</tr>
+</tbody>
+</table>
+<p>NuGet으로 설치된 모듈은 별도의 시작 아티팩트인 <code>settings/nuget.module.assets.json</code>을 사용합니다. 이 파일이 있으면 <code>ModuleTools.RegisterModules(...)</code>는 런타임 asset loader에게 <code>net10.0-windows</code>용 런타임 어셈블리를 로드하게 합니다.</p>
+<h2 id="하이브리드-ui와-aspire-통합">하이브리드 UI와 Aspire 통합</h2>
+<p>ZYC.Framework는 네이티브 WPF View와 하이브리드 Web 콘텐츠를 지원합니다.</p>
+<p><code>ZYC.Framework.WebView2</code>는 재사용 가능한 WebView2 Host 인프라를 소유합니다. WebBrowser와 BlazorDemo 같은 모듈은 이 표면을 기반으로 Web 콘텐츠나 Web 기반 경험을 임베드합니다.</p>
+<p><code>ZYC.Framework.Modules.Aspire</code>는 .NET Aspire를 통합합니다. <code>AspireService.Build(...)</code>는 <code>DistributedApplicationBuilder</code>를 만들고, 기존 Autofac lifetime scope로 구성하며, <code>AspireConfig.Environment</code>를 적용하고, 모든 <code>IExtensionResourcesProvider</code> 구현을 해석합니다. 확장 모듈은 핵심 Aspire 모듈을 수정하지 않고도 자식 리소스를 Aspire 앱에 연결할 수 있습니다.</p>
+<p><code>Translator</code> 모듈은 이 패턴의 예입니다. <code>ICommandlineResourcesProvider</code>를 해석하고 <code>libretranslate</code>용 명령줄 리소스를 등록합니다.</p>
+<p><code>ZYC.Framework.Modules.Accounts</code>는 provider-based account shell입니다. Session initialization, <code>IAccountManager</code>, protected token storage, 창 제목 표시줄 account UI를 소유합니다. <code>ZYC.Framework.Modules.Accounts.GitHub</code> 같은 provider module은 <code>IAccountProvider</code> 구현을 제공하고 WebView2 기반 OAuth flow를 포함한 자체 authentication tab factory를 등록할 수 있습니다.</p>
+<p><code>ZYC.Framework.Modules.ChromeExtensions</code>는 browser extension package management를 browser runtime에서 분리합니다. Chrome Web Store package를 다운로드하고 압축을 풀며, manifest metadata를 읽고, WebView2가 안정적인 extension identity를 사용할 수 있도록 unpacked manifest key를 동기화합니다. <code>ZYC.Framework.Modules.WebBrowser</code>는 installed package list를 사용해 <code>WebBrowserConfig.CustomBrowserArguments</code>의 <code>--load-extension</code>을 갱신하고, <code>ZYC.Framework.WebView2</code>가 노출하는 live <code>CoreWebView2BrowserExtension</code> data를 runtime plugin UI에 사용합니다.</p>
+<h2 id="mcp-노출">MCP 노출</h2>
+<p>MCP Server 모듈은 인터페이스 주석을 통해 애플리케이션 기능을 노출합니다.</p>
+<p><code>[ExposeToMCP]</code>가 붙은 인터페이스나 메서드는 <code>MCPAutoToolDiscoveryExtensions.AddAutoDiscoveredTools(...)</code>에 의해 발견될 수 있습니다. <code>[MCPIgnore]</code>가 붙은 메서드는 건너뜁니다. 도구가 UI 스레드 실행을 필요로 하면 MCP 래퍼가 UI dispatcher를 통해 호출을 위임합니다.</p>
+<p>즉 MCP는 계약 기반입니다.</p>
+<ol>
+<li>안정적인 기능을 인터페이스에 둡니다.</li>
+<li>인터페이스나 메서드에 <code>[ExposeToMCP]</code>를 붙입니다.</li>
+<li>내부용이거나 노출하기 부적절한 멤버는 <code>[MCPIgnore]</code>로 제외합니다.</li>
+<li>MCP Server가 런타임에 로드된 어셈블리를 발견하게 합니다.</li>
+</ol>
+<h2 id="빌드와-템플릿-흐름">빌드와 템플릿 흐름</h2>
+<p>문서와 스캐폴딩은 런타임 모듈과 분리되어 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>도구</th>
+<th>책임</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Build.Doc</code></td>
+<td><code>Templates/README/README.md</code>와 <code>Templates/docs/*</code>를 루트 <code>README*.md</code>와 <code>docs/*</code>로 렌더링합니다.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.CLI</code></td>
+<td><code>zyc new</code> 프로젝트 템플릿과 <code>zyc new-module</code> 모듈 스캐폴딩을 제공합니다.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.NewModule</code></td>
+<td>저장소 내부 모듈 생성을 위한 <code>zyc new-module</code> 래퍼입니다.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.NuGet</code></td>
+<td>NuGet 패키징과 릴리스 노트.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.InnoSetup</code></td>
+<td>설치 프로그램 빌드 지원.</td>
+</tr>
+</tbody>
+</table>
+<p>프로젝트 생성과 모듈 생성은 의도적으로 서로 다른 명령 표면입니다.</p>
+<table>
+<thead>
+<tr>
+<th>명령</th>
+<th>목적</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zyc new &lt;ProjectName&gt;</code></td>
+<td><code>minimal</code> 또는 <code>modular</code> 프로젝트 템플릿에서 외부 Host 프로젝트를 만듭니다.</td>
+</tr>
+<tr>
+<td><code>zyc new-module &lt;ModuleName&gt; --src-root &lt;SourceRoot&gt;</code></td>
+<td>기존 소스 트리 안에 모듈 쌍을 만듭니다.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="모듈-추가하기">모듈 추가하기</h2>
+<p>일반적인 모듈 추가 흐름은 다음과 같습니다.</p>
+<ol>
+<li>공개 계약, 상수, 설정, 상태, 명령 인터페이스를 위해 <code>ZYC.Framework.Modules.&lt;Name&gt;.Abstractions</code>를 만듭니다.</li>
+<li>런타임 구현을 위해 <code>ZYC.Framework.Modules.&lt;Name&gt;</code>를 만듭니다.</li>
+<li><code>ModuleBase</code> 하위 클래스를 포함하는 <code>Module.cs</code>를 추가합니다.</li>
+<li>컨테이너 빌드 전에 필요한 DI 등록은 <code>RegisterAsync(...)</code>에 둡니다.</li>
+<li>탭 팩토리, 메뉴 항목, 상태 표시줄 항목, QuickBar 항목, Aspire Provider, 시작 동작은 <code>LoadAsync(...)</code>에서 등록합니다.</li>
+<li>셸 View를 직접 조작하기보다 <code>RegisterTabItemFactory&lt;T&gt;()</code>, <code>RegisterToolsMainMenuItem&lt;T&gt;()</code> 같은 Manager API를 우선 사용합니다.</li>
+<li>공개 Abstractions는 가능한 한 안정적이고 추가형 변경으로 유지합니다.</li>
+</ol>
+<p>이 구조는 모듈을 독립적으로 개발하면서도 공유 셸과 Manager 기반 확장 모델을 통해 Host에 구성할 수 있게 합니다.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/architecture.ko.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

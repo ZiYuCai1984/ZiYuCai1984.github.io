@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>확장 지점 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="확장 지점 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.ko.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="extension-points.html">English</a> |
+  <a href="extension-points.ja.html">日本語</a> |
+  <a href="extension-points.zh-CN.html">简体中文</a> |
+  <a href="extension-points.zh-TW.html">繁體中文</a> |
+  <a href="extension-points.ko.html">한국어</a> |
+</p>
+<h1 id="확장-지점">확장 지점</h1>
+<p>ZYC.Framework 확장은 대부분 모듈과 Autofac을 통해 등록됩니다. 모듈은 Host와 함께 로드되고 서비스 또는 UI 기여를 등록합니다. 그런 다음 Shell은 해당 등록에서 메뉴, 탭, 워크스페이스 작업, 상태 표시줄 항목, 작업 표시줄 메뉴 항목, 드래그 앤 드롭 동작, Aspire 리소스를 구성합니다.</p>
+<h2 id="확장-지점-맵">확장 지점 맵</h2>
+<table>
+<thead>
+<tr>
+<th>확장 지점</th>
+<th>등록 위치</th>
+<th>런타임 소비자</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>모듈 라이프사이클</td>
+<td><code>ModuleBase.RegisterAsync</code>, <code>LoadAsync</code>, <code>AfterLoadedAsync</code></td>
+<td>Host 시작과 모듈 로더.</td>
+</tr>
+<tr>
+<td>URI 탭</td>
+<td><code>ITabItemFactoryManager.RegisterFactory&lt;T&gt;()</code></td>
+<td><code>TabManager.InternalNavigateAsync(...)</code>.</td>
+</tr>
+<tr>
+<td>단순 뷰 탭</td>
+<td><code>ISimpleTabItemFactoryManager.Register(...)</code></td>
+<td>내장 <code>SimpleTabItemFactory</code>.</td>
+</tr>
+<tr>
+<td>메인 메뉴</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code></td>
+<td><code>MainMenuManager</code>와 메인 메뉴 뷰.</td>
+</tr>
+<tr>
+<td>창 제목 표시줄</td>
+<td><code>IWindowTitleManager</code>, <code>IWindowTitleExtendManager</code></td>
+<td><code>WindowTitleView</code>.</td>
+</tr>
+<tr>
+<td>워크스페이스 메뉴</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td><code>WorkspaceMenuView</code>.</td>
+</tr>
+<tr>
+<td>워크스페이스 컨텍스트 메뉴 manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td>Manager는 존재하며 항목을 정렬합니다. 컨텍스트 메뉴 표면을 연결할 때 사용합니다.</td>
+</tr>
+<tr>
+<td>탭 헤더 컨텍스트 메뉴</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+<td><code>TabItemHeaderContextMenuItemsResolver</code>.</td>
+</tr>
+<tr>
+<td>상태 표시줄</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code></td>
+<td><code>StatusBarManager</code>.</td>
+</tr>
+<tr>
+<td>작업 표시줄 메뉴</td>
+<td><code>ITaskbarMenuManager</code></td>
+<td><code>TaskbarContextMenu</code>.</td>
+</tr>
+<tr>
+<td>구성/상태</td>
+<td><code>IConfig</code>, <code>IState</code></td>
+<td><code>ModuleTools.RegisterAllFromAssembly(...)</code>.</td>
+</tr>
+<tr>
+<td>이벤트</td>
+<td><code>IEventAggregator</code></td>
+<td>런타임 publish/subscribe bus.</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td><code>IToastManager</code>, <code>IToast</code></td>
+<td>Toast popup host.</td>
+</tr>
+<tr>
+<td>드래그 앤 드롭</td>
+<td><code>IDropActionProvider</code></td>
+<td><code>DropOrchestrator</code>.</td>
+</tr>
+<tr>
+<td>Aspire 리소스</td>
+<td><code>IExtensionResourcesProvider</code></td>
+<td><code>AspireService.Build(...)</code>.</td>
+</tr>
+<tr>
+<td>CLI 옵션</td>
+<td><code>ModuleBase.RegisterCommandLineOption(...)</code></td>
+<td><code>ZYC.Framework.CLI</code> root command.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="모듈-라이프사이클">모듈 라이프사이클</h2>
+<p>각 등록 위치는 모듈 라이프사이클에 맞춰 결정합니다.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>컨테이너가 만들어지기 전에 필요한 Autofac 등록.</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>탭 팩터리, 메뉴 항목, 상태 표시줄 provider, Aspire 리소스 등록 같은 런타임 기여.</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>모든 모듈이 로드된 뒤 필요한 교차 모듈 작업.</td>
+</tr>
+<tr>
+<td><code>RegisterCommandLineOption(...)</code></td>
+<td>모듈이 소유한 CLI 플래그.</td>
+</tr>
+</tbody>
+</table>
+<p>대부분의 UI 모듈은 <code>LoadAsync</code>만 필요합니다.</p>
+<h2 id="uri-탭">URI 탭</h2>
+<p>URI 탭은 기능 표면을 노출하는 주요 방법입니다. 보통 <code>ILifetimeScope</code> helper로 <code>ITabItemFactory</code>를 등록합니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>라우트를 URI 부분으로 설명할 수 있으면 <code>TabItemRouteAttribute</code>를 사용합니다. 서비스, 파일 형식 검사, 더 복잡한 정책이 필요하면 <code>CheckUriMatchedAsync</code>를 재정의합니다.</p>
+<p>전용 라우트 모델 없이 하나의 <code>UserControl</code>만 열면 되는 작은 단일 뷰 사례에서는 <code>RegisterSimpleTabItemFactory(...)</code>를 사용합니다.</p>
+<h2 id="메인-메뉴">메인 메뉴</h2>
+<p>루트 메뉴에는 File, View, Tools, Extensions, About 내장 provider가 있습니다. 모듈 메뉴 항목은 보통 그중 하나 아래에 등록합니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>메뉴 정렬은 먼저 <code>Anchor</code>, 같은 anchor 그룹 안에서는 <code>Priority</code>로 결정됩니다. <code>MainMenuManager</code>는 anchor 그룹 사이에 separator를 넣고 하위 항목도 재귀적으로 정렬합니다.</p>
+<p>여러 하위 명령을 가진 부모 메뉴가 필요할 때만 모듈 소유 <code>IMainMenuItemsProvider</code>를 만듭니다. 명령이 하나라면 기존 provider 아래에 <code>IMainMenuItem</code>을 등록합니다.</p>
+<h2 id="창-제목-표시줄">창 제목 표시줄</h2>
+<p>컴팩트한 command-style title-bar buttons에는 <code>IWindowTitleManager</code>를, 더 풍부한 title-bar content에는 <code>IWindowTitleExtendManager</code>를 사용합니다. Extension item은 <code>IWindowTitleExtendItem</code>을 구현하고 제목 표시줄에 표시할 view object를 반환합니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWindowTitleExtendManager&gt;()
+        .RegisterItem&lt;ReportsWindowTitleItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>이 surface는 window chrome 근처에 계속 보여야 하는 module-owned status나 account controls에 적합합니다. 사용자가 즐겨찾는 shortcuts에는 module-owned title-bar UI 대신 quick bar items를 사용합니다.</p>
+<h2 id="워크스페이스-메뉴">워크스페이스 메뉴</h2>
+<p>워크스페이스 번호 옆의 표시되는 드롭다운에 명령을 넣으려면 <code>IWorkspaceMenuManager</code>를 사용합니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWorkspaceMenuManager&gt;()
+        .RegisterItem&lt;ReportsWorkspaceMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>IWorkspaceMenuItem</code>은 <code>Title</code>, <code>Command</code>, <code>SubItems</code>, <code>Icon</code>, <code>Anchor</code>, <code>Priority</code>, <code>Localization</code>을 지원합니다. 현재 표시되는 <code>WorkspaceMenuView</code>는 <code>IWorkspaceMenuManager.GetItems()</code>를 읽습니다.</p>
+<p><code>IWorkspaceContextMenuManager</code>는 별도의 manager이며 <code>Anchor</code>와 <code>Priority</code>로 재귀 정렬합니다. 컨텍스트 메뉴 뷰가 연결되어 있지 않다면 그 항목이 표시된다고 가정하지 마세요.</p>
+<h2 id="탭-헤더-컨텍스트-메뉴">탭 헤더 컨텍스트 메뉴</h2>
+<p>탭 헤더 메뉴 항목은 <code>ITabItemHeaderContextMenuItemView</code>로 등록되는 WPF 메뉴 항목 뷰입니다.</p>
+<pre><code class="lang-csharp">[RegisterAs(typeof(ITabItemHeaderContextMenuItemView))]
+internal partial class ReportsTabHeaderMenuItem :
+    ITabItemHeaderContextMenuItemView
+{
+    public int Order =&gt; 20;
+}
+</code></pre>
+<p><code>TabItemHeaderContextMenuItemsResolver</code>는 등록된 모든 뷰를 resolve하고 <code>Order</code>로 정렬합니다. WPF ContextMenu는 late-bound이므로 현재 탭 인스턴스가 필요한 항목에서는 command parameter와 기존 <code>ContextMenuItemBase</code> 패턴을 우선 사용하세요.</p>
+<h2 id="상태-표시줄">상태 표시줄</h2>
+<p>상태 표시줄 확장은 <code>IStatusBarItemsProvider</code>를 제공합니다. Provider는 하나 이상의 <code>IStatusBarItem</code>을 반환합니다. <code>StatusBarManager</code>는 등록된 모든 provider를 모으고 <code>Order</code>로 정렬합니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IStatusBarManager&gt;()
+        .RegisterStatusBarItemsProvider&lt;ReportsStatusBarItemsProvider&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>각 항목은 <code>StatusBarSection.Left</code> 또는 <code>StatusBarSection.Right</code>로 표시 위치를 선택합니다.</p>
+<h2 id="작업-표시줄-메뉴">작업 표시줄 메뉴</h2>
+<p>작업 표시줄 메뉴 항목은 <code>ITaskbarMenuItem</code>을 구현하고 <code>ITaskbarMenuManager</code>에 등록합니다.</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ITaskbarMenuManager&gt;()
+    .RegisterMenuItem(lifetimeScope.Resolve&lt;ReportsTaskbarMenuItem&gt;());
+</code></pre>
+<p>작업 표시줄 메뉴는 <code>Info.Anchor</code>로 그룹화하고 <code>Info.Priority</code>로 정렬하며 하위 항목도 재귀적으로 정렬합니다. 이 표면은 tray/window 수준 명령에 사용하고, 기능 내비게이션은 메인 메뉴에 둡니다.</p>
+<h2 id="구성과-상태">구성과 상태</h2>
+<p><code>IConfig</code> 또는 <code>IState</code>를 구현하는 모든 concrete 타입은 모듈 어셈블리 등록 중 settings 디렉터리에서 로드되고 Autofac에 등록됩니다. 작은 JSON 직렬화 가능 설정과 상태에 사용합니다.</p>
+<p>지침:</p>
+<ul>
+<li>사용자가 편집하는 옵션은 <code>IConfig</code>에 둡니다.</li>
+<li>런타임 지속성은 <code>IState</code>에 둡니다.</li>
+<li>타입은 작고 버전 변화에 견딜 수 있게 유지합니다.</li>
+<li>config/state를 큰 비즈니스 데이터 저장소로 사용하지 마세요.</li>
+</ul>
+<h2 id="이벤트와-toast">이벤트와 Toast</h2>
+<p>분리된 런타임 알림에는 <code>IEventAggregator</code>를 사용합니다.</p>
+<pre><code class="lang-csharp">lifetimeScope.PublishEvent(new ReportsChangedEvent());
+lifetimeScope.SubscribeEvent&lt;ReportsChangedEvent&gt;(OnReportsChanged, onUiThread: true);
+</code></pre>
+<p>사용자에게 보이는 임시 피드백에는 <code>IToastManager</code>를 사용합니다.</p>
+<pre><code class="lang-csharp">toastManager.PromptMessage(ToastMessage.Info(&quot;Report exported.&quot;, localization: false));
+toastManager.PromptException(exception);
+</code></pre>
+<p>이벤트는 조정용이고 Toast는 표시 피드백용입니다. Toast 메시지를 제어 흐름으로 사용하지 마세요.</p>
+<h2 id="드래그-앤-드롭">드래그 앤 드롭</h2>
+<p>드래그 앤 드롭 동작은 <code>IDropActionProvider</code>로 기여합니다. Orchestrator는 모든 provider에 호환되는 <code>DropAction</code>을 요청하고, <code>CanRun()</code>으로 필터링하며, <code>Id</code>로 중복을 제거한 뒤 기본 동작을 실행하거나 picker를 표시합니다.</p>
+<p>모듈이 dropped file, path, tab payload를 워크스페이스 인식 방식으로 처리해야 할 때 사용합니다. <code>DropContext</code>에는 target object, workspace id, modifier keys, screen point, cancellation token이 포함됩니다.</p>
+<h2 id="aspire-리소스">Aspire 리소스</h2>
+<p>Aspire 확장 모듈은 <code>IExtensionResourcesProvider</code>를 등록합니다. <code>AspireService.Build(...)</code>는 모든 provider를 resolve하고 각 provider의 <code>ConfigureResources(builder)</code>를 호출합니다.</p>
+<p>명령줄 child service는 <code>ICommandlineResourcesProvider</code>로 등록합니다.</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ICommandlineResourcesProvider&gt;()
+    .Register(new CommandlineServiceOptions
+    {
+        Name = &quot;reports-worker&quot;,
+        WorkDirectory = workerDirectory,
+        Command = &quot;dotnet run&quot;
+    });
+</code></pre>
+<p>큰 인앱 UI가 아니라 Aspire Host가 시작해야 하는 sidecar service에 사용합니다.</p>
+<h2 id="cli-옵션">CLI 옵션</h2>
+<p>CLI는 모듈을 로드하고 root command를 확정하기 전에 <code>RegisterCommandLineOption(container, optionRegister)</code>를 호출합니다. 모듈이 자체 command-line switch를 필요로 할 때 사용합니다.</p>
+<p>전체 스캐폴딩 명령은 관련 없는 flag에 끼워 넣지 말고, 내장 <code>zyc new</code>, <code>zyc new-module</code> 패턴처럼 명시적 subcommand를 사용합니다.</p>
+<h2 id="올바른-표면-선택">올바른 표면 선택</h2>
+<table>
+<thead>
+<tr>
+<th>목표</th>
+<th>사용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기능 뷰 열기</td>
+<td>URI + <code>ITabItemFactory</code></td>
+</tr>
+<tr>
+<td>앱 명령 하나 추가</td>
+<td>기존 main menu provider</td>
+</tr>
+<tr>
+<td>하나의 모듈 부모 아래 여러 명령 추가</td>
+<td>모듈 소유 <code>IMainMenuItemsProvider</code></td>
+</tr>
+<tr>
+<td>워크스페이스 작업 추가</td>
+<td><code>IWorkspaceMenuManager</code></td>
+</tr>
+<tr>
+<td>탭 헤더 동작 추가</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+</tr>
+<tr>
+<td>가벼운 런타임 상태 표시</td>
+<td>Status bar provider</td>
+</tr>
+<tr>
+<td>Tray/window 명령 추가</td>
+<td><code>ITaskbarMenuManager</code></td>
+</tr>
+<tr>
+<td>작은 설정 또는 상태 지속화</td>
+<td><code>IConfig</code> / <code>IState</code></td>
+</tr>
+<tr>
+<td>런타임 동작 조정</td>
+<td><code>IEventAggregator</code></td>
+</tr>
+<tr>
+<td>사용자 피드백 표시</td>
+<td><code>IToastManager</code></td>
+</tr>
+<tr>
+<td>dropped-file 동작 추가</td>
+<td><code>IDropActionProvider</code></td>
+</tr>
+<tr>
+<td>sidecar service 시작</td>
+<td>Aspire resource provider</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.ko.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

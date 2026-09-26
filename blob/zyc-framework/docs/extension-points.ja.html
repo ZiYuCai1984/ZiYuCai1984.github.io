@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>拡張ポイント </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="拡張ポイント ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.ja.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="extension-points.html">English</a> |
+  <a href="extension-points.ja.html">日本語</a> |
+  <a href="extension-points.zh-CN.html">简体中文</a> |
+  <a href="extension-points.zh-TW.html">繁體中文</a> |
+  <a href="extension-points.ko.html">한국어</a> |
+</p>
+<h1 id="拡張ポイント">拡張ポイント</h1>
+<p>ZYC.Framework の拡張は、主にモジュールと Autofac を通して登録されます。モジュールは Host と一緒にロードされ、サービスや UI コントリビューションを登録します。その後 Shell は、メニュー、タブ、ワークスペース操作、ステータスバー項目、タスクバー メニュー項目、ドラッグ&amp;ドロップ操作、Aspire リソースをそれらの登録から構成します。</p>
+<h2 id="拡張ポイント一覧">拡張ポイント一覧</h2>
+<table>
+<thead>
+<tr>
+<th>拡張ポイント</th>
+<th>登録元</th>
+<th>実行時の利用側</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モジュール ライフサイクル</td>
+<td><code>ModuleBase.RegisterAsync</code>, <code>LoadAsync</code>, <code>AfterLoadedAsync</code></td>
+<td>Host startup と module loader。</td>
+</tr>
+<tr>
+<td>URI タブ</td>
+<td><code>ITabItemFactoryManager.RegisterFactory&lt;T&gt;()</code></td>
+<td><code>TabManager.InternalNavigateAsync(...)</code>。</td>
+</tr>
+<tr>
+<td>Simple view tabs</td>
+<td><code>ISimpleTabItemFactoryManager.Register(...)</code></td>
+<td>組み込み <code>SimpleTabItemFactory</code>。</td>
+</tr>
+<tr>
+<td>メインメニュー</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code></td>
+<td><code>MainMenuManager</code> とメインメニュー View。</td>
+</tr>
+<tr>
+<td>ウィンドウ タイトル</td>
+<td><code>IWindowTitleManager</code>, <code>IWindowTitleExtendManager</code></td>
+<td><code>WindowTitleView</code>。</td>
+</tr>
+<tr>
+<td>ワークスペース メニュー</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td><code>WorkspaceMenuView</code>。</td>
+</tr>
+<tr>
+<td>ワークスペース コンテキストメニュー manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td>Manager は存在し、項目をソートします。コンテキストメニュー面を接続するときに使います。</td>
+</tr>
+<tr>
+<td>タブ ヘッダー コンテキストメニュー</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+<td><code>TabItemHeaderContextMenuItemsResolver</code>。</td>
+</tr>
+<tr>
+<td>ステータスバー</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code></td>
+<td><code>StatusBarManager</code>。</td>
+</tr>
+<tr>
+<td>タスクバー メニュー</td>
+<td><code>ITaskbarMenuManager</code></td>
+<td><code>TaskbarContextMenu</code>。</td>
+</tr>
+<tr>
+<td>設定/状態</td>
+<td><code>IConfig</code>, <code>IState</code></td>
+<td><code>ModuleTools.RegisterAllFromAssembly(...)</code>。</td>
+</tr>
+<tr>
+<td>イベント</td>
+<td><code>IEventAggregator</code></td>
+<td>実行時 publish/subscribe bus。</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td><code>IToastManager</code>, <code>IToast</code></td>
+<td>Toast popup host。</td>
+</tr>
+<tr>
+<td>Drag/drop</td>
+<td><code>IDropActionProvider</code></td>
+<td><code>DropOrchestrator</code>。</td>
+</tr>
+<tr>
+<td>Aspire resources</td>
+<td><code>IExtensionResourcesProvider</code></td>
+<td><code>AspireService.Build(...)</code>。</td>
+</tr>
+<tr>
+<td>CLI options</td>
+<td><code>ModuleBase.RegisterCommandLineOption(...)</code></td>
+<td><code>ZYC.Framework.CLI</code> root command。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="モジュール-ライフサイクル">モジュール ライフサイクル</h2>
+<p>各登録をどこに置くかは、モジュール ライフサイクルで決めます。</p>
+<table>
+<thead>
+<tr>
+<th>メソッド</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>コンテナー構築前に必要な Autofac 登録。</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>タブ ファクトリ、メニュー項目、ステータスバー provider、Aspire resource 登録などの実行時コントリビューション。</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>すべてのモジュールがロードされた後に必要なクロスモジュール処理。</td>
+</tr>
+<tr>
+<td><code>RegisterCommandLineOption(...)</code></td>
+<td>モジュールが所有する CLI フラグ。</td>
+</tr>
+</tbody>
+</table>
+<p>多くの UI モジュールでは <code>LoadAsync</code> だけで十分です。</p>
+<h2 id="uri-タブ">URI タブ</h2>
+<p>URI タブは機能面を公開する主要な方法です。<code>ITabItemFactory</code> を登録します。通常は <code>ILifetimeScope</code> のヘルパーを使います。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>ルートを URI 部品で表せる場合は <code>TabItemRouteAttribute</code> を使います。サービス、ファイル種別判定、より複雑なポリシーが必要な場合は <code>CheckUriMatchedAsync</code> をオーバーライドします。</p>
+<p>専用のルート モデルを持たず、1 つの <code>UserControl</code> を開くだけの小さなケースでは <code>RegisterSimpleTabItemFactory(...)</code> を使います。</p>
+<h2 id="メインメニュー">メインメニュー</h2>
+<p>root メニューには File、View、Tools、Extensions、About の組み込み provider があります。モジュール メニュー項目は通常、そのどれかへ登録します。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>メニュー順はまず <code>Anchor</code>、同じ anchor 内で <code>Priority</code> によって決まります。<code>MainMenuManager</code> は anchor グループ間にセパレーターを挿入し、子項目も再帰的にソートします。</p>
+<p>複数の子コマンドを持つ親メニューが必要な場合だけ、モジュール専用の <code>IMainMenuItemsProvider</code> を作ります。1 つのコマンドなら、既存 provider に <code>IMainMenuItem</code> を登録します。</p>
+<h2 id="ウィンドウ-タイトル">ウィンドウ タイトル</h2>
+<p>コンパクトな command-style title-bar buttons には <code>IWindowTitleManager</code>、よりリッチな title-bar content には <code>IWindowTitleExtendManager</code> を使います。Extension item は <code>IWindowTitleExtendItem</code> を実装し、タイトルバーに表示する view object を返します。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWindowTitleExtendManager&gt;()
+        .RegisterItem&lt;ReportsWindowTitleItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>この surface は、window chrome の近くに常時表示したい module-owned status や account controls に使います。ユーザーが選ぶ shortcuts には、module-owned title-bar UI ではなく quick bar items を使います。</p>
+<h2 id="ワークスペース-メニュー">ワークスペース メニュー</h2>
+<p>ワークスペース番号の横にある表示中のドロップダウンへコマンドを出す場合は <code>IWorkspaceMenuManager</code> を使います。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IWorkspaceMenuManager&gt;()
+        .RegisterItem&lt;ReportsWorkspaceMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>IWorkspaceMenuItem</code> は <code>Title</code>、<code>Command</code>、<code>SubItems</code>、<code>Icon</code>、<code>Anchor</code>、<code>Priority</code>、<code>Localization</code> を持ちます。現在の <code>WorkspaceMenuView</code> は <code>IWorkspaceMenuManager.GetItems()</code> を読みます。</p>
+<p><code>IWorkspaceContextMenuManager</code> は別の manager で、<code>Anchor</code> と <code>Priority</code> による再帰ソートを行います。コンテキストメニュー View が接続されていない限り、その項目が表示されるとは扱わないでください。</p>
+<h2 id="タブ-ヘッダー-コンテキストメニュー">タブ ヘッダー コンテキストメニュー</h2>
+<p>タブ ヘッダー メニュー項目は <code>ITabItemHeaderContextMenuItemView</code> として登録される WPF メニュー項目 View です。</p>
+<pre><code class="lang-csharp">[RegisterAs(typeof(ITabItemHeaderContextMenuItemView))]
+internal partial class ReportsTabHeaderMenuItem :
+    ITabItemHeaderContextMenuItemView
+{
+    public int Order =&gt; 20;
+}
+</code></pre>
+<p><code>TabItemHeaderContextMenuItemsResolver</code> は登録済み View をすべて解決し、<code>Order</code> で並べます。WPF のコンテキストメニューは late-bound なので、現在のタブ インスタンスが必要な項目では command parameter と既存の <code>ContextMenuItemBase</code> パターンを優先します。</p>
+<h2 id="ステータスバー">ステータスバー</h2>
+<p>ステータスバー拡張は <code>IStatusBarItemsProvider</code> を提供します。Provider は 1 つ以上の <code>IStatusBarItem</code> を返します。<code>StatusBarManager</code> は登録済み provider を集約し、<code>Order</code> で並べます。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.Resolve&lt;IStatusBarManager&gt;()
+        .RegisterStatusBarItemsProvider&lt;ReportsStatusBarItemsProvider&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>各 item は <code>StatusBarSection.Left</code> または <code>StatusBarSection.Right</code> で表示側を選びます。</p>
+<h2 id="タスクバー-メニュー">タスクバー メニュー</h2>
+<p>タスクバー メニュー項目は <code>ITaskbarMenuItem</code> を実装し、<code>ITaskbarMenuManager</code> に登録します。</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ITaskbarMenuManager&gt;()
+    .RegisterMenuItem(lifetimeScope.Resolve&lt;ReportsTaskbarMenuItem&gt;());
+</code></pre>
+<p>タスクバー メニューは <code>Info.Anchor</code> でグループ化し、<code>Info.Priority</code> で並べ、子項目も再帰的にソートします。この面は tray/window レベルのコマンドに使い、機能ナビゲーションはメインメニューへ置きます。</p>
+<h2 id="設定と状態">設定と状態</h2>
+<p><code>IConfig</code> または <code>IState</code> を実装する具象型は、モジュール アセンブリ登録時に settings ディレクトリから読み込まれ、Autofac に登録されます。小さな JSON シリアライズ可能な設定と状態に使います。</p>
+<p>ガイドライン:</p>
+<ul>
+<li>ユーザーが編集するオプションは <code>IConfig</code> に置く。</li>
+<li>実行時の永続化は <code>IState</code> に置く。</li>
+<li>型は小さく、バージョン変更に強くする。</li>
+<li>config/state を大きな業務データ ストアとして使わない。</li>
+</ul>
+<h2 id="イベントと-toast">イベントと Toast</h2>
+<p>疎結合な実行時通知には <code>IEventAggregator</code> を使います。</p>
+<pre><code class="lang-csharp">lifetimeScope.PublishEvent(new ReportsChangedEvent());
+lifetimeScope.SubscribeEvent&lt;ReportsChangedEvent&gt;(OnReportsChanged, onUiThread: true);
+</code></pre>
+<p>ユーザー向けの一時的なフィードバックには <code>IToastManager</code> を使います。</p>
+<pre><code class="lang-csharp">toastManager.PromptMessage(ToastMessage.Info(&quot;Report exported.&quot;, localization: false));
+toastManager.PromptException(exception);
+</code></pre>
+<p>イベントは調整用、Toast は表示フィードバック用です。Toast メッセージを制御フローとして使わないでください。</p>
+<h2 id="drag-and-drop">Drag and Drop</h2>
+<p>Drag/drop 操作は <code>IDropActionProvider</code> から提供します。Orchestrator はすべての provider に対応する <code>DropAction</code> を問い合わせ、<code>CanRun()</code> で絞り込み、<code>Id</code> で重複排除し、既定アクションを実行するか picker を表示します。</p>
+<p>モジュールが workspace-aware な形でドロップされたファイル、パス、タブ payload を処理したい場合に使います。<code>DropContext</code> には target object、workspace id、modifier keys、screen point、cancellation token が含まれます。</p>
+<h2 id="aspire-resources">Aspire Resources</h2>
+<p>Aspire 拡張モジュールは <code>IExtensionResourcesProvider</code> を登録します。<code>AspireService.Build(...)</code> はすべての provider を解決し、それぞれの <code>ConfigureResources(builder)</code> を呼びます。</p>
+<p>コマンドライン子サービスでは <code>ICommandlineResourcesProvider</code> から登録します。</p>
+<pre><code class="lang-csharp">lifetimeScope.Resolve&lt;ICommandlineResourcesProvider&gt;()
+    .Register(new CommandlineServiceOptions
+    {
+        Name = &quot;reports-worker&quot;,
+        WorkDirectory = workerDirectory,
+        Command = &quot;dotnet run&quot;
+    });
+</code></pre>
+<p>大きなアプリ内 UI ではなく、Aspire Host に起動させる sidecar service に使います。</p>
+<h2 id="cli-オプション">CLI オプション</h2>
+<p>CLI はモジュールをロードし、root command を確定する前に <code>RegisterCommandLineOption(container, optionRegister)</code> を呼びます。モジュールが自分の command-line switch を必要とするときに使います。</p>
+<p>完全なスキャフォールド コマンドでは、無関係なフラグに詰め込まず、組み込みの <code>zyc new</code> / <code>zyc new-module</code> のような明示的 subcommand を使います。</p>
+<h2 id="選択ガイド">選択ガイド</h2>
+<table>
+<thead>
+<tr>
+<th>目的</th>
+<th>使うもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>機能 View を開く</td>
+<td>URI + <code>ITabItemFactory</code></td>
+</tr>
+<tr>
+<td>アプリ コマンドを 1 つ追加する</td>
+<td>既存 main menu provider</td>
+</tr>
+<tr>
+<td>1 つの親の下に複数コマンドを追加する</td>
+<td>モジュール専用 <code>IMainMenuItemsProvider</code></td>
+</tr>
+<tr>
+<td>ワークスペース操作を追加する</td>
+<td><code>IWorkspaceMenuManager</code></td>
+</tr>
+<tr>
+<td>タブ ヘッダー操作を追加する</td>
+<td><code>ITabItemHeaderContextMenuItemView</code></td>
+</tr>
+<tr>
+<td>軽量な実行時状態を表示する</td>
+<td>Status bar provider</td>
+</tr>
+<tr>
+<td>Tray/window コマンドを追加する</td>
+<td><code>ITaskbarMenuManager</code></td>
+</tr>
+<tr>
+<td>小さな設定や状態を永続化する</td>
+<td><code>IConfig</code> / <code>IState</code></td>
+</tr>
+<tr>
+<td>実行時動作を調整する</td>
+<td><code>IEventAggregator</code></td>
+</tr>
+<tr>
+<td>ユーザーへフィードバックを出す</td>
+<td><code>IToastManager</code></td>
+</tr>
+<tr>
+<td>ドロップ ファイル動作を追加する</td>
+<td><code>IDropActionProvider</code></td>
+</tr>
+<tr>
+<td>sidecar service を起動する</td>
+<td>Aspire resource provider</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/extension-points.ja.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

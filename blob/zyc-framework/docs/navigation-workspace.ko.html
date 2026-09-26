@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>내비게이션과 워크스페이스 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="내비게이션과 워크스페이스 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/navigation-workspace.ko.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="navigation-workspace.html">English</a> |
+  <a href="navigation-workspace.ja.html">日本語</a> |
+  <a href="navigation-workspace.zh-CN.html">简体中文</a> |
+  <a href="navigation-workspace.zh-TW.html">繁體中文</a> |
+  <a href="navigation-workspace.ko.html">한국어</a> |
+</p>
+<h1 id="내비게이션과-워크스페이스">내비게이션과 워크스페이스</h1>
+<p>ZYC.Framework는 <strong>무엇을 열지</strong> 와 <strong>어디에 표시할지</strong> 를 분리합니다. URI는 대상 콘텐츠를 설명합니다. 탭 팩터리는 해당 URI의 탭 인스턴스를 만듭니다. 워크스페이스는 그 인스턴스가 어느 탭 표면에 들어갈지 결정합니다.</p>
+<h2 id="멘탈-모델">멘탈 모델</h2>
+<table>
+<thead>
+<tr>
+<th>개념</th>
+<th>런타임 역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URI</td>
+<td>기능, 파일, 페이지, 도구의 주소입니다. 예: <code>zyc://...</code>, <code>file://...</code>, 모듈 소유 scheme.</td>
+</tr>
+<tr>
+<td><code>ITabItemFactory</code></td>
+<td>URI를 처리할 수 있는지 확인하고 <code>ITabItemInstance</code>를 만듭니다.</td>
+</tr>
+<tr>
+<td><code>ITabItemInstance</code></td>
+<td>탭 ID, 제목, 아이콘, 뷰, 라이프사이클, 닫기 동작을 가집니다.</td>
+</tr>
+<tr>
+<td><code>ITabManager</code></td>
+<td>URI 내비게이션, 탭 생성, 재사용, 포커스, 닫기, 리로드, 이동, 복원을 조정합니다.</td>
+</tr>
+<tr>
+<td><code>WorkspaceNode</code></td>
+<td>워크스페이스 레이아웃 트리의 노드입니다. 리프 노드는 내비게이션 상태를 가집니다.</td>
+</tr>
+<tr>
+<td><code>IParallelWorkspaceManager</code></td>
+<td>워크스페이스 분할, 병합, 포커스, 교환, 리셋, 레이아웃 적용을 담당합니다.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="내비게이션-흐름">내비게이션 흐름</h2>
+<pre><code class="lang-mermaid">graph TD
+    A[&quot;메뉴 명령, URI 바, 시작 URI 또는 모듈 코드&quot;] --&gt; B[&quot;ITabManager.NavigateAsync(...)&quot;]
+    B --&gt; C[&quot;포커스된 워크스페이스 또는 명시적 workspaceId 선택&quot;]
+    C --&gt; D[&quot;TabManager.InternalNavigateAsync(...)&quot;]
+    D --&gt; E[&quot;매칭되는 ITabItemFactory 찾기&quot;]
+    E --&gt; F[&quot;허용되면 기존 싱글턴 탭 재사용&quot;]
+    E --&gt; G[&quot;새 ITabItemInstance 생성 및 로드&quot;]
+    G --&gt; H[&quot;탭을 워크스페이스에 연결&quot;]
+    F --&gt; I[&quot;탭 포커스&quot;]
+    H --&gt; I
+    I --&gt; J[&quot;NavigateCompletedEvent 게시&quot;]
+</code></pre>
+<p><code>NavigateAsync(Uri)</code>는 현재 포커스된 워크스페이스로 이동합니다. <code>NavigateAsync(Guid workspaceId, Uri uri)</code>는 특정 워크스페이스를 대상으로 합니다.</p>
+<h2 id="uri-라우팅과-팩터리">URI 라우팅과 팩터리</h2>
+<p>팩터리는 보통 <code>Module.LoadAsync</code>에서 <code>ITabItemFactoryManager</code>에 등록합니다.</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>TabItemFactoryBase</code>는 <code>TabItemRouteAttribute</code>로 라우트를 매칭합니다.</p>
+<pre><code class="lang-csharp">[RegisterSingleInstance]
+[TabItemRoute(Host = ReportsModuleConstants.Host)]
+internal class ReportsTabItemFactory : TabItemFactoryBase
+{
+    public override async Task&lt;ITabItemInstance&gt; CreateTabItemInstanceAsync(
+        TabItemCreationContext context)
+    {
+        await Task.CompletedTask;
+        return context.Resolve&lt;ReportsTabItem&gt;(
+            new TypedParameter(
+                typeof(TabReference),
+                new TabReference(context.Uri)));
+    }
+}
+</code></pre>
+<p>중요한 동작:</p>
+<ul>
+<li>팩터리는 매니저 순서대로 검사됩니다.</li>
+<li><code>TabItemRouteAttribute</code>는 <code>Scheme</code>, <code>Host</code>, <code>Path</code>, <code>PathMatch</code>를 매칭할 수 있습니다.</li>
+<li><code>TabItemFactoryBase.IsSingle</code> 기본값은 <code>true</code>입니다.</li>
+<li>싱글턴 팩터리가 이미 열린 URI와 매칭되면 기존 탭을 재사용합니다.</li>
+<li>매칭되는 팩터리가 없으면 Host는 내장 Not Found 탭을 엽니다.</li>
+<li>생성 또는 로딩 중 예외가 발생하면 Host는 내장 Error 탭을 엽니다.</li>
+</ul>
+<h2 id="워크스페이스-선택">워크스페이스 선택</h2>
+<p>현재 포커스된 워크스페이스는 <code>ParallelWorkspaceState.FocusedWorkspaceId</code>에 저장됩니다. <code>IParallelWorkspaceManager.GetFocusedWorkspace()</code>는 활성 리프 노드를 찾고, 저장된 id가 더 이상 유효하지 않으면 첫 번째 사용 가능한 리프로 대체합니다.</p>
+<p>UI는 워크스페이스 메뉴 버튼, 빈 워크스페이스 표면, URI 바, 탭 표면 조작으로 포커스를 변경합니다. 모듈 코드도 워크스페이스를 명시적으로 지정할 수 있습니다.</p>
+<pre><code class="lang-csharp">var workspace = parallelWorkspaceManager.GetFocusedWorkspace();
+await tabManager.NavigateAsync(workspace.Id, ReportsModuleConstants.Uri);
+</code></pre>
+<p>명령이 특정 워크스페이스에 묶여 있으면 <code>workspaceId</code>가 있는 오버로드를 사용합니다. 사용자의 현재 포커스를 따라야 하는 명령은 일반 <code>NavigateAsync(Uri)</code>를 사용합니다.</p>
+<h2 id="워크스페이스-레이아웃-트리">워크스페이스 레이아웃 트리</h2>
+<p>워크스페이스 레이아웃은 <code>WorkspaceNode</code> 트리입니다.</p>
+<table>
+<thead>
+<tr>
+<th>속성</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Id</code></td>
+<td>안정적인 워크스페이스 노드 ID.</td>
+</tr>
+<tr>
+<td><code>Left</code> / <code>Right</code></td>
+<td>자식 노드. 자식이 없는 노드가 리프 워크스페이스입니다.</td>
+</tr>
+<tr>
+<td><code>IsHorizontal</code></td>
+<td>자식 노드의 분할 방향.</td>
+</tr>
+<tr>
+<td><code>Ratio</code></td>
+<td>자식 노드 사이의 분할 비율.</td>
+</tr>
+<tr>
+<td><code>IsSplitterLocked</code></td>
+<td>분할선을 보이게 유지하면서 드래그를 막습니다.</td>
+</tr>
+<tr>
+<td><code>NavigationState</code></td>
+<td>워크스페이스별 탭 URI, 포커스 URI, 히스토리.</td>
+</tr>
+<tr>
+<td><code>IsNavigationBarVisible</code></td>
+<td>워크스페이스 내비게이션 바 표시 여부.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ParallelWorkspaceView</code>는 시각적 host이면서 <code>IParallelWorkspaceManager</code> 구현입니다. 각 리프 워크스페이스는 <code>TabManagerView</code>를 resolve하고, 각 <code>TabManagerView</code>는 자신의 <code>WorkspaceNode</code>에 속한 탭 컬렉션을 표시합니다.</p>
+<h2 id="분할-병합-레이아웃-작업">분할, 병합, 레이아웃 작업</h2>
+<p><code>IParallelWorkspaceManager</code>가 레이아웃 작업을 담당합니다.</p>
+<table>
+<thead>
+<tr>
+<th>작업</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SplitHorizontalAsync</code></td>
+<td>리프를 좌우 워크스페이스로 분할합니다.</td>
+</tr>
+<tr>
+<td><code>SplitVerticalAsync</code></td>
+<td>리프를 상하 워크스페이스로 분할합니다.</td>
+</tr>
+<tr>
+<td><code>MergeAsync</code></td>
+<td>가능하면 워크스페이스를 부모 구조로 병합합니다.</td>
+</tr>
+<tr>
+<td><code>MergeAllAsync</code></td>
+<td>레이아웃을 하나의 워크스페이스로 접습니다.</td>
+</tr>
+<tr>
+<td><code>ToggleOrientationAsync</code></td>
+<td>부모 분할 방향을 토글합니다.</td>
+</tr>
+<tr>
+<td><code>SwapAsync</code></td>
+<td>워크스페이스를 관련 형제 위치와 교환합니다.</td>
+</tr>
+<tr>
+<td><code>ApplyLayoutAsync</code></td>
+<td>저장된 <code>WorkspaceNode</code> 트리에서 레이아웃을 다시 만듭니다.</td>
+</tr>
+</tbody>
+</table>
+<p>워크스페이스가 제거되면 <code>ParallelWorkspaceView</code>는 워크스페이스 뷰를 분리하기 전에 <code>ITabManager.MoveAllTabItemInstances(...)</code>로 탭을 대체 워크스페이스로 이동합니다.</p>
+<h2 id="상태-복원">상태 복원</h2>
+<p>시작 복원은 워크스페이스 시각 트리가 준비된 뒤 실행됩니다.</p>
+<ol>
+<li><code>ParallelWorkspaceView</code>가 root <code>WorkspaceView</code>를 만듭니다.</li>
+<li>각 리프 워크스페이스가 <code>TabManagerView</code>를 resolve합니다.</li>
+<li><code>TabManager.RestoreStateAsync()</code>가 각 리프 <code>NavigationState</code>에서 저장된 탭 URI를 다시 엽니다.</li>
+<li>가능하면 이전에 포커스된 URI를 포커스합니다.</li>
+<li><code>TabManagerRestoreCompleted</code>를 게시합니다.</li>
+</ol>
+<p>시작 URI 처리는 <code>TabManagerRestoreCompleted</code>를 기다리므로 프로토콜 또는 명령줄 내비게이션이 탭/워크스페이스 복원과 경쟁하지 않습니다.</p>
+<h2 id="워크스페이스-간-탭-이동">워크스페이스 간 탭 이동</h2>
+<p>탭은 세 가지 방식으로 이동할 수 있습니다.</p>
+<ul>
+<li><code>ITabManager.MoveTabItemInstance(instance, from, to)</code>는 하나의 탭을 다른 워크스페이스로 이동합니다.</li>
+<li><code>ITabManager.MoveTabItemInstance(source, target, position)</code>은 탭을 재정렬하거나 대상 탭 기준 위치로 이동합니다.</li>
+<li><code>ITabManager.MoveAllTabItemInstances(from, to)</code>는 워크스페이스가 제거될 때 모든 탭을 이동합니다.</li>
+</ul>
+<p>내장 탭 헤더 컨텍스트 메뉴는 <code>IMoveWorkspaceTabItemHeaderContextMenuItemManager</code>로 &quot;이동할 워크스페이스&quot; 대상을 만듭니다. 드래그 앤 드롭은 <code>IDropActionProvider</code>와 <code>DropOrchestrator</code>를 사용하며, 내장 <code>TabManagerDropProvider</code>가 탭 이동 payload를 처리합니다.</p>
+<h2 id="워크스페이스-메뉴">워크스페이스 메뉴</h2>
+<p>워크스페이스 메뉴에는 두 표면이 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>표면</th>
+<th>Manager</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>워크스페이스 내비게이션 드롭다운</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td>워크스페이스 번호 근처의 현재 표시 메뉴입니다. 내장 항목에는 reset, split, merge, swap, orientation toggle, focus가 있습니다.</td>
+</tr>
+<tr>
+<td>워크스페이스 컨텍스트 메뉴 manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td><code>Anchor</code>와 <code>Priority</code>에 따른 재귀 정렬을 제공합니다. 현재 빈 영역 컨텍스트 메뉴에 항목이 보인다고 가정하려면 먼저 뷰 표면을 연결해야 합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>표시되는 워크스페이스 메뉴에 명령을 넣으려면 <code>IWorkspaceMenuManager.RegisterItem&lt;T&gt;()</code>를 사용합니다. <code>IWorkspaceContextMenuManager</code>는 컨텍스트 메뉴 표면을 확장하거나 연결할 때만 사용합니다.</p>
+<h2 id="실무-규칙">실무 규칙</h2>
+<ul>
+<li>메뉴 명령에서 뷰를 직접 인스턴스화하지 말고 URI로 이동합니다.</li>
+<li>모듈이 소유한 각 URI 표면에는 탭 팩터리를 등록합니다.</li>
+<li>&quot;포커스된 워크스페이스에서 열기&quot; 동작에는 <code>NavigateAsync(Uri)</code>를 사용합니다.</li>
+<li>명령이 워크스페이스에 명확히 연결되어 있으면 <code>NavigateAsync(Guid, Uri)</code>를 사용합니다.</li>
+<li><code>WorkspaceNode.NavigationState</code>를 해당 워크스페이스의 지속 탭 상태로 취급합니다.</li>
+<li>복원된 탭에 의존하는 시작 내비게이션은 <code>TabManagerRestoreCompleted</code>를 기다립니다.</li>
+<li>탭 이동은 UI 컬렉션을 직접 수정하지 말고 <code>ITabManager</code>를 통해 수행합니다.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/navigation-workspace.ko.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

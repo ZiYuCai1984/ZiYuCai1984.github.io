@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>架構 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="架構 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/architecture.zh-TW.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="architecture.html">English</a> |
+  <a href="architecture.ja.html">日本語</a> |
+  <a href="architecture.zh-CN.html">简体中文</a> |
+  <a href="architecture.zh-TW.html">繁體中文</a> |
+  <a href="architecture.ko.html">한국어</a> |
+</p>
+<h1 id="架構">架構</h1>
+<p>本文件根據儲存庫結構與執行時載入路徑，說明目前 ZYC.Framework 的架構。重點不是泛泛介紹 WPF，而是專案中實際使用的擴充點：模組、相依性注入、基於 URI 的分頁、工作區、設定/狀態持久化、Aspire 資源與 MCP 暴露。</p>
+<h2 id="解決方案結構">解決方案結構</h2>
+<p>ZYC.Framework 是一個模組化 WPF 桌面框架。可執行 Shell 刻意保持精簡：它負責啟動應用程式、建立 Autofac 容器、載入模組，然後將 UI 組合交給主選單、分頁、工作區、狀態列與通知等 Manager。</p>
+<table>
+<thead>
+<tr>
+<th>區域</th>
+<th>職責</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Abstractions</code></td>
+<td>公開契約、設定/狀態型別、模組側 DTO、選單/分頁/工作區介面、MCP 屬性。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Core</code></td>
+<td>通用 WPF 輔助能力、命令、基礎控制項、對話框、在地化輔助、轉換器與註冊輔助方法。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.MetroWindow</code></td>
+<td>主視窗實作，以及對話框承載等視窗層級服務。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.WebView2</code></td>
+<td>WebView2 Host 控制項與瀏覽器整合基礎設施。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework</code></td>
+<td>桌面可執行 Shell、啟動流程、工作區 UI、分頁 UI、選單 UI、通知、QuickBar、狀態列與 AppContext 實作。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.*.Abstractions</code></td>
+<td>模組專用的公開契約、設定/狀態類別、常數與命令介面。這些專案是其他模組應引用的邊界。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.*</code></td>
+<td>模組實作專案。負責註冊服務、選單項、分頁 Factory、狀態列項、Aspire 資源或命令列選項。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.CLI</code></td>
+<td>dotnet tool 入口。擁有 <code>zyc new</code>、<code>zyc new-module</code>，並與桌面 Host 共用模組發現/載入基礎設施。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.*</code></td>
+<td>建置期工具，包含文件、打包、安裝程式產生、專案/模組鷹架包裝器與產品版本處理。</td>
+</tr>
+<tr>
+<td><code>Thirdparty/*</code></td>
+<td>隨解決方案一起建置的 vendored 或 forked 相依項。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="高層相依圖">高層相依圖</h2>
+<pre><code class="lang-mermaid">graph TD
+  Host[&quot;ZYC.Framework executable&quot;]
+  Abs[&quot;ZYC.Framework.Abstractions&quot;]
+  Core[&quot;ZYC.Framework.Core&quot;]
+  Metro[&quot;ZYC.Framework.MetroWindow&quot;]
+  WebView[&quot;ZYC.Framework.WebView2&quot;]
+  Modules[&quot;ZYC.Framework.Modules.*&quot;]
+  ModuleAbs[&quot;ZYC.Framework.Modules.*.Abstractions&quot;]
+  CLI[&quot;ZYC.Framework.CLI&quot;]
+  Build[&quot;ZYC.Framework.Build.*&quot;]
+  Thirdparty[&quot;Thirdparty/*&quot;]
+
+  Host --&gt; Abs
+  Host --&gt; Core
+  Host --&gt; Metro
+  Host --&gt; WebView
+  Host --&gt; CLI
+  Core --&gt; Abs
+  Metro --&gt; Abs
+  Metro --&gt; Core
+  WebView --&gt; Core
+  Modules --&gt; Abs
+  Modules --&gt; Core
+  Modules --&gt; ModuleAbs
+  ModuleAbs --&gt; Abs
+  CLI --&gt; Abs
+  CLI --&gt; Core
+  Build --&gt; Abs
+  Build --&gt; CLI
+  Core --&gt; Thirdparty
+  WebView --&gt; Thirdparty
+</code></pre>
+<p>最重要的邊界是：<code>*.Abstractions</code> 專案定義公開模組契約，並應與 WPF 實作細節解耦。執行時模組在實作真實 View、選單項或分頁項時，可以依賴 WPF 與框架 UI 基礎設施。</p>
+<h2 id="啟動流程">啟動流程</h2>
+<p>桌面端入口是 <code>src/ZYC.Framework/Program.cs</code>。</p>
+<ol>
+<li>程序讀取啟動 URI，初始化 JSON/Settings 行為，在非 Debug 建置下啟用單一實例控制，並判斷是否需要重新導向至持久化的啟動版本。</li>
+<li>建立 Autofac <code>ContainerBuilder</code>。</li>
+<li>透過 <code>ModuleTools.RegisterAllFromAssembly(...)</code> 註冊核心框架組件：可執行組件、<code>ZYC.Framework.Core</code>、<code>ZYC.Framework.WebView2</code>、<code>ZYC.Framework.MetroWindow</code> 與 <code>ZYC.Framework.Abstractions</code>。</li>
+<li><code>RegisterAllFromAssembly(...)</code> 註冊組件中的 Autofac 服務，並從 settings 目錄載入發現到的所有 <code>IConfig</code> 與 <code>IState</code> 實作。</li>
+<li><code>ModuleTools.RegisterModules(...)</code> 從執行目錄掃描 <code>ZYC.Framework.Modules*.dll</code>，追加 <code>ModuleConfig.AdditionalAssemblyNames</code> 中列出的組件，略過 <code>ModuleConfig.DisabledAssemblyNames</code> 中停用的組件，處理待刪除檔案，並可從 <code>settings/nuget.module.assets.json</code> 載入 NuGet 模組。</li>
+<li>每個模組實例會在容器建立前執行 <code>RegisterAsync(builder)</code>。</li>
+<li><code>builder.Build()</code> 之後，啟用的模組依序執行 <code>LoadAsync(container)</code> 與 <code>AfterLoadedAsync(container)</code>。</li>
+<li>Shell 註冊內建的模組載入分頁 Factory，將模組載入錯誤寫入 <code>IModuleLoadInfoManager</code>，解析主視窗，並啟動 WPF。</li>
+</ol>
+<pre><code class="lang-mermaid">graph TD
+  Start[&quot;Program.Main&quot;]
+  Builder[&quot;建立 Autofac ContainerBuilder&quot;]
+  FrameworkAssemblies[&quot;註冊框架組件&quot;]
+  ConfigState[&quot;從 settings 載入 IConfig 與 IState&quot;]
+  ModuleScan[&quot;掃描模組 DLL 與 NuGet module assets&quot;]
+  RegisterAsync[&quot;Module.RegisterAsync(builder)&quot;]
+  BuildContainer[&quot;builder.Build()&quot;]
+  LoadAsync[&quot;Module.LoadAsync(container)&quot;]
+  AfterLoaded[&quot;Module.AfterLoadedAsync(container)&quot;]
+  Shell[&quot;解析主視窗並執行 WPF 應用程式&quot;]
+
+  Start --&gt; Builder
+  Builder --&gt; FrameworkAssemblies
+  FrameworkAssemblies --&gt; ConfigState
+  ConfigState --&gt; ModuleScan
+  ModuleScan --&gt; RegisterAsync
+  RegisterAsync --&gt; BuildContainer
+  BuildContainer --&gt; LoadAsync
+  LoadAsync --&gt; AfterLoaded
+  AfterLoaded --&gt; Shell
+</code></pre>
+<h2 id="模組模型">模組模型</h2>
+<p>一個模組通常拆成兩個專案：</p>
+<table>
+<thead>
+<tr>
+<th>專案</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Modules.&lt;Name&gt;.Abstractions</code></td>
+<td>公開 API、常數、設定/狀態、命令與 DTO。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.&lt;Name&gt;</code></td>
+<td>實作層：<code>Module.cs</code>、View、分頁項、分頁 Factory、選單項、Manager、Provider 與服務註冊。</td>
+</tr>
+</tbody>
+</table>
+<p>執行時模組物件是 <code>ModuleBase</code> 的子類別。框架使用以下階段：</p>
+<table>
+<thead>
+<tr>
+<th>階段</th>
+<th>執行時機</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder)</code></td>
+<td>Autofac 根容器建立前。</td>
+<td>註冊必須參與相依解析的服務。</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope)</code></td>
+<td>容器建立後。</td>
+<td>註冊執行時擴充點，例如分頁 Factory、選單項、狀態列項、Aspire 資源與啟動工作。</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope)</code></td>
+<td>所有啟用模組載入完成後。</td>
+<td>依賴其他模組已可用的工作。</td>
+</tr>
+</tbody>
+</table>
+<p>模組相依關係是透過對 <code>ZYC.Framework.Modules.*.Abstractions.dll</code> 的組件參考推斷。這能提供模組管理器實用的相依視圖，但它仍是基於約定的發現，而不是獨立的語意化模組清單。</p>
+<h2 id="ui-組合">UI 組合</h2>
+<p>Shell 由 Manager 組合，而不是硬編碼模組 UI。</p>
+<table>
+<thead>
+<tr>
+<th>介面區域</th>
+<th>主要契約</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主選單與 Hamburger 選單</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code>, <code>IMainMenuItem</code>, <code>IHamburgerMenuManager</code></td>
+</tr>
+<tr>
+<td>分頁與導覽</td>
+<td><code>ITabManager</code>, <code>ITabItemFactoryManager</code>, <code>ITabItemFactory</code>, <code>ITabItemInstance</code></td>
+</tr>
+<tr>
+<td>工作區</td>
+<td><code>IParallelWorkspaceManager</code>, 工作區 state/config 型別, 工作區選單 Manager</td>
+</tr>
+<tr>
+<td>QuickBar</td>
+<td><code>IQuickBarManager</code>, QuickBar item/provider 契約</td>
+</tr>
+<tr>
+<td>狀態列</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code>, <code>IStatusBarItem</code></td>
+</tr>
+<tr>
+<td>通知</td>
+<td><code>IToastManager</code>, <code>IBannerManager</code>, Toast/Banner View 基礎設施</td>
+</tr>
+<tr>
+<td>對話框與 Overlay</td>
+<td><code>IDialogManager</code>, <code>IDialog</code>, <code>IOverlayManager</code></td>
+</tr>
+</tbody>
+</table>
+<p>模組通常在 <code>LoadAsync(...)</code> 中加入 UI。例如，一個模組可以註冊分頁 Factory 與 Tools 選單項：</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;MyTabItemFactory&gt;();
+    lifetimeScope.RegisterToolsMainMenuItem&lt;MyMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>對於簡單 WPF View，<code>SimpleTabItemFactoryInfo</code> 是最短路徑。它會建立一個 URI 驅動的分頁，在 Extensions 下加入選單入口，並可加入 QuickBar 項。更複雜的路由情境中，模組應直接實作 <code>ITabItemFactory</code>。</p>
+<h2 id="基於-uri-的分頁導覽">基於 URI 的分頁導覽</h2>
+<p>分頁導覽由 URI 驅動。命令與選單項呼叫 <code>ITabManager.NavigateAsync(...)</code>；TabManager 查詢已註冊的 Factory 是否能處理該 URI；最符合的 Factory 建立分頁實例。</p>
+<pre><code class="lang-mermaid">graph TD
+  Command[&quot;選單項 / 命令 / 啟動 URI&quot;]
+  Navigate[&quot;ITabManager.NavigateAsync(uri)&quot;]
+  Factories[&quot;ITabItemFactoryManager.GetTabItemFactories()&quot;]
+  Match[&quot;Factory.CheckUriMatchedAsync(uri)&quot;]
+  Create[&quot;Factory.CreateTabItemInstanceAsync(context)&quot;]
+  Load[&quot;ITabItemInstance.LoadAsync()&quot;]
+  View[&quot;解析 View&quot;]
+  Attach[&quot;將分頁掛到目前聚焦工作區&quot;]
+  Fallback[&quot;NotFoundTabItem 或 ErrorTabItem&quot;]
+
+  Command --&gt; Navigate
+  Navigate --&gt; Factories
+  Factories --&gt; Match
+  Match --&gt; Create
+  Create --&gt; Load
+  Load --&gt; View
+  View --&gt; Attach
+  Match --&gt; Fallback
+</code></pre>
+<p>Factory 依 Priority 遞減排序。Singleton Factory 在目標 URI 已開啟時可以重用既有分頁。沒有 Factory 符合時，Shell 會建立 not-found 分頁；建立失敗時，Shell 會建立 error 分頁。</p>
+<h2 id="設定與狀態">設定與狀態</h2>
+<p>設定與狀態透過標記介面發現：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>介面</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config</td>
+<td><code>IConfig</code></td>
+<td>使用者或模組可編輯的設定。</td>
+</tr>
+<tr>
+<td>State</td>
+<td><code>IState</code></td>
+<td>程序重啟後仍需保留的執行時狀態，例如導覽或工作區狀態。</td>
+</tr>
+</tbody>
+</table>
+<p><code>ModuleTools.RegisterAllFromAssembly(...)</code> 在啟動時從 settings 目錄載入這些型別，並將實例註冊到 Autofac。<code>IAppContext</code> 暴露應用層級路徑與保存操作，例如 <code>SaveAllConfig()</code> 與 <code>SaveAllState()</code>。</p>
+<p><code>ModuleConfig</code> 是核心模組載入設定：</p>
+<table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>含義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DisabledAssemblyNames</code></td>
+<td>應被忽略的模組 DLL。</td>
+</tr>
+<tr>
+<td><code>AdditionalAssemblyNames</code></td>
+<td>除標準模組 DLL 外，需要從 app 資料夾額外載入的 DLL。</td>
+</tr>
+</tbody>
+</table>
+<p>NuGet 安裝的模組使用獨立的啟動產物：<code>settings/nuget.module.assets.json</code>。當它存在時，<code>ModuleTools.RegisterModules(...)</code> 會讓執行時資產載入器載入 <code>net10.0-windows</code> 對應的執行時組件。</p>
+<h2 id="混合-ui-與-aspire-整合">混合 UI 與 Aspire 整合</h2>
+<p>ZYC.Framework 支援原生 WPF View 與混合 Web 內容。</p>
+<p><code>ZYC.Framework.WebView2</code> 擁有可重用的 WebView2 Host 基礎設施。WebBrowser、BlazorDemo 等模組基於這個能力嵌入 Web 內容或 Web 化體驗。</p>
+<p><code>ZYC.Framework.Modules.Aspire</code> 整合 .NET Aspire。<code>AspireService.Build(...)</code> 建立 <code>DistributedApplicationBuilder</code>，使用現有 Autofac lifetime scope 進行配置，套用 <code>AspireConfig.Environment</code>，並解析所有 <code>IExtensionResourcesProvider</code> 實作。擴充模組可以將子資源插入 Aspire app，而不需要修改核心 Aspire 模組。</p>
+<p><code>Translator</code> 模組是這個模式的例子：它解析 <code>ICommandlineResourcesProvider</code>，並為 <code>libretranslate</code> 註冊命令列資源。</p>
+<p><code>ZYC.Framework.Modules.Accounts</code> 是 provider-based account shell。它負責 session 初始化、<code>IAccountManager</code>、受保護的 token 儲存，以及視窗標題列帳號 UI。<code>ZYC.Framework.Modules.Accounts.GitHub</code> 這類 provider module 提供 <code>IAccountProvider</code> 實作，並可註冊自己的 authentication tab factory，包括 WebView2-backed OAuth flow。</p>
+<p><code>ZYC.Framework.Modules.ChromeExtensions</code> 將 browser extension package management 與 browser runtime 分離。它下載並解包 Chrome Web Store package，讀取 manifest metadata，並同步 unpacked manifest key，讓 WebView2 可以使用穩定的 extension identity。<code>ZYC.Framework.Modules.WebBrowser</code> 消費已安裝 package list，把 <code>--load-extension</code> 寫入 <code>WebBrowserConfig.CustomBrowserArguments</code>，並使用 <code>ZYC.Framework.WebView2</code> 暴露的 live <code>CoreWebView2BrowserExtension</code> data 建構 runtime plugin UI。</p>
+<h2 id="mcp-暴露">MCP 暴露</h2>
+<p>MCP Server 模組透過介面註解暴露應用能力。</p>
+<p>標記了 <code>[ExposeToMCP]</code> 的介面或方法可以被 <code>MCPAutoToolDiscoveryExtensions.AddAutoDiscoveredTools(...)</code> 發現。標記了 <code>[MCPIgnore]</code> 的方法會被略過。如果工具需要在 UI 執行緒執行，MCP 包裝器會透過 UI dispatcher 轉發呼叫。</p>
+<p>這代表 MCP 是契約驅動的：</p>
+<ol>
+<li>將穩定能力放在介面上。</li>
+<li>對介面或方法加上 <code>[ExposeToMCP]</code>。</li>
+<li>用 <code>[MCPIgnore]</code> 排除內部或不適合暴露的成員。</li>
+<li>讓 MCP Server 在執行時發現已載入組件。</li>
+</ol>
+<h2 id="建置與範本流程">建置與範本流程</h2>
+<p>文件與鷹架和執行時模組是分離的。</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>職責</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Build.Doc</code></td>
+<td>將 <code>Templates/README/README.md</code> 與 <code>Templates/docs/*</code> 渲染到根目錄 <code>README*.md</code> 與 <code>docs/*</code>。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.CLI</code></td>
+<td>提供 <code>zyc new</code> 專案範本與 <code>zyc new-module</code> 模組鷹架。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.NewModule</code></td>
+<td>面向儲存庫內模組生成的 <code>zyc new-module</code> 包裝器。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.NuGet</code></td>
+<td>NuGet 打包與發布說明。</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.InnoSetup</code></td>
+<td>安裝程式建置支援。</td>
+</tr>
+</tbody>
+</table>
+<p>專案建立與模組建立是刻意分開的命令面：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zyc new &lt;ProjectName&gt;</code></td>
+<td>從 <code>minimal</code> 或 <code>modular</code> 專案範本建立外部 Host 專案。</td>
+</tr>
+<tr>
+<td><code>zyc new-module &lt;ModuleName&gt; --src-root &lt;SourceRoot&gt;</code></td>
+<td>在既有原始碼樹中建立模組專案對。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="新增模組">新增模組</h2>
+<p>典型模組新增流程如下：</p>
+<ol>
+<li>建立 <code>ZYC.Framework.Modules.&lt;Name&gt;.Abstractions</code>，放公開契約、常數、設定、狀態與命令介面。</li>
+<li>建立 <code>ZYC.Framework.Modules.&lt;Name&gt;</code>，放執行時實作。</li>
+<li>新增包含 <code>ModuleBase</code> 子類別的 <code>Module.cs</code>。</li>
+<li>必須在容器建立前參與 DI 的註冊放在 <code>RegisterAsync(...)</code>。</li>
+<li>分頁 Factory、選單項、狀態列項、QuickBar 項、Aspire Provider 或啟動行為放在 <code>LoadAsync(...)</code> 註冊。</li>
+<li>優先使用 <code>RegisterTabItemFactory&lt;T&gt;()</code>、<code>RegisterToolsMainMenuItem&lt;T&gt;()</code> 等 Manager API，而不是直接操作 Shell View。</li>
+<li>公開 Abstractions 盡量保持穩定，並優先採用追加式變更。</li>
+</ol>
+<p>這樣可以讓模組獨立開發，同時仍透過共享 Shell 與基於 Manager 的擴充模型組合進 Host。</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/architecture.zh-TW.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

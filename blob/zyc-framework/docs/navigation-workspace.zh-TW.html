@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>導覽與工作區 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="導覽與工作區 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/navigation-workspace.zh-TW.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="navigation-workspace.html">English</a> |
+  <a href="navigation-workspace.ja.html">日本語</a> |
+  <a href="navigation-workspace.zh-CN.html">简体中文</a> |
+  <a href="navigation-workspace.zh-TW.html">繁體中文</a> |
+  <a href="navigation-workspace.ko.html">한국어</a> |
+</p>
+<h1 id="導覽與工作區">導覽與工作區</h1>
+<p>ZYC.Framework 將 <strong>開啟什麼</strong> 和 <strong>顯示在哪裡</strong> 分開處理。URI 描述目標內容。Tab factory 為該 URI 建立 Tab 實例。Workspace 決定這個實例進入哪個 Tab 顯示區域。</p>
+<h2 id="心智模型">心智模型</h2>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>執行階段角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URI</td>
+<td>功能、檔案、頁面或工具的位址。例如 <code>zyc://...</code>、<code>file://...</code> 和模組自有 scheme。</td>
+</tr>
+<tr>
+<td><code>ITabItemFactory</code></td>
+<td>判斷自己能否處理某個 URI，並建立 <code>ITabItemInstance</code>。</td>
+</tr>
+<tr>
+<td><code>ITabItemInstance</code></td>
+<td>擁有 Tab 識別、標題、圖示、View、生命週期與關閉行為。</td>
+</tr>
+<tr>
+<td><code>ITabManager</code></td>
+<td>協調 URI 導覽、Tab 建立、重用、聚焦、關閉、重載、移動與恢復。</td>
+</tr>
+<tr>
+<td><code>WorkspaceNode</code></td>
+<td>工作區布局樹中的一個節點。葉節點持有導覽狀態。</td>
+</tr>
+<tr>
+<td><code>IParallelWorkspaceManager</code></td>
+<td>負責工作區拆分、合併、聚焦、交換、重置與套用布局。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="導覽流程">導覽流程</h2>
+<pre><code class="lang-mermaid">graph TD
+    A[&quot;選單命令、URI 欄、啟動 URI 或模組程式碼&quot;] --&gt; B[&quot;ITabManager.NavigateAsync(...)&quot;]
+    B --&gt; C[&quot;選擇聚焦工作區或明確 workspaceId&quot;]
+    C --&gt; D[&quot;TabManager.InternalNavigateAsync(...)&quot;]
+    D --&gt; E[&quot;查找匹配的 ITabItemFactory&quot;]
+    E --&gt; F[&quot;允許時重用既有單例 Tab&quot;]
+    E --&gt; G[&quot;建立並載入新的 ITabItemInstance&quot;]
+    G --&gt; H[&quot;掛載 Tab 到工作區&quot;]
+    F --&gt; I[&quot;聚焦 Tab&quot;]
+    H --&gt; I
+    I --&gt; J[&quot;發布 NavigateCompletedEvent&quot;]
+</code></pre>
+<p><code>NavigateAsync(Uri)</code> 會導覽到目前聚焦工作區。<code>NavigateAsync(Guid workspaceId, Uri uri)</code> 會導覽到指定工作區。</p>
+<h2 id="uri-路由與-factory">URI 路由與 factory</h2>
+<p>Factory 透過 <code>ITabItemFactoryManager</code> 註冊，通常在 <code>Module.LoadAsync</code> 中完成：</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p><code>TabItemFactoryBase</code> 使用 <code>TabItemRouteAttribute</code> 做路由匹配：</p>
+<pre><code class="lang-csharp">[RegisterSingleInstance]
+[TabItemRoute(Host = ReportsModuleConstants.Host)]
+internal class ReportsTabItemFactory : TabItemFactoryBase
+{
+    public override async Task&lt;ITabItemInstance&gt; CreateTabItemInstanceAsync(
+        TabItemCreationContext context)
+    {
+        await Task.CompletedTask;
+        return context.Resolve&lt;ReportsTabItem&gt;(
+            new TypedParameter(
+                typeof(TabReference),
+                new TabReference(context.Uri)));
+    }
+}
+</code></pre>
+<p>關鍵行為：</p>
+<ul>
+<li>Factory 依 Manager 回傳順序檢查。</li>
+<li><code>TabItemRouteAttribute</code> 可以匹配 <code>Scheme</code>、<code>Host</code>、<code>Path</code> 和 <code>PathMatch</code>。</li>
+<li><code>TabItemFactoryBase.IsSingle</code> 預設是 <code>true</code>。</li>
+<li>如果單例 factory 匹配到一個已經開啟的 URI，會重用既有 Tab。</li>
+<li>如果沒有 factory 匹配，Host 會開啟內建 Not Found Tab。</li>
+<li>如果建立或載入時拋出例外，Host 會開啟內建 Error Tab。</li>
+</ul>
+<h2 id="工作區選擇">工作區選擇</h2>
+<p>目前聚焦工作區保存在 <code>ParallelWorkspaceState.FocusedWorkspaceId</code>。<code>IParallelWorkspaceManager.GetFocusedWorkspace()</code> 會解析目前有效葉節點；如果保存的 id 已失效，會回退到第一個可用葉節點。</p>
+<p>當使用者操作工作區選單按鈕、空工作區區域、URI 欄或 Tab 區域時，UI 會切換聚焦工作區。模組程式碼也可以明確指定工作區：</p>
+<pre><code class="lang-csharp">var workspace = parallelWorkspaceManager.GetFocusedWorkspace();
+await tabManager.NavigateAsync(workspace.Id, ReportsModuleConstants.Uri);
+</code></pre>
+<p>當命令明確繫結到某個工作區時，使用帶 <code>workspaceId</code> 的多載。當命令應該跟隨使用者目前焦點時，使用普通的 <code>NavigateAsync(Uri)</code>。</p>
+<h2 id="工作區布局樹">工作區布局樹</h2>
+<p>工作區布局是一棵 <code>WorkspaceNode</code> 樹：</p>
+<table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>含義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Id</code></td>
+<td>穩定的工作區節點識別。</td>
+</tr>
+<tr>
+<td><code>Left</code> / <code>Right</code></td>
+<td>子節點。沒有子節點的節點就是葉工作區。</td>
+</tr>
+<tr>
+<td><code>IsHorizontal</code></td>
+<td>子節點拆分方向。</td>
+</tr>
+<tr>
+<td><code>Ratio</code></td>
+<td>子節點之間的拆分比例。</td>
+</tr>
+<tr>
+<td><code>IsSplitterLocked</code></td>
+<td>禁止拖動分隔條，但仍保持分隔可見。</td>
+</tr>
+<tr>
+<td><code>NavigationState</code></td>
+<td>每個工作區自己的 Tab URI、焦點 URI 與歷史記錄。</td>
+</tr>
+<tr>
+<td><code>IsNavigationBarVisible</code></td>
+<td>控制工作區導覽列是否可見。</td>
+</tr>
+</tbody>
+</table>
+<p><code>ParallelWorkspaceView</code> 既是視覺宿主，也是 <code>IParallelWorkspaceManager</code> 的實作。每個葉工作區都會解析一個 <code>TabManagerView</code>，每個 <code>TabManagerView</code> 顯示自己 <code>WorkspaceNode</code> 下的 Tab 集合。</p>
+<h2 id="拆分合併與布局操作">拆分、合併與布局操作</h2>
+<p><code>IParallelWorkspaceManager</code> 擁有布局操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SplitHorizontalAsync</code></td>
+<td>將葉節點拆成左右兩個工作區。</td>
+</tr>
+<tr>
+<td><code>SplitVerticalAsync</code></td>
+<td>將葉節點拆成上下兩個工作區。</td>
+</tr>
+<tr>
+<td><code>MergeAsync</code></td>
+<td>在可行時把工作區合併回父結構。</td>
+</tr>
+<tr>
+<td><code>MergeAllAsync</code></td>
+<td>將布局摺疊為單一工作區。</td>
+</tr>
+<tr>
+<td><code>ToggleOrientationAsync</code></td>
+<td>切換父拆分方向。</td>
+</tr>
+<tr>
+<td><code>SwapAsync</code></td>
+<td>與相關兄弟位置交換。</td>
+</tr>
+<tr>
+<td><code>ApplyLayoutAsync</code></td>
+<td>從保存的 <code>WorkspaceNode</code> 樹重建布局。</td>
+</tr>
+</tbody>
+</table>
+<p>當工作區被移除時，<code>ParallelWorkspaceView</code> 會先透過 <code>ITabManager.MoveAllTabItemInstances(...)</code> 把它的 Tab 移到備援工作區，然後再分離工作區 View。</p>
+<h2 id="狀態恢復">狀態恢復</h2>
+<p>啟動恢復發生在工作區視覺樹準備完成之後：</p>
+<ol>
+<li><code>ParallelWorkspaceView</code> 建立根 <code>WorkspaceView</code>。</li>
+<li>每個葉工作區解析一個 <code>TabManagerView</code>。</li>
+<li><code>TabManager.RestoreStateAsync()</code> 從每個葉 <code>NavigationState</code> 中重新開啟已保存的 Tab URI。</li>
+<li>如果可能，恢復之前聚焦的 URI。</li>
+<li>發布 <code>TabManagerRestoreCompleted</code>。</li>
+</ol>
+<p>啟動 URI 處理會等待 <code>TabManagerRestoreCompleted</code>，因此通訊協定或命令列導覽不會和 Tab/工作區恢復發生競態。</p>
+<h2 id="在工作區之間移動-tab">在工作區之間移動 Tab</h2>
+<p>Tab 有三種移動方式：</p>
+<ul>
+<li><code>ITabManager.MoveTabItemInstance(instance, from, to)</code> 把一個 Tab 移到另一個工作區。</li>
+<li><code>ITabManager.MoveTabItemInstance(source, target, position)</code> 重排 Tab，或把它移動到目標 Tab 的相對位置。</li>
+<li><code>ITabManager.MoveAllTabItemInstances(from, to)</code> 在工作區被移除時移動所有 Tab。</li>
+</ul>
+<p>內建 Tab 標頭右鍵選單透過 <code>IMoveWorkspaceTabItemHeaderContextMenuItemManager</code> 建立「移動到工作區」的目標。拖放使用 <code>IDropActionProvider</code> 與 <code>DropOrchestrator</code>；內建 <code>TabManagerDropProvider</code> 處理 Tab 移動負載。</p>
+<h2 id="工作區選單">工作區選單</h2>
+<p>工作區選單有兩個表面：</p>
+<table>
+<thead>
+<tr>
+<th>表面</th>
+<th>Manager</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工作區導覽下拉選單</td>
+<td><code>IWorkspaceMenuManager</code></td>
+<td>工作區編號附近的目前可見選單。內建項包括 reset、split、merge、swap、orientation toggle 和 focus。</td>
+</tr>
+<tr>
+<td>工作區內容選單 Manager</td>
+<td><code>IWorkspaceContextMenuManager</code></td>
+<td>提供依 <code>Anchor</code> 和 <code>Priority</code> 的遞迴排序。不要假設它的項目會出現在目前空白區域右鍵選單中，除非已接入對應 View 表面。</td>
+</tr>
+</tbody>
+</table>
+<p>要把命令放進可見的工作區選單，請使用 <code>IWorkspaceMenuManager.RegisterItem&lt;T&gt;()</code>。只有在擴展或接線工作區內容選單表面時，才使用 <code>IWorkspaceContextMenuManager</code>。</p>
+<h2 id="實用規則">實用規則</h2>
+<ul>
+<li>透過 URI 導覽，不要從選單命令直接實例化 View。</li>
+<li>模組擁有的每個 URI 表面都應註冊 Tab factory。</li>
+<li>「在目前聚焦工作區開啟」使用 <code>NavigateAsync(Uri)</code>。</li>
+<li>命令明確繫結工作區時使用 <code>NavigateAsync(Guid, Uri)</code>。</li>
+<li>將 <code>WorkspaceNode.NavigationState</code> 視為該工作區的持久化 Tab 狀態。</li>
+<li>依賴已恢復 Tab 的啟動導覽要等待 <code>TabManagerRestoreCompleted</code>。</li>
+<li>移動 Tab 透過 <code>ITabManager</code>，不要直接編輯 UI 集合。</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/navigation-workspace.zh-TW.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
