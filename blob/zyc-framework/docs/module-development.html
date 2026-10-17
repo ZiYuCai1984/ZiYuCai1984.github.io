@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Module Development </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Module Development ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/module-development.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="module-development.html">English</a> |
+  <a href="module-development.ja.html">日本語</a> |
+  <a href="module-development.zh-CN.html">简体中文</a> |
+  <a href="module-development.zh-TW.html">繁體中文</a> |
+  <a href="module-development.ko.html">한국어</a> |
+</p>
+<h1 id="module-development">Module Development</h1>
+<p>This guide explains how to build a ZYC.Framework module that fits the host runtime: dependency injection first, URI-based tab navigation, optional main menu integration, and a clean split between public contracts and WPF implementation.</p>
+<h2 id="when-to-create-a-module">When to Create a Module</h2>
+<p>Create a module when a feature needs to be discovered and loaded by the ZYC.Framework host instead of being compiled directly into the shell. A module can contribute views, tab factories, main menu items, configuration, state, background services, and command-line options.</p>
+<p>For reusable feature contracts, create an <code>*.Abstractions</code> project. Keep public DTOs, constants, service interfaces, and menu provider interfaces there. Keep WPF views, tab item implementations, and runtime registrations in the implementation project.</p>
+<h2 id="recommended-project-shape">Recommended Project Shape</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Typical files</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Abstractions</td>
+<td><code>*ModuleConstants.cs</code>, <code>I*MainMenuItemsProvider.cs</code>, service interfaces</td>
+<td>Public contracts that other modules can reference without depending on WPF implementation details.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><code>Module.cs</code></td>
+<td>Module lifecycle entrypoint. Registers factories, menu items, providers, and services.</td>
+</tr>
+<tr>
+<td>Navigation</td>
+<td><code>*TabItemFactory.cs</code>, <code>*TabItem.cs</code></td>
+<td>Matches <code>zyc://</code> or app URIs and creates tab instances.</td>
+</tr>
+<tr>
+<td>Menu</td>
+<td><code>*MainMenuItem.cs</code>, optional <code>*MainMenuItemsProvider.cs</code></td>
+<td>Adds user-visible commands that navigate to module tabs or run module actions.</td>
+</tr>
+<tr>
+<td>UI</td>
+<td><code>UI/*View.xaml</code>, <code>UI/*View.xaml.cs</code></td>
+<td>WPF view surface used by the tab item.</td>
+</tr>
+</tbody>
+</table>
+<p>Abstractions projects should not expose WPF control types. <code>System.Windows.Input.ICommand</code> is acceptable in abstractions when a command contract is needed.</p>
+<h2 id="lifecycle">Lifecycle</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Timing</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>Before the Autofac container is built.</td>
+<td>Register services that must be available to the whole container.</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>After the container is built and the module is enabled.</td>
+<td>Register tab factories, main menu items, status bar items, and runtime hooks.</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>After all enabled modules have loaded.</td>
+<td>Cross-module initialization that needs other modules to already be registered.</td>
+</tr>
+</tbody>
+</table>
+<p>Most UI modules only need <code>LoadAsync</code>.</p>
+<h2 id="minimal-view-module">Minimal View Module</h2>
+<p>For a single-view module, register a simple tab factory from <code>LoadAsync</code>:</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac;
+using ZYC.Framework.Abstractions;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core;
+using MyCompany.Tools.UI;
+
+namespace MyCompany.Tools;
+
+internal class Module : ModuleBase
+{
+    public override Task LoadAsync(ILifetimeScope lifetimeScope)
+    {
+        lifetimeScope.RegisterSimpleTabItemFactory(
+            new SimpleTabItemFactoryInfo(typeof(ToolsView)));
+
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<p>This is the pattern used by the <code>minimal</code> project template. It is enough when the module only needs to expose one WPF <code>UserControl</code> as a tab.</p>
+<h2 id="routed-tab-module">Routed Tab Module</h2>
+<p>Use <code>TabItemFactoryBase</code> when the module needs a stable URI, route matching, parameters, custom singleton behavior, or multiple tabs.</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core;
+using ZYC.Framework.Modules.Reports.Abstractions;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[RegisterSingleInstance]
+[TabItemRoute(Host = ReportsModuleConstants.Host)]
+internal class ReportsTabItemFactory : TabItemFactoryBase
+{
+    public override async Task&lt;ITabItemInstance&gt; CreateTabItemInstanceAsync(
+        TabItemCreationContext context)
+    {
+        await Task.CompletedTask;
+        return context.Resolve&lt;ReportsTabItem&gt;(
+            new TypedParameter(
+                typeof(TabReference),
+                new TabReference(context.Uri)));
+    }
+}
+</code></pre>
+<p><code>TabItemRouteAttribute</code> can match by <code>Scheme</code>, <code>Host</code>, <code>Path</code>, and <code>PathMatch</code>. When several factories match the same URI, the factory with the higher <code>Priority</code> wins. <code>TabItemFactoryBase</code> defaults to <code>IsSingle = true</code>; override it when the module should allow multiple tab instances.</p>
+<h2 id="tab-item-and-view">Tab Item and View</h2>
+<p>A routed tab normally wraps a WPF view with <code>TabItemInstanceBase&lt;TView&gt;</code>:</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core.Tab;
+using ZYC.Framework.Modules.Reports.Abstractions;
+using ZYC.Framework.Modules.Reports.UI;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[Register]
+[ConstantsSource(typeof(ReportsModuleConstants))]
+internal class ReportsTabItem : TabItemInstanceBase&lt;ReportsView&gt;
+{
+    public ReportsTabItem(
+        ILifetimeScope lifetimeScope,
+        TabReference tabReference) : base(lifetimeScope, tabReference)
+    {
+    }
+}
+</code></pre>
+<p>Keep tab lifetime behavior in the tab item and keep visual behavior in the view. This keeps routing, tab identity, and UI composition separate.</p>
+<h2 id="main-menu-entry">Main Menu Entry</h2>
+<p>Menu items usually navigate to the module URI:</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.MainMenu;
+using ZYC.Framework.Core;
+using ZYC.Framework.Modules.Reports.Abstractions;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[RegisterSingleInstance]
+internal class ReportsMainMenuItem : MainMenuItem
+{
+    public ReportsMainMenuItem(ILifetimeScope lifetimeScope)
+    {
+        Info = new MenuItemInfo
+        {
+            Title = ReportsModuleConstants.Title,
+            Icon = ReportsModuleConstants.Icon
+        };
+
+        Command = lifetimeScope.CreateNavigateCommand(ReportsModuleConstants.Uri);
+    }
+}
+</code></pre>
+<p>Register it from the module:</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>Use the existing menu provider that matches the feature location, such as File, View, Tools, Extensions, or About. Add a module-owned provider only when the feature has several child commands.</p>
+<h2 id="configuration-and-state">Configuration and State</h2>
+<p>Types implementing <code>IConfig</code> or <code>IState</code> are loaded from the settings directory during module registration and registered into Autofac automatically. Use config for user-editable settings and state for runtime persistence such as selected paths, pending operations, and window state.</p>
+<p>Do not store large business data in config/state classes. Keep them small, serializable, and version-tolerant.</p>
+<h2 id="module-loading-and-dependencies">Module Loading and Dependencies</h2>
+<p>The host discovers standard module assemblies named like <code>ZYC.Framework.Modules*.dll</code>, then adds assemblies listed in <code>ModuleConfig.AdditionalAssemblyNames</code>. Assemblies in <code>ModuleConfig.DisabledAssemblyNames</code> are discovered but not loaded as enabled modules.</p>
+<p>Dependencies are inferred from references to other module <code>*.Abstractions.dll</code> assemblies. If module A references <code>ZYC.Framework.Modules.B.Abstractions.dll</code>, the runtime can report that A depends on B without forcing A to reference B's WPF implementation.</p>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>Put public constants and contracts in <code>*.Abstractions</code>.</li>
+<li>Keep WPF views and tab items in the implementation project.</li>
+<li>Register services in <code>RegisterAsync</code> only when they must exist before the container is built.</li>
+<li>Register tab factories and menu items in <code>LoadAsync</code>.</li>
+<li>Use <code>TabItemRouteAttribute</code> for stable URI routing.</li>
+<li>Prefer existing main menu providers before adding a new provider.</li>
+<li>Keep config/state classes small and serializable.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/module-development.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
