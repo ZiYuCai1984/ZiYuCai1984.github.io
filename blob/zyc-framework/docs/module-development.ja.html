@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>モジュール開発 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="モジュール開発 ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/module-development.ja.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="module-development.html">English</a> |
+  <a href="module-development.ja.html">日本語</a> |
+  <a href="module-development.zh-CN.html">简体中文</a> |
+  <a href="module-development.zh-TW.html">繁體中文</a> |
+  <a href="module-development.ko.html">한국어</a> |
+</p>
+<h1 id="モジュール開発">モジュール開発</h1>
+<p>このガイドでは、ZYC.Framework Host の実行時モデルに合うモジュールの作り方を説明します。基本は、依存性注入を入口にし、URI ベースでタブへ遷移し、必要に応じてメインメニューへ統合し、公開コントラクトと WPF 実装を分離することです。</p>
+<h2 id="モジュールを作るタイミング">モジュールを作るタイミング</h2>
+<p>シェルに直接組み込むのではなく、ZYC.Framework Host に発見・ロードさせたい機能はモジュールにします。モジュールはビュー、タブ ファクトリ、メインメニュー項目、設定、状態、バックグラウンド サービス、コマンドライン オプションを提供できます。</p>
+<p>再利用されるコントラクトがある場合は <code>*.Abstractions</code> プロジェクトを作成します。公開 DTO、定数、サービス インターフェイス、メニュー プロバイダー インターフェイスはそこに置きます。WPF ビュー、タブ項目、実行時登録は実装プロジェクトに置きます。</p>
+<h2 id="推奨プロジェクト構成">推奨プロジェクト構成</h2>
+<table>
+<thead>
+<tr>
+<th>領域</th>
+<th>代表的なファイル</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Abstractions</td>
+<td><code>*ModuleConstants.cs</code>, <code>I*MainMenuItemsProvider.cs</code>, service interfaces</td>
+<td>他モジュールが WPF 実装へ依存せず参照できる公開コントラクト。</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td><code>Module.cs</code></td>
+<td>モジュールのライフサイクル入口。ファクトリ、メニュー項目、プロバイダー、サービスを登録する。</td>
+</tr>
+<tr>
+<td>Navigation</td>
+<td><code>*TabItemFactory.cs</code>, <code>*TabItem.cs</code></td>
+<td><code>zyc://</code> または app URI を判定し、タブ インスタンスを作成する。</td>
+</tr>
+<tr>
+<td>Menu</td>
+<td><code>*MainMenuItem.cs</code>, optional <code>*MainMenuItemsProvider.cs</code></td>
+<td>モジュールのタブへ遷移する、または処理を実行するユーザー向けコマンドを追加する。</td>
+</tr>
+<tr>
+<td>UI</td>
+<td><code>UI/*View.xaml</code>, <code>UI/*View.xaml.cs</code></td>
+<td>タブ項目で使う WPF ビュー。</td>
+</tr>
+</tbody>
+</table>
+<p>Abstractions プロジェクトでは WPF コントロール型を公開しないでください。コマンド契約が必要な場合、<code>System.Windows.Input.ICommand</code> は Abstractions で使えます。</p>
+<h2 id="ライフサイクル">ライフサイクル</h2>
+<table>
+<thead>
+<tr>
+<th>メソッド</th>
+<th>タイミング</th>
+<th>主な用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder builder)</code></td>
+<td>Autofac コンテナー構築前。</td>
+<td>コンテナー全体で必要になるサービス登録。</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>コンテナー構築後、かつモジュールが有効なとき。</td>
+<td>タブ ファクトリ、メインメニュー項目、ステータスバー項目、実行時フックの登録。</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope lifetimeScope)</code></td>
+<td>有効なすべてのモジュールがロードされた後。</td>
+<td>他モジュールの登録が完了していることを前提にした初期化。</td>
+</tr>
+</tbody>
+</table>
+<p>多くの UI モジュールでは <code>LoadAsync</code> だけで十分です。</p>
+<h2 id="最小構成のビュー-モジュール">最小構成のビュー モジュール</h2>
+<p>単一ビューのモジュールでは、<code>LoadAsync</code> で simple tab factory を登録します。</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac;
+using ZYC.Framework.Abstractions;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core;
+using MyCompany.Tools.UI;
+
+namespace MyCompany.Tools;
+
+internal class Module : ModuleBase
+{
+    public override Task LoadAsync(ILifetimeScope lifetimeScope)
+    {
+        lifetimeScope.RegisterSimpleTabItemFactory(
+            new SimpleTabItemFactoryInfo(typeof(ToolsView)));
+
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<p>これは <code>minimal</code> プロジェクト テンプレートで使われる形です。1 つの WPF <code>UserControl</code> をタブとして公開するだけなら、この形で足ります。</p>
+<h2 id="ルーティング付きタブ-モジュール">ルーティング付きタブ モジュール</h2>
+<p>安定した URI、ルート判定、パラメーター、独自のシングルトン制御、複数タブが必要な場合は <code>TabItemFactoryBase</code> を使います。</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core;
+using ZYC.Framework.Modules.Reports.Abstractions;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[RegisterSingleInstance]
+[TabItemRoute(Host = ReportsModuleConstants.Host)]
+internal class ReportsTabItemFactory : TabItemFactoryBase
+{
+    public override async Task&lt;ITabItemInstance&gt; CreateTabItemInstanceAsync(
+        TabItemCreationContext context)
+    {
+        await Task.CompletedTask;
+        return context.Resolve&lt;ReportsTabItem&gt;(
+            new TypedParameter(
+                typeof(TabReference),
+                new TabReference(context.Uri)));
+    }
+}
+</code></pre>
+<p><code>TabItemRouteAttribute</code> は <code>Scheme</code>、<code>Host</code>、<code>Path</code>、<code>PathMatch</code> で URI を判定できます。同じ URI に複数のファクトリが一致した場合は、<code>Priority</code> が高いファクトリが選ばれます。<code>TabItemFactoryBase</code> の既定は <code>IsSingle = true</code> です。複数インスタンスを許可したい場合はオーバーライドしてください。</p>
+<h2 id="タブ項目とビュー">タブ項目とビュー</h2>
+<p>ルーティング付きタブでは、通常 <code>TabItemInstanceBase&lt;TView&gt;</code> で WPF ビューをラップします。</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.Tab;
+using ZYC.Framework.Core.Tab;
+using ZYC.Framework.Modules.Reports.Abstractions;
+using ZYC.Framework.Modules.Reports.UI;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[Register]
+[ConstantsSource(typeof(ReportsModuleConstants))]
+internal class ReportsTabItem : TabItemInstanceBase&lt;ReportsView&gt;
+{
+    public ReportsTabItem(
+        ILifetimeScope lifetimeScope,
+        TabReference tabReference) : base(lifetimeScope, tabReference)
+    {
+    }
+}
+</code></pre>
+<p>タブのライフタイムはタブ項目に、見た目の振る舞いはビューに置きます。これにより、ルーティング、タブ ID、UI 構成を分離できます。</p>
+<h2 id="メインメニュー項目">メインメニュー項目</h2>
+<p>メニュー項目は通常、モジュール URI へ遷移します。</p>
+<pre><code class="lang-csharp">using Autofac;
+using ZYC.CoreToolkit.Extensions.Autofac.Attributes;
+using ZYC.Framework.Abstractions.MainMenu;
+using ZYC.Framework.Core;
+using ZYC.Framework.Modules.Reports.Abstractions;
+
+namespace ZYC.Framework.Modules.Reports;
+
+[RegisterSingleInstance]
+internal class ReportsMainMenuItem : MainMenuItem
+{
+    public ReportsMainMenuItem(ILifetimeScope lifetimeScope)
+    {
+        Info = new MenuItemInfo
+        {
+            Title = ReportsModuleConstants.Title,
+            Icon = ReportsModuleConstants.Icon
+        };
+
+        Command = lifetimeScope.CreateNavigateCommand(ReportsModuleConstants.Uri);
+    }
+}
+</code></pre>
+<p>モジュールから登録します。</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;ReportsTabItemFactory&gt;();
+    lifetimeScope.RegisterExtensionsMainMenuItem&lt;ReportsMainMenuItem&gt;();
+
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>機能の配置に合う既存のメニュー プロバイダーを使ってください。File、View、Tools、Extensions、About などがあります。複数の子コマンドを持つ機能だけ、モジュール専用のプロバイダーを追加します。</p>
+<h2 id="設定と状態">設定と状態</h2>
+<p><code>IConfig</code> または <code>IState</code> を実装した型は、モジュール登録中に settings ディレクトリから読み込まれ、Autofac に自動登録されます。ユーザーが編集する設定には config を、選択パス、保留中の操作、ウィンドウ状態などの実行時永続化には state を使います。</p>
+<p>大きな業務データを config/state クラスへ入れないでください。小さく、シリアライズ可能で、バージョン変更に耐えやすい形にします。</p>
+<h2 id="モジュール-ロードと依存関係">モジュール ロードと依存関係</h2>
+<p>Host は <code>ZYC.Framework.Modules*.dll</code> のような標準モジュール アセンブリを発見し、さらに <code>ModuleConfig.AdditionalAssemblyNames</code> に列挙されたアセンブリを追加します。<code>ModuleConfig.DisabledAssemblyNames</code> に含まれるアセンブリは発見されますが、有効なモジュールとしてはロードされません。</p>
+<p>依存関係は、他モジュールの <code>*.Abstractions.dll</code> への参照から推定されます。モジュール A が <code>ZYC.Framework.Modules.B.Abstractions.dll</code> を参照していれば、A が B に依存することを実行時に報告できます。その際、A が B の WPF 実装へ直接依存する必要はありません。</p>
+<h2 id="チェックリスト">チェックリスト</h2>
+<ul>
+<li>公開定数とコントラクトは <code>*.Abstractions</code> に置く。</li>
+<li>WPF ビューとタブ項目は実装プロジェクトに置く。</li>
+<li>コンテナー構築前に必要なサービスだけ <code>RegisterAsync</code> で登録する。</li>
+<li>タブ ファクトリとメニュー項目は <code>LoadAsync</code> で登録する。</li>
+<li>安定した URI ルーティングには <code>TabItemRouteAttribute</code> を使う。</li>
+<li>新しいプロバイダーを追加する前に、既存のメインメニュー プロバイダーを優先する。</li>
+<li>config/state クラスは小さく、シリアライズ可能に保つ。</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/module-development.ja.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

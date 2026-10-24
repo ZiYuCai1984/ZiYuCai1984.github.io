@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Architecture </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Architecture ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/architecture.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p align="center">
+  <a href="architecture.html">English</a> |
+  <a href="architecture.ja.html">日本語</a> |
+  <a href="architecture.zh-CN.html">简体中文</a> |
+  <a href="architecture.zh-TW.html">繁體中文</a> |
+  <a href="architecture.ko.html">한국어</a> |
+</p>
+<h1 id="architecture">Architecture</h1>
+<p>This document describes the current architecture of ZYC.Framework from the repository structure and runtime loading path. It focuses on the real extension points used by the application: modules, dependency injection, URI-based tabs, workspaces, configuration/state persistence, Aspire resources, and MCP exposure.</p>
+<h2 id="solution-shape">Solution Shape</h2>
+<p>ZYC.Framework is a modular WPF desktop framework. The executable shell is intentionally small: it starts the application, builds the Autofac container, loads modules, and then hands UI composition to managers such as the main menu manager, tab manager, workspace manager, status bar manager, and notification managers.</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Abstractions</code></td>
+<td>Public contracts, config/state types, module-facing DTOs, menu/tab/workspace interfaces, MCP attributes.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Core</code></td>
+<td>Shared WPF helpers, commands, base controls, dialogs, localization helpers, converters, and registration helpers.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.MetroWindow</code></td>
+<td>Main window implementation and window-level services such as dialog hosting.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.WebView2</code></td>
+<td>WebView2 host controls and browser integration infrastructure.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework</code></td>
+<td>Desktop executable shell, startup flow, workspace UI, tab UI, menu UI, notifications, quick bar, status bar, and app context implementation.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.*.Abstractions</code></td>
+<td>Module-specific public contracts, config/state classes, constants, and command interfaces. These projects are the boundary other modules should reference.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.*</code></td>
+<td>Module implementation projects. They register services, menu items, tab factories, status bar items, Aspire resources, or command-line options.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.CLI</code></td>
+<td>Dotnet tool entrypoint. It owns <code>zyc new</code>, <code>zyc new-module</code>, and shares the module discovery/loading infrastructure used by the desktop host.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.*</code></td>
+<td>Build-time tools for docs, packaging, installer generation, project/module scaffolding wrappers, and product-version work.</td>
+</tr>
+<tr>
+<td><code>Thirdparty/*</code></td>
+<td>Vendored or forked dependencies that are built with the solution.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="high-level-dependency-graph">High-Level Dependency Graph</h2>
+<pre><code class="lang-mermaid">graph TD
+  Host[&quot;ZYC.Framework executable&quot;]
+  Abs[&quot;ZYC.Framework.Abstractions&quot;]
+  Core[&quot;ZYC.Framework.Core&quot;]
+  Metro[&quot;ZYC.Framework.MetroWindow&quot;]
+  WebView[&quot;ZYC.Framework.WebView2&quot;]
+  Modules[&quot;ZYC.Framework.Modules.*&quot;]
+  ModuleAbs[&quot;ZYC.Framework.Modules.*.Abstractions&quot;]
+  CLI[&quot;ZYC.Framework.CLI&quot;]
+  Build[&quot;ZYC.Framework.Build.*&quot;]
+  Thirdparty[&quot;Thirdparty/*&quot;]
+
+  Host --&gt; Abs
+  Host --&gt; Core
+  Host --&gt; Metro
+  Host --&gt; WebView
+  Host --&gt; CLI
+  Core --&gt; Abs
+  Metro --&gt; Abs
+  Metro --&gt; Core
+  WebView --&gt; Core
+  Modules --&gt; Abs
+  Modules --&gt; Core
+  Modules --&gt; ModuleAbs
+  ModuleAbs --&gt; Abs
+  CLI --&gt; Abs
+  CLI --&gt; Core
+  Build --&gt; Abs
+  Build --&gt; CLI
+  Core --&gt; Thirdparty
+  WebView --&gt; Thirdparty
+</code></pre>
+<p>The important boundary is that <code>*.Abstractions</code> projects define public module contracts and should stay independent from WPF implementation details. Runtime modules can depend on WPF and framework UI infrastructure when they implement actual views, menu items, or tab items.</p>
+<h2 id="startup-flow">Startup Flow</h2>
+<p>The desktop entrypoint is <code>src/ZYC.Framework/Program.cs</code>.</p>
+<ol>
+<li>The process reads the startup URI, initializes JSON/settings behavior, enforces single-instance behavior outside Debug builds, and decides whether to redirect to a persisted startup version.</li>
+<li>An Autofac <code>ContainerBuilder</code> is created.</li>
+<li>Core framework assemblies are registered through <code>ModuleTools.RegisterAllFromAssembly(...)</code>: the executable assembly, <code>ZYC.Framework.Core</code>, <code>ZYC.Framework.WebView2</code>, <code>ZYC.Framework.MetroWindow</code>, and <code>ZYC.Framework.Abstractions</code>.</li>
+<li><code>RegisterAllFromAssembly(...)</code> registers Autofac services from the assembly and loads every discovered <code>IConfig</code> and <code>IState</code> implementation from the settings directory.</li>
+<li><code>ModuleTools.RegisterModules(...)</code> scans the executing folder for <code>ZYC.Framework.Modules*.dll</code>, adds assemblies listed in <code>ModuleConfig.AdditionalAssemblyNames</code>, skips disabled assemblies from <code>ModuleConfig.DisabledAssemblyNames</code>, handles pending file deletion, and can also load NuGet modules from <code>settings/nuget.module.assets.json</code>.</li>
+<li>Each module instance runs <code>RegisterAsync(builder)</code> before the container is built.</li>
+<li>After <code>builder.Build()</code>, enabled modules run <code>LoadAsync(container)</code> and then <code>AfterLoadedAsync(container)</code>.</li>
+<li>The shell registers the built-in module-load tab factory, stores module load errors in <code>IModuleLoadInfoManager</code>, resolves the main window, and starts WPF.</li>
+</ol>
+<pre><code class="lang-mermaid">graph TD
+  Start[&quot;Program.Main&quot;]
+  Builder[&quot;Create Autofac ContainerBuilder&quot;]
+  FrameworkAssemblies[&quot;Register framework assemblies&quot;]
+  ConfigState[&quot;Load IConfig and IState from settings&quot;]
+  ModuleScan[&quot;Scan module DLLs and NuGet module assets&quot;]
+  RegisterAsync[&quot;Module.RegisterAsync(builder)&quot;]
+  BuildContainer[&quot;builder.Build()&quot;]
+  LoadAsync[&quot;Module.LoadAsync(container)&quot;]
+  AfterLoaded[&quot;Module.AfterLoadedAsync(container)&quot;]
+  Shell[&quot;Resolve main window and run WPF app&quot;]
+
+  Start --&gt; Builder
+  Builder --&gt; FrameworkAssemblies
+  FrameworkAssemblies --&gt; ConfigState
+  ConfigState --&gt; ModuleScan
+  ModuleScan --&gt; RegisterAsync
+  RegisterAsync --&gt; BuildContainer
+  BuildContainer --&gt; LoadAsync
+  LoadAsync --&gt; AfterLoaded
+  AfterLoaded --&gt; Shell
+</code></pre>
+<h2 id="module-model">Module Model</h2>
+<p>A module is normally split into two projects:</p>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Modules.&lt;Name&gt;.Abstractions</code></td>
+<td>Public API, constants, config/state, commands, and DTOs.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Modules.&lt;Name&gt;</code></td>
+<td>Implementation: <code>Module.cs</code>, views, tab items, tab factories, menu items, managers, providers, and service registrations.</td>
+</tr>
+</tbody>
+</table>
+<p>The runtime module object is a <code>ModuleBase</code> subclass. The framework uses these phases:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>When it runs</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterAsync(ContainerBuilder)</code></td>
+<td>Before Autofac builds the root container.</td>
+<td>Register services that must participate in dependency resolution.</td>
+</tr>
+<tr>
+<td><code>LoadAsync(ILifetimeScope)</code></td>
+<td>After the container is built.</td>
+<td>Register runtime extension points such as tab factories, menu items, status bar items, Aspire resources, and startup tasks.</td>
+</tr>
+<tr>
+<td><code>AfterLoadedAsync(ILifetimeScope)</code></td>
+<td>After all enabled modules have loaded.</td>
+<td>Work that depends on other modules already being available.</td>
+</tr>
+</tbody>
+</table>
+<p>Module dependencies are inferred from assembly references to <code>ZYC.Framework.Modules.*.Abstractions.dll</code>. This gives the module manager a practical dependency view, but it is still convention-based discovery rather than a separate semantic module manifest.</p>
+<h2 id="ui-composition">UI Composition</h2>
+<p>The shell is built from managers rather than hardcoded module UI.</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Primary contracts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main menu and hamburger menu</td>
+<td><code>IMainMenuManager</code>, <code>IMainMenuItemsProvider</code>, <code>IMainMenuItem</code>, <code>IHamburgerMenuManager</code></td>
+</tr>
+<tr>
+<td>Tabs and navigation</td>
+<td><code>ITabManager</code>, <code>ITabItemFactoryManager</code>, <code>ITabItemFactory</code>, <code>ITabItemInstance</code></td>
+</tr>
+<tr>
+<td>Workspaces</td>
+<td><code>IParallelWorkspaceManager</code>, workspace state/config types, workspace menu managers</td>
+</tr>
+<tr>
+<td>Quick bar</td>
+<td><code>IQuickBarManager</code>, quick bar item/provider contracts</td>
+</tr>
+<tr>
+<td>Status bar</td>
+<td><code>IStatusBarManager</code>, <code>IStatusBarItemsProvider</code>, <code>IStatusBarItem</code></td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td><code>IToastManager</code>, <code>IBannerManager</code>, toast/banner view infrastructure</td>
+</tr>
+<tr>
+<td>Dialogs and overlays</td>
+<td><code>IDialogManager</code>, <code>IDialog</code>, <code>IOverlayManager</code></td>
+</tr>
+</tbody>
+</table>
+<p>Modules usually add UI in <code>LoadAsync(...)</code>. For example, a module can register a tab factory and a Tools menu item:</p>
+<pre><code class="lang-csharp">public override Task LoadAsync(ILifetimeScope lifetimeScope)
+{
+    lifetimeScope.RegisterTabItemFactory&lt;MyTabItemFactory&gt;();
+    lifetimeScope.RegisterToolsMainMenuItem&lt;MyMainMenuItem&gt;();
+    return Task.CompletedTask;
+}
+</code></pre>
+<p>For simple WPF views, <code>SimpleTabItemFactoryInfo</code> is the shortest path. It creates a URI-backed tab, adds a menu entry under Extensions, and can add a quick bar item. For richer routing, modules implement <code>ITabItemFactory</code> directly.</p>
+<h2 id="uri-based-tab-navigation">URI-Based Tab Navigation</h2>
+<p>Tab navigation is URI-driven. Commands and menu items call <code>ITabManager.NavigateAsync(...)</code>; the tab manager asks registered factories whether they can handle the URI; the best matching factory creates the tab instance.</p>
+<pre><code class="lang-mermaid">graph TD
+  Command[&quot;Menu item / command / startup URI&quot;]
+  Navigate[&quot;ITabManager.NavigateAsync(uri)&quot;]
+  Factories[&quot;ITabItemFactoryManager.GetTabItemFactories()&quot;]
+  Match[&quot;Factory.CheckUriMatchedAsync(uri)&quot;]
+  Create[&quot;Factory.CreateTabItemInstanceAsync(context)&quot;]
+  Load[&quot;ITabItemInstance.LoadAsync()&quot;]
+  View[&quot;Resolve View&quot;]
+  Attach[&quot;Attach tab to focused workspace&quot;]
+  Fallback[&quot;NotFoundTabItem or ErrorTabItem&quot;]
+
+  Command --&gt; Navigate
+  Navigate --&gt; Factories
+  Factories --&gt; Match
+  Match --&gt; Create
+  Create --&gt; Load
+  Load --&gt; View
+  View --&gt; Attach
+  Match --&gt; Fallback
+</code></pre>
+<p>Factories are sorted by descending priority. Singleton factories can reuse an existing tab when the target URI is already open. When no factory matches, the shell creates a not-found tab; when creation fails, it creates an error tab.</p>
+<h2 id="configuration-and-state">Configuration and State</h2>
+<p>Configuration and state are discovered through marker interfaces:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Interface</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config</td>
+<td><code>IConfig</code></td>
+<td>User-editable or module-editable settings.</td>
+</tr>
+<tr>
+<td>State</td>
+<td><code>IState</code></td>
+<td>Runtime state that should survive process restarts, such as navigation or workspace state.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ModuleTools.RegisterAllFromAssembly(...)</code> loads these types from the settings directory during startup and registers the instances into Autofac. <code>IAppContext</code> exposes app-level paths and save operations such as <code>SaveAllConfig()</code> and <code>SaveAllState()</code>.</p>
+<p><code>ModuleConfig</code> is the central module loading config:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DisabledAssemblyNames</code></td>
+<td>Module DLLs that should be ignored.</td>
+</tr>
+<tr>
+<td><code>AdditionalAssemblyNames</code></td>
+<td>Extra DLLs to load from the app folder in addition to standard module DLLs.</td>
+</tr>
+</tbody>
+</table>
+<p>NuGet-installed modules use a separate startup artifact: <code>settings/nuget.module.assets.json</code>. When it exists, <code>ModuleTools.RegisterModules(...)</code> asks the runtime asset loader to load runtime assemblies for <code>net10.0-windows</code>.</p>
+<h2 id="hybrid-ui-and-aspire-integration">Hybrid UI and Aspire Integration</h2>
+<p>ZYC.Framework supports native WPF views and hybrid web content.</p>
+<p><code>ZYC.Framework.WebView2</code> owns reusable WebView2 host infrastructure. Modules such as WebBrowser and BlazorDemo build on this surface to embed web content or web-backed experiences.</p>
+<p><code>ZYC.Framework.Modules.Aspire</code> integrates .NET Aspire. <code>AspireService.Build(...)</code> creates a <code>DistributedApplicationBuilder</code>, configures it with the existing Autofac lifetime scope, applies <code>AspireConfig.Environment</code>, and resolves all <code>IExtensionResourcesProvider</code> implementations. Extension modules can plug child resources into the Aspire app without modifying the core Aspire module.</p>
+<p>The <code>Translator</code> module is an example of this pattern: it resolves <code>ICommandlineResourcesProvider</code> and registers a command-line resource for <code>libretranslate</code>.</p>
+<p><code>ZYC.Framework.Modules.Accounts</code> is a provider-based account shell. It owns session initialization, <code>IAccountManager</code>, protected token storage, and the window-title account UI. Provider modules such as <code>ZYC.Framework.Modules.Accounts.GitHub</code> contribute <code>IAccountProvider</code> implementations and can register their own authentication tab factories, including WebView2-backed OAuth flows.</p>
+<p><code>ZYC.Framework.Modules.ChromeExtensions</code> keeps browser extension package management separate from the browser runtime. It downloads and unpacks Chrome Web Store packages, reads manifest metadata, and synchronizes the unpacked manifest key so WebView2 can use stable extension identities. <code>ZYC.Framework.Modules.WebBrowser</code> consumes the installed package list, updates <code>WebBrowserConfig.CustomBrowserArguments</code> with <code>--load-extension</code>, and uses the live <code>CoreWebView2BrowserExtension</code> data exposed by <code>ZYC.Framework.WebView2</code> for runtime plugin UI.</p>
+<h2 id="mcp-exposure">MCP Exposure</h2>
+<p>The MCP server module exposes application capabilities through interface annotations.</p>
+<p>Interfaces or methods marked with <code>[ExposeToMCP]</code> can be discovered by <code>MCPAutoToolDiscoveryExtensions.AddAutoDiscoveredTools(...)</code>. Methods marked with <code>[MCPIgnore]</code> are skipped. If a tool requires UI-thread execution, the MCP wrapper delegates the call through the UI dispatcher.</p>
+<p>This means MCP is contract-driven:</p>
+<ol>
+<li>Put stable capabilities on interfaces.</li>
+<li>Mark the interface or method with <code>[ExposeToMCP]</code>.</li>
+<li>Exclude internal or unsafe members with <code>[MCPIgnore]</code>.</li>
+<li>Let the MCP server discover the loaded assemblies at runtime.</li>
+</ol>
+<h2 id="build-and-template-flow">Build and Template Flow</h2>
+<p>Documentation and scaffolding are separate from runtime modules.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZYC.Framework.Build.Doc</code></td>
+<td>Renders <code>Templates/README/README.md</code> and <code>Templates/docs/*</code> into root <code>README*.md</code> and <code>docs/*</code>.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.CLI</code></td>
+<td>Provides <code>zyc new</code> project templates and <code>zyc new-module</code> module scaffolding.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.NewModule</code></td>
+<td>Wrapper around <code>zyc new-module</code> for repository-local module generation.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.NuGet</code></td>
+<td>NuGet packaging and release notes.</td>
+</tr>
+<tr>
+<td><code>ZYC.Framework.Build.InnoSetup</code></td>
+<td>Installer build support.</td>
+</tr>
+</tbody>
+</table>
+<p>Project creation and module creation are intentionally different command surfaces:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zyc new &lt;ProjectName&gt;</code></td>
+<td>Creates an external host project from <code>minimal</code> or <code>modular</code> project templates.</td>
+</tr>
+<tr>
+<td><code>zyc new-module &lt;ModuleName&gt; --src-root &lt;SourceRoot&gt;</code></td>
+<td>Creates a module pair inside an existing source tree.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="adding-a-module">Adding a Module</h2>
+<p>A typical module addition follows this path:</p>
+<ol>
+<li>Create <code>ZYC.Framework.Modules.&lt;Name&gt;.Abstractions</code> for public contracts, constants, config, state, and command interfaces.</li>
+<li>Create <code>ZYC.Framework.Modules.&lt;Name&gt;</code> for the runtime implementation.</li>
+<li>Add <code>Module.cs</code> with a <code>ModuleBase</code> subclass.</li>
+<li>Use <code>RegisterAsync(...)</code> for DI registrations that must exist before the container is built.</li>
+<li>Use <code>LoadAsync(...)</code> to register tab factories, menu items, status bar items, quick bar items, Aspire providers, or startup behavior.</li>
+<li>Prefer manager APIs such as <code>RegisterTabItemFactory&lt;T&gt;()</code> and <code>RegisterToolsMainMenuItem&lt;T&gt;()</code> over directly manipulating shell views.</li>
+<li>Keep public abstractions stable and additive when possible.</li>
+</ol>
+<p>This keeps modules independently developed while still letting the host compose them through a shared shell and manager-based extension model.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ZiYuCai1984/ZYC.Framework/blob/master/docs/architecture.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
