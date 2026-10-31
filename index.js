@@ -1,0 +1,13 @@
+function updateTagDisplayState(propertyName){const root=document.getElementById('root');if(root===null){return;}
+if(root.style.getPropertyValue(propertyName)==='flex'){root.style.setProperty(propertyName,'none');}else{root.style.setProperty(propertyName,'flex');}
+localStorage.setItem('tags',root.getAttribute('style'));applyDocumentFilters();}
+function normalizeSearchText(value){return value.normalize('NFKC').toLocaleLowerCase();}
+function applyDocumentFilters(){const root=document.getElementById('root');const searchInput=document.getElementById('search-input');const searchTerms=normalizeSearchText(searchInput?.value??'').trim().split(/\s+/).filter(Boolean);const rows=document.querySelectorAll('#container > .break-inside');rows.forEach(row=>{const properties=(row.dataset.tagProperties??'').split(' ').filter(Boolean);const hiddenByTag=root!==null&&properties.some(propertyName=>root.style.getPropertyValue(propertyName)==='none');const searchText=normalizeSearchText(row.dataset.searchText??row.textContent??'');const hiddenBySearch=!searchTerms.every(term=>searchText.includes(term));row.style.display=hiddenByTag||hiddenBySearch?'none':'flex';});}
+function updateTagSelectorState(){const root=document.getElementById('root');if(root===null){return;}
+const attributeName='display-tag-selector';root.setAttribute(attributeName,root.getAttribute(attributeName)==='false'?'true':'false');localStorage.setItem(attributeName,root.getAttribute(attributeName));}
+function restoreTagStateFromLocalStorage(){const root=document.getElementById('root');if(root===null){return;}
+const tagStyle=localStorage.getItem('tags');if(tagStyle!==null&&tagStyle!==undefined){root.setAttribute('style',tagStyle);}}
+function restoreTagSelectorStateFromLocalStorage(){const root=document.getElementById('root');if(root===null){return;}
+const attributeName='display-tag-selector';const state=localStorage.getItem(attributeName);if(state!==null&&state!==undefined){root.setAttribute(attributeName,state);}}
+document.addEventListener('DOMContentLoaded',()=>{restoreTagStateFromLocalStorage();restoreTagSelectorStateFromLocalStorage();const searchInput=document.getElementById('search-input');searchInput?.addEventListener('input',applyDocumentFilters);searchInput?.addEventListener('keydown',event=>{if(event.key!=='Escape'){return;}
+searchInput.value='';applyDocumentFilters();});applyDocumentFilters();document.body.style.display='block';});
